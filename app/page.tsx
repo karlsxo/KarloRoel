@@ -275,10 +275,10 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 
             {submitStatus === 'success' ? (
               <div className="text-center py-8">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-200">
-                  <Mail className="w-8 h-8 text-emerald-600" />
+                <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-cyan-200">
+                  <Mail className="w-8 h-8 text-cyan-600" />
                 </div>
-                <p className="text-emerald-700 font-medium">Opening your email client...</p>
+                <p className="text-cyan-700 font-medium">Opening your email client...</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -425,9 +425,9 @@ const ProjectDetailModal = ({
                 {project.achievements && project.achievements.length > 0 && (
                   <div className="flex flex-wrap gap-3 mt-4">
                     {project.achievements.map((achievement, index) => (
-                      <div key={index} className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/80 rounded-lg backdrop-blur-md shadow-xs">
-                        <Award className="w-5 h-5 text-amber-600" />
-                        <span className="text-amber-900 text-sm font-semibold">{achievement}</span>
+                      <div key={index} className="flex items-center gap-2 px-4 py-2 bg-violet-50 border border-violet-200/80 rounded-lg backdrop-blur-md shadow-xs">
+                        <Award className="w-5 h-5 text-violet-600" />
+                        <span className="text-violet-950 text-sm font-semibold">{achievement}</span>
                       </div>
                     ))}
                   </div>
@@ -483,12 +483,12 @@ const ProjectDetailModal = ({
                         <p className="text-slate-600 leading-relaxed">{project.problemStatement}</p>
                       </div>
 
-                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-emerald-100">
+                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-cyan-100">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-emerald-50 rounded-lg border border-emerald-200">
-                            <Lightbulb className="w-6 h-6 text-emerald-600" />
+                          <div className="p-2 bg-cyan-50 rounded-lg border border-cyan-200">
+                            <Lightbulb className="w-6 h-6 text-cyan-600" />
                           </div>
-                          <h3 className="text-xl font-bold text-emerald-950">The Solution</h3>
+                          <h3 className="text-xl font-bold text-cyan-950">The Solution</h3>
                         </div>
                         <p className="text-slate-600 leading-relaxed">{project.solution}</p>
                       </div>
@@ -650,7 +650,7 @@ export default function Portfolio() {
   if (!mounted) return null;
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-[#f8fafc] text-slate-900 font-sans selection:bg-cyan-500/20">
+    <div className="relative isolate min-h-screen overflow-hidden bg-[#f7fbff] text-slate-900 font-sans selection:bg-violet-400/20">
       <div className="aurora-stage" />
       <div className="aurora-ribbon" />
       <div className="noise-overlay" />
@@ -668,13 +668,13 @@ export default function Portfolio() {
         project={selectedProject}
       />
   
-      {/* Hero Section - Yellow, Orange & Green Aurora Theme */}
+      {/* Hero Section - Aurora Borealis Theme */}
       <section className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-[85vh] flex flex-col justify-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-slate-200/90 text-xs text-slate-900 font-semibold mb-6 backdrop-blur-md shadow-xs shadow-slate-200/50">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-cyan-100/90 text-xs text-slate-900 font-semibold mb-6 backdrop-blur-md shadow-xs shadow-cyan-200/40">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
             </span>
             Open to Work & Collaboration
           </div>
@@ -692,11 +692,11 @@ export default function Portfolio() {
           </p>
   
           <div className="flex flex-wrap gap-4">
-            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-slate-950 text-white rounded-full font-bold hover:bg-emerald-600 transition-all hover:shadow-lg hover:shadow-emerald-500/20 shadow-md">
+            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-slate-950 text-white rounded-full font-bold hover:bg-cyan-700 transition-all hover:shadow-lg hover:shadow-cyan-500/20 shadow-md">
               View Selected Work
               <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
             </a>
-            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/90 text-slate-900 border border-slate-300 rounded-full font-semibold hover:bg-white hover:border-emerald-300 hover:shadow-xs transition-all backdrop-blur-md">
+            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/90 text-slate-900 border border-slate-300 rounded-full font-semibold hover:bg-white hover:border-violet-300 hover:shadow-xs transition-all backdrop-blur-md">
               <Github className="w-4 h-4 text-slate-800" />
               GitHub
             </a>
@@ -709,14 +709,14 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-slate-500 text-sm font-semibold mb-6 uppercase tracking-wider">Core Technologies</p>
           <div className="flex gap-4 md:gap-6 flex-wrap text-slate-700 font-semibold text-lg md:text-xl">
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">Python</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">Java</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">JavaScript</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">HTML5 & CSS3</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">React / Next.js</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">C++</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">Git</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">SQL</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-cyan-700 hover:border-cyan-300 hover:bg-cyan-50/60 transition-colors shadow-xs cursor-default">Python</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-violet-700 hover:border-violet-300 hover:bg-violet-50/60 transition-colors shadow-xs cursor-default">Java</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-teal-700 hover:border-teal-300 hover:bg-teal-50/60 transition-colors shadow-xs cursor-default">JavaScript</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-fuchsia-700 hover:border-fuchsia-300 hover:bg-fuchsia-50/60 transition-colors shadow-xs cursor-default">HTML5 & CSS3</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-cyan-700 hover:border-cyan-300 hover:bg-cyan-50/60 transition-colors shadow-xs cursor-default">React / Next.js</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-violet-700 hover:border-violet-300 hover:bg-violet-50/60 transition-colors shadow-xs cursor-default">C++</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-teal-700 hover:border-teal-300 hover:bg-teal-50/60 transition-colors shadow-xs cursor-default">Git</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-fuchsia-700 hover:border-fuchsia-300 hover:bg-fuchsia-50/60 transition-colors shadow-xs cursor-default">SQL</span>
           </div>
         </div>
       </div>
@@ -824,7 +824,7 @@ export default function Portfolio() {
             Let&apos;s build something <br />
             <span className="relative inline-block">
               <span className="aurora-text relative z-10">extraordinary.</span>
-              <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-pink-400 opacity-25 animate-pulse"></span>
+              <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 opacity-25 animate-pulse"></span>
             </span>
           </h2>
           <button 

@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #f7fbff;
+  --foreground: #08111f;
+  --aurora-mint: #43ffd2;
+  --aurora-cyan: #19c8ff;
+  --aurora-blue: #496dff;
+  --aurora-violet: #b36cff;
+  --aurora-pink: #ff7ee7;
+  --silver: #f8fbff;
   --scroll-progress: 0;
   --scroll-y: 0px;
 }
@@ -32,9 +38,10 @@ body::before {
   inset: 0;
   z-index: -4;
   background:
-    radial-gradient(circle at 10% 12%, rgba(16, 185, 129, 0.24), transparent 45%),
-    radial-gradient(circle at 90% 18%, rgba(249, 115, 22, 0.22), transparent 45%),
-    linear-gradient(180deg, #ffffff 0%, #f8fafc 45%, #f1f5f9 100%);
+    radial-gradient(circle at 12% 14%, rgba(67, 255, 210, 0.36), transparent 42%),
+    radial-gradient(circle at 78% 18%, rgba(255, 126, 231, 0.34), transparent 43%),
+    radial-gradient(circle at 58% 72%, rgba(25, 200, 255, 0.22), transparent 48%),
+    linear-gradient(135deg, #ffffff 0%, #efffff 28%, #f5f4ff 62%, #fff9fe 100%);
 }
 
 .aurora-stage {
@@ -44,9 +51,8 @@ body::before {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  /* Mask creates a light white vignette & crisp white space around center while allowing vibrant aurora colors to pop */
-  mask-image: radial-gradient(ellipse 95% 85% at 50% 35%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.35) 85%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 35%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.35) 85%, transparent 100%);
+  mask-image: radial-gradient(ellipse 98% 86% at 50% 33%, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.28) 83%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 98% 86% at 50% 33%, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.28) 83%, transparent 100%);
 }
 
 .aurora-stage::before {
@@ -54,17 +60,19 @@ body::before {
   position: absolute;
   inset: -15%;
   background:
-    conic-gradient(from 140deg at 60% 40%,
+    conic-gradient(from 138deg at 61% 38%,
       transparent 0deg,
-      rgba(16, 185, 129, 0.88) 35deg,
-      rgba(234, 179, 8, 0.85) 80deg,
+      rgba(67, 255, 210, 0.9) 34deg,
+      rgba(25, 200, 255, 0.88) 73deg,
+      rgba(179, 108, 255, 0.72) 106deg,
       transparent 135deg,
       transparent 180deg,
-      rgba(249, 115, 22, 0.88) 225deg,
-      rgba(34, 197, 94, 0.85) 285deg,
+      rgba(255, 126, 231, 0.8) 224deg,
+      rgba(73, 109, 255, 0.74) 270deg,
+      rgba(248, 251, 255, 0.88) 306deg,
       transparent 340deg);
-  filter: blur(55px) saturate(290%);
-  opacity: 0.68;
+  filter: blur(58px) saturate(260%);
+  opacity: 0.72;
   transform:
     translate3d(calc(var(--scroll-progress) * -8vw), calc(var(--scroll-progress) * 16vh), 0)
     rotate(calc(var(--scroll-progress) * 28deg));
@@ -76,14 +84,15 @@ body::before {
   position: absolute;
   inset: -20% -10%;
   opacity: 0.62;
-  filter: blur(65px) saturate(310%);
+  filter: blur(68px) saturate(285%);
   background:
     linear-gradient(125deg,
       transparent 18%,
-      rgba(34, 197, 94, 0.85) 35%,
-      rgba(250, 204, 21, 0.88) 50%,
+      rgba(67, 255, 210, 0.78) 34%,
+      rgba(248, 251, 255, 0.88) 43%,
+      rgba(25, 200, 255, 0.72) 53%,
       transparent 68%,
-      rgba(249, 115, 22, 0.82) 82%,
+      rgba(255, 126, 231, 0.72) 82%,
       transparent 95%);
   transform:
     translate3d(calc(var(--scroll-progress) * 10vw), calc(var(--scroll-progress) * -12vh), 0)
@@ -100,13 +109,14 @@ body::before {
   background:
     linear-gradient(105deg,
       transparent 10%,
-      rgba(249, 115, 22, 0.82) 25%,
-      rgba(234, 179, 8, 0.85) 42%,
-      transparent 58%,
-      rgba(16, 185, 129, 0.85) 75%,
+      rgba(25, 200, 255, 0.62) 24%,
+      rgba(67, 255, 210, 0.72) 36%,
+      rgba(248, 251, 255, 0.82) 48%,
+      rgba(179, 108, 255, 0.62) 62%,
+      rgba(255, 126, 231, 0.68) 76%,
       transparent 92%);
-  filter: blur(35px) saturate(270%);
-  opacity: 0.65;
+  filter: blur(38px) saturate(250%);
+  opacity: 0.7;
   transform:
     translateY(calc(var(--scroll-progress) * 18vh))
     skewY(-9deg);
@@ -118,35 +128,42 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.10;
+  opacity: 0.58;
   background-image:
-    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 90%);
+    radial-gradient(circle at 8% 18%, rgba(255, 255, 255, 0.92) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 22% 74%, rgba(185, 247, 255, 0.82) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 52% 36%, rgba(255, 255, 255, 0.88) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 74% 24%, rgba(245, 236, 255, 0.88) 0 1px, transparent 1.9px),
+    radial-gradient(circle at 88% 64%, rgba(224, 250, 255, 0.86) 0 1px, transparent 1.8px),
+    linear-gradient(rgba(8, 17, 31, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 17, 31, 0.018) 1px, transparent 1px);
+  background-size: 190px 190px, 230px 230px, 270px 270px, 310px 310px, 350px 350px, 72px 72px, 72px 72px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.42) 58%, transparent 96%);
 }
 
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.68));
-  border: 1px solid rgba(255, 255, 255, 0.95);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(244, 252, 255, 0.76)),
+    linear-gradient(135deg, rgba(67, 255, 210, 0.08), rgba(255, 126, 231, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.98);
   box-shadow: 
-    0 20px 40px -15px rgba(234, 179, 8, 0.12),
-    0 8px 24px -6px rgba(15, 23, 42, 0.04),
+    0 22px 44px -18px rgba(73, 109, 255, 0.18),
+    0 8px 24px -6px rgba(8, 17, 31, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 1);
-  backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(170%);
 }
 
 .glass-card {
   position: relative;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 250, 252, 0.55));
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(242, 252, 255, 0.76)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(246, 248, 255, 0.58));
   border: 1px solid rgba(255, 255, 255, 0.98);
   box-shadow: 
-    0 18px 45px -10px rgba(234, 179, 8, 0.12),
-    0 4px 16px rgba(15, 23, 42, 0.04),
+    0 18px 45px -12px rgba(25, 200, 255, 0.16),
+    0 4px 16px rgba(8, 17, 31, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 1);
-  backdrop-filter: blur(26px) saturate(160%);
+  backdrop-filter: blur(26px) saturate(175%);
 }
 
 .glass-card::before {
@@ -156,9 +173,9 @@ body::before {
   border-radius: inherit;
   pointer-events: none;
   background:
-    radial-gradient(circle at 15% 0%, rgba(16, 185, 129, 0.16), transparent 36%),
-    radial-gradient(circle at 100% 20%, rgba(249, 115, 22, 0.14), transparent 38%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.5), transparent 42%);
+    radial-gradient(circle at 15% 0%, rgba(67, 255, 210, 0.18), transparent 36%),
+    radial-gradient(circle at 100% 18%, rgba(255, 126, 231, 0.15), transparent 38%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.58), transparent 42%);
   opacity: 0.88;
 }
 
@@ -169,11 +186,11 @@ body::before {
 
 .aurora-text {
   color: transparent;
-  background-image: linear-gradient(110deg, #059669 0%, #10b981 25%, #d97706 55%, #ea580c 80%, #059669 100%);
-  background-size: 220% 100%;
+  background-image: linear-gradient(110deg, #0284c7 0%, #00bfa6 23%, #2265e8 48%, #8b5cf6 69%, #db3bbc 86%, #0284c7 100%);
+  background-size: 240% 100%;
   background-clip: text;
   -webkit-background-clip: text;
-  filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.18));
+  filter: drop-shadow(0 2px 5px rgba(8, 17, 31, 0.16));
   animation: shimmer-text 8s ease-in-out infinite alternate;
 }
 
@@ -188,9 +205,9 @@ body::before {
   height: 160px;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(16, 185, 129, 0.18), rgba(234, 179, 8, 0.16), rgba(249, 115, 22, 0.16));
-  filter: blur(55px);
-  opacity: 0.6;
+  background: linear-gradient(90deg, rgba(67, 255, 210, 0.18), rgba(25, 200, 255, 0.16), rgba(179, 108, 255, 0.16), rgba(255, 126, 231, 0.14));
+  filter: blur(56px);
+  opacity: 0.68;
 }
 
 @keyframes aurora-drift {
