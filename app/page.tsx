@@ -650,7 +650,7 @@ export default function Portfolio() {
   if (!mounted) return null;
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden bg-[#f7fbff] text-slate-900 font-sans selection:bg-violet-400/20">
+    <div className="relative isolate min-h-screen overflow-hidden bg-transparent text-slate-900 font-sans selection:bg-violet-400/20">
       <div className="aurora-stage" />
       <div className="aurora-ribbon" />
       <div className="noise-overlay" />
