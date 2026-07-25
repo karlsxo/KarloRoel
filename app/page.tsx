@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, 
@@ -143,7 +143,7 @@ const projectsData: ProjectData[] = [dalaniProject, arteryProject];
 // --- Utility Components ---
 
 const Section = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => (
-  <section id={id} className={`px-6 py-24 md:py-32 max-w-7xl mx-auto ${className}`}>
+  <section id={id} className={`relative z-10 px-6 py-24 md:py-32 max-w-7xl mx-auto ${className}`}>
     {children}
   </section>
 );
@@ -180,15 +180,15 @@ const ProjectCard = ({
       whileHover={{ y: -8 }}
       transition={{ type: "spring", stiffness: 300 }}
       onClick={handleClick}
-      className={`group flex flex-col bg-neutral-900/50 border border-neutral-800 rounded-3xl overflow-hidden hover:border-neutral-600 transition-all cursor-pointer h-full ${className}`}
+      className={`group glass-card flex flex-col rounded-3xl overflow-hidden hover:border-cyan-400/60 hover:shadow-xl hover:shadow-cyan-500/10 transition-all cursor-pointer h-full ${className}`}
     >
       {/* Image Container */}
-      <div className="relative h-64 w-full bg-neutral-950 overflow-hidden flex items-center justify-center p-8">
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/60 to-transparent z-10" />
+      <div className="relative h-64 w-full bg-gradient-to-br from-slate-50/90 via-white to-cyan-50/40 border-b border-slate-200/60 overflow-hidden flex items-center justify-center p-8">
+        <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/5 via-transparent to-pink-500/5 z-10" />
         {children}
         {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-center justify-center">
-          <div className="px-4 py-2 bg-white text-black rounded-full text-sm font-bold flex items-center gap-2 shadow-xl">
+        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-center justify-center backdrop-blur-sm">
+          <div className="px-4 py-2 bg-slate-900 text-white rounded-full text-sm font-bold flex items-center gap-2 shadow-xl">
             {href ? "Visit Website" : "View Gallery"} 
             {href ? <ExternalLink className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
           </div>
@@ -199,14 +199,14 @@ const ProjectCard = ({
       <div className="p-8 flex flex-col flex-1">
         <div className="flex flex-wrap gap-2 mb-4">
           {tags.map((tag) => (
-            <span key={tag} className="px-2 py-1 rounded-md bg-neutral-800 text-[10px] font-bold uppercase tracking-wider text-neutral-400 border border-neutral-700">
+            <span key={tag} className="px-2.5 py-1 rounded-md bg-cyan-50 text-[10px] font-bold uppercase tracking-wider text-cyan-800 border border-cyan-200/80 shadow-xs">
               {tag}
             </span>
           ))}
         </div>
-        <h3 className="text-2xl font-bold text-white mb-1">{title}</h3>
-        <p className="text-indigo-400 text-sm font-medium mb-4">{subtitle}</p>
-        <p className="text-neutral-400 text-sm leading-relaxed">
+        <h3 className="text-2xl font-bold text-slate-900 mb-1">{title}</h3>
+        <p className="text-cyan-700 text-sm font-semibold mb-4">{subtitle}</p>
+        <p className="text-slate-600 text-sm leading-relaxed">
           {description}
         </p>
       </div>
@@ -246,13 +246,6 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    if (!isOpen) {
-      setFormData({ name: '', email: '', message: '' });
-      setSubmitStatus('idle');
-    }
-  }, [isOpen]);
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -260,37 +253,37 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-4"
           onClick={onClose}
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="relative w-full max-w-md bg-neutral-900 border border-neutral-800 rounded-2xl p-8 shadow-2xl"
+            className="glass-panel relative w-full max-w-md rounded-2xl p-8 shadow-2xl border border-white/90 bg-white/90"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-white transition-colors"
+              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-2xl font-bold text-white mb-2">Get in Touch</h3>
-            <p className="text-neutral-400 text-sm mb-6">Send me a message and I'll get back to you soon.</p>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">Get in Touch</h3>
+            <p className="text-slate-600 text-sm mb-6">Send me a message and I&apos;ll get back to you soon.</p>
 
             {submitStatus === 'success' ? (
               <div className="text-center py-8">
-                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Mail className="w-8 h-8 text-green-500" />
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-200">
+                  <Mail className="w-8 h-8 text-emerald-600" />
                 </div>
-                <p className="text-green-500 font-medium">Opening your email client...</p>
+                <p className="text-emerald-700 font-medium">Opening your email client...</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-neutral-300 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                     Full Name
                   </label>
                   <input
@@ -300,13 +293,13 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:bg-white transition-all"
                     placeholder="Your full name"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-neutral-300 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
                     Email Address
                   </label>
                   <input
@@ -316,13 +309,13 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:bg-white transition-all"
                     placeholder="your.email@example.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-neutral-300 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
                     Message
                   </label>
                   <textarea
@@ -332,7 +325,7 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:bg-white transition-all resize-none"
                     placeholder="Tell me about your project or inquiry..."
                   />
                 </div>
@@ -340,11 +333,11 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-white text-black rounded-lg font-bold hover:bg-neutral-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                       Sending...
                     </>
                   ) : (
@@ -357,81 +350,6 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               </form>
             )}
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
-
-// --- Image Gallery Modal ---
-const ImageGalleryModal = ({ isOpen, onClose, images }: { isOpen: boolean; onClose: () => void; images: string[] }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
-  if (images.length === 0) return null;
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl overflow-y-auto"
-          onClick={onClose}
-        >
-          {/* Close Button - Fixed Position */}
-          <button 
-            onClick={onClose} 
-            className="fixed top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md border border-white/20 transition-all z-50"
-          >
-            <X className="w-6 h-6 text-white" />
-          </button>
-
-          {/* Content Container */}
-          <div className="min-h-full py-20 px-4 md:px-8">
-            <motion.div
-              ref={modalRef}
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="max-w-7xl mx-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Grid Layout for All Images */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {images.map((image, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.3 }}
-                    className="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-neutral-900 border border-neutral-700/50 hover:border-neutral-500 transition-all shadow-2xl group"
-                  >
-                    <Image 
-                      src={image} 
-                      alt={`Gallery image ${index + 1}`} 
-                      fill 
-                      className="object-contain p-2 group-hover:scale-[1.02] transition-transform duration-300" 
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                      priority={index < 4}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -453,7 +371,6 @@ const ProjectDetailModal = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      setActiveTab('overview');
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -471,15 +388,15 @@ const ProjectDetailModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl overflow-y-auto"
+          className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-md overflow-y-auto"
           onClick={onClose}
         >
           {/* Close Button */}
           <button 
             onClick={onClose} 
-            className="fixed top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md border border-white/20 transition-all z-50"
+            className="fixed top-6 right-6 p-3 bg-white/90 hover:bg-white text-slate-800 rounded-full backdrop-blur-md border border-slate-200/80 transition-all z-50 shadow-lg"
           >
-            <X className="w-6 h-6 text-white" />
+            <X className="w-6 h-6 text-slate-800" />
           </button>
 
           {/* Content Container */}
@@ -496,21 +413,21 @@ const ProjectDetailModal = ({
               <div className="mb-8">
                 <div className="flex flex-wrap items-center gap-3 mb-4">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-400 text-xs font-bold uppercase tracking-wider border border-indigo-500/30">
+                    <span key={tag} className="px-3 py-1 rounded-full bg-cyan-50 text-cyan-800 text-xs font-bold uppercase tracking-wider border border-cyan-200/80 shadow-xs">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-2">{project.title}</h1>
-                <p className="text-xl text-indigo-400 font-medium mb-4">{project.subtitle}</p>
+                <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-2">{project.title}</h1>
+                <p className="text-xl text-cyan-700 font-semibold mb-4">{project.subtitle}</p>
                 
                 {/* Achievements */}
                 {project.achievements && project.achievements.length > 0 && (
                   <div className="flex flex-wrap gap-3 mt-4">
                     {project.achievements.map((achievement, index) => (
-                      <div key={index} className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                        <Award className="w-5 h-5 text-amber-400" />
-                        <span className="text-amber-300 text-sm font-medium">{achievement}</span>
+                      <div key={index} className="flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/80 rounded-lg backdrop-blur-md shadow-xs">
+                        <Award className="w-5 h-5 text-amber-600" />
+                        <span className="text-amber-900 text-sm font-semibold">{achievement}</span>
                       </div>
                     ))}
                   </div>
@@ -518,7 +435,7 @@ const ProjectDetailModal = ({
               </div>
 
               {/* Tab Navigation */}
-              <div className="flex gap-2 mb-8 border-b border-neutral-800 pb-4">
+              <div className="flex gap-2 mb-8 border-b border-slate-200/80 pb-4">
                 {[
                   { id: 'overview', label: 'Overview' },
                   { id: 'features', label: 'Features' },
@@ -529,8 +446,8 @@ const ProjectDetailModal = ({
                     onClick={() => setActiveTab(tab.id as typeof activeTab)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${
                       activeTab === tab.id
-                        ? 'bg-white text-black'
-                        : 'bg-neutral-900 text-neutral-400 hover:bg-neutral-800 hover:text-white'
+                        ? 'bg-slate-900 text-white shadow-md'
+                        : 'bg-white/70 text-slate-600 hover:bg-white hover:text-slate-900 border border-slate-200/70'
                     }`}
                   >
                     {tab.label}
@@ -549,65 +466,65 @@ const ProjectDetailModal = ({
                     className="space-y-8"
                   >
                     {/* Main Description */}
-                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8">
-                      <h3 className="text-2xl font-bold text-white mb-4">About the Project</h3>
-                      <p className="text-neutral-300 leading-relaxed text-lg">{project.fullDescription}</p>
+                    <div className="glass-panel rounded-2xl p-8 bg-white/85 shadow-xs border-white/90">
+                      <h3 className="text-2xl font-bold text-slate-900 mb-4">About the Project</h3>
+                      <p className="text-slate-700 leading-relaxed text-lg">{project.fullDescription}</p>
                     </div>
 
                     {/* Problem & Solution Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-8">
+                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-rose-100">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-red-500/20 rounded-lg">
-                            <Target className="w-6 h-6 text-red-400" />
+                          <div className="p-2 bg-rose-50 rounded-lg border border-rose-200">
+                            <Target className="w-6 h-6 text-rose-600" />
                           </div>
-                          <h3 className="text-xl font-bold text-white">The Problem</h3>
+                          <h3 className="text-xl font-bold text-rose-950">The Problem</h3>
                         </div>
-                        <p className="text-neutral-300 leading-relaxed">{project.problemStatement}</p>
+                        <p className="text-slate-600 leading-relaxed">{project.problemStatement}</p>
                       </div>
 
-                      <div className="bg-green-500/5 border border-green-500/20 rounded-2xl p-8">
+                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-emerald-100">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-green-500/20 rounded-lg">
-                            <Lightbulb className="w-6 h-6 text-green-400" />
+                          <div className="p-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                            <Lightbulb className="w-6 h-6 text-emerald-600" />
                           </div>
-                          <h3 className="text-xl font-bold text-white">The Solution</h3>
+                          <h3 className="text-xl font-bold text-emerald-950">The Solution</h3>
                         </div>
-                        <p className="text-neutral-300 leading-relaxed">{project.solution}</p>
+                        <p className="text-slate-600 leading-relaxed">{project.solution}</p>
                       </div>
                     </div>
 
                     {/* Target Market & UVP */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8">
+                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-sky-100 shadow-xs">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-blue-500/20 rounded-lg">
-                            <Users className="w-6 h-6 text-blue-400" />
+                          <div className="p-2 bg-sky-50 rounded-lg border border-sky-200">
+                            <Users className="w-6 h-6 text-sky-600" />
                           </div>
-                          <h3 className="text-xl font-bold text-white">Target Market</h3>
+                          <h3 className="text-xl font-bold text-slate-900">Target Market</h3>
                         </div>
-                        <p className="text-neutral-300 leading-relaxed">{project.targetMarket}</p>
+                        <p className="text-slate-600 leading-relaxed">{project.targetMarket}</p>
                       </div>
 
-                      <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8">
+                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-fuchsia-100 shadow-xs">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-purple-500/20 rounded-lg">
-                            <Zap className="w-6 h-6 text-purple-400" />
+                          <div className="p-2 bg-fuchsia-50 rounded-lg border border-fuchsia-200">
+                            <Zap className="w-6 h-6 text-fuchsia-600" />
                           </div>
-                          <h3 className="text-xl font-bold text-white">Unique Value</h3>
+                          <h3 className="text-xl font-bold text-slate-900">Unique Value</h3>
                         </div>
-                        <p className="text-neutral-300 leading-relaxed">{project.uniqueValue}</p>
+                        <p className="text-slate-600 leading-relaxed">{project.uniqueValue}</p>
                       </div>
                     </div>
 
                     {/* Technologies */}
-                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8">
-                      <h3 className="text-xl font-bold text-white mb-6">Technologies & Tools</h3>
+                    <div className="glass-panel rounded-2xl p-8 bg-white/85 shadow-xs">
+                      <h3 className="text-xl font-bold text-slate-900 mb-6">Technologies & Tools</h3>
                       <div className="flex flex-wrap gap-3">
                         {project.technologies.map((tech) => (
                           <span 
                             key={tech} 
-                            className="px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-200 font-medium text-sm hover:border-indigo-500 hover:bg-indigo-500/10 transition-all cursor-default"
+                            className="px-4 py-2 bg-white/90 border border-slate-200/80 rounded-lg text-slate-700 font-medium text-sm hover:border-cyan-300 hover:bg-cyan-50/50 transition-all cursor-default shadow-xs"
                           >
                             {tech}
                           </span>
@@ -631,15 +548,15 @@ const ProjectDetailModal = ({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 hover:border-neutral-600 transition-all"
+                        className="glass-panel rounded-2xl p-8 bg-white/85 hover:border-cyan-300/60 hover:shadow-md transition-all"
                       >
                         <div className="flex items-center gap-4 mb-4">
-                          <div className="p-3 bg-indigo-500/20 rounded-xl">
-                            <feature.icon className="w-6 h-6 text-indigo-400" />
+                          <div className="p-3 bg-cyan-50 rounded-xl border border-cyan-200">
+                            <feature.icon className="w-6 h-6 text-cyan-600" />
                           </div>
-                          <h3 className="text-xl font-bold text-white">{feature.title}</h3>
+                          <h3 className="text-xl font-bold text-slate-900">{feature.title}</h3>
                         </div>
-                        <p className="text-neutral-300 leading-relaxed">{feature.description}</p>
+                        <p className="text-slate-600 leading-relaxed">{feature.description}</p>
                       </motion.div>
                     ))}
                   </motion.div>
@@ -659,7 +576,7 @@ const ProjectDetailModal = ({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05, duration: 0.3 }}
-                        className="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-neutral-900 border border-neutral-700/50 hover:border-neutral-500 transition-all shadow-2xl group"
+                        className="glass-card relative w-full aspect-[9/16] rounded-xl overflow-hidden hover:border-cyan-300/60 hover:shadow-md transition-all shadow-xs group bg-slate-50/50"
                       >
                         <Image 
                           src={image} 
@@ -679,7 +596,7 @@ const ProjectDetailModal = ({
               <div className="mt-12 text-center">
                 <button 
                   onClick={onClose}
-                  className="inline-flex items-center gap-2 text-neutral-500 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors font-medium"
                 >
                   <span>Close project details</span>
                   <ChevronRight className="w-4 h-4" />
@@ -697,18 +614,30 @@ const ProjectDetailModal = ({
 
 export default function Portfolio() {
   const [mounted, setMounted] = useState(false);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [currentGalleryImages, setCurrentGalleryImages] = useState<string[]>([]);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const updateAuroraPosition = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
 
-  const openGallery = (images: string[]) => {
-    setCurrentGalleryImages(images);
-    setIsGalleryOpen(true);
-  };
+      document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
+      document.documentElement.style.setProperty("--scroll-y", `${window.scrollY}px`);
+    };
+
+    updateAuroraPosition();
+    window.addEventListener("scroll", updateAuroraPosition, { passive: true });
+
+    setTimeout(() => {
+      setMounted(true);
+    }, 0);
+
+    return () => {
+      window.removeEventListener("scroll", updateAuroraPosition);
+    };
+  }, []);
 
   const openProjectDetail = (projectId: string) => {
     const project = projectsData.find(p => p.id === projectId);
@@ -721,59 +650,54 @@ export default function Portfolio() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-200 font-sans selection:bg-indigo-500/30">
+    <div className="relative isolate min-h-screen overflow-hidden bg-[#f8fafc] text-slate-900 font-sans selection:bg-cyan-500/20">
+      <div className="aurora-stage" />
+      <div className="aurora-ribbon" />
+      <div className="noise-overlay" />
       
       <ContactModal 
+        key={isContactModalOpen ? 'contact-open' : 'contact-closed'}
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />
-      
-      <ImageGalleryModal 
-        isOpen={isGalleryOpen} 
-        onClose={() => setIsGalleryOpen(false)} 
-        images={currentGalleryImages} 
-      />
-
+  
       <ProjectDetailModal
+        key={selectedProject?.id ? `project-${selectedProject.id}` : 'project-closed'}
         isOpen={isProjectDetailOpen}
         onClose={() => setIsProjectDetailOpen(false)}
         project={selectedProject}
       />
-
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-[85vh] flex flex-col justify-center">
-        <div className="absolute top-0 right-0 -z-10 opacity-20 overflow-hidden pointer-events-none">
-          <div className="w-[600px] h-[600px] bg-indigo-600 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-        </div>
-        
+  
+      {/* Hero Section - Yellow, Orange & Green Aurora Theme */}
+      <section className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-[85vh] flex flex-col justify-center">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs text-indigo-400 font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-slate-200/90 text-xs text-slate-900 font-semibold mb-6 backdrop-blur-md shadow-xs shadow-slate-200/50">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             Open to Work & Collaboration
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight text-white mb-8 leading-[1.1]">
+          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight text-slate-950 mb-8 leading-[1.1]">
             Building the <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300">
+            <span className="aurora-text">
               tech of tomorrow.
             </span>
           </h1>
           
-          <p className="text-xl text-neutral-400 max-w-2xl leading-relaxed mb-12">
-            Hi, I'm a Computer Science student dedicated to building next-generation technologies. 
-            My focus lies in <span className="text-white font-medium">UI/UX</span>—crafting interfaces that are as intuitive as they are powerful.
+          <p className="text-xl text-slate-700 font-medium max-w-2xl leading-relaxed mb-12">
+            Hi, I&apos;m a Computer Science student dedicated to building next-generation technologies. 
+            My focus lies in <span className="text-slate-950 font-bold">UI/UX</span>—crafting interfaces that are as intuitive as they are powerful.
           </p>
-
+  
           <div className="flex flex-wrap gap-4">
-            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-medium hover:bg-neutral-200 transition-all">
+            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-slate-950 text-white rounded-full font-bold hover:bg-emerald-600 transition-all hover:shadow-lg hover:shadow-emerald-500/20 shadow-md">
               View Selected Work
               <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
             </a>
-            <a href="https://github.com" target="_blank" className="flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white border border-neutral-800 rounded-full font-medium hover:bg-neutral-800 transition-all">
-              <Github className="w-4 h-4" />
+            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/90 text-slate-900 border border-slate-300 rounded-full font-semibold hover:bg-white hover:border-emerald-300 hover:shadow-xs transition-all backdrop-blur-md">
+              <Github className="w-4 h-4 text-slate-800" />
               GitHub
             </a>
           </div>
@@ -781,27 +705,27 @@ export default function Portfolio() {
       </section>
 
       {/* Tech Stack */}
-      <div className="w-full overflow-hidden bg-neutral-900/30 border-y border-neutral-800 py-10">
+      <div className="relative z-10 mx-6 overflow-hidden glass-panel rounded-3xl py-10 bg-white/70 border-white/90">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-neutral-500 text-sm font-medium mb-6 uppercase tracking-wider">Core Technologies</p>
-          <div className="flex gap-12 flex-wrap text-neutral-400 font-semibold text-xl">
-             <span className="hover:text-white transition-colors cursor-default">Python</span>
-             <span className="hover:text-white transition-colors cursor-default">Java</span>
-             <span className="hover:text-white transition-colors cursor-default">JavaScript</span>
-             <span className="hover:text-white transition-colors cursor-default">HTML5 & CSS3</span>
-             <span className="hover:text-white transition-colors cursor-default">React / Next.js</span>
-             <span className="hover:text-white transition-colors cursor-default">C++</span>
-             <span className="hover:text-white transition-colors cursor-default">Git</span>
-             <span className="hover:text-white transition-colors cursor-default">SQL</span>
+          <p className="text-slate-500 text-sm font-semibold mb-6 uppercase tracking-wider">Core Technologies</p>
+          <div className="flex gap-4 md:gap-6 flex-wrap text-slate-700 font-semibold text-lg md:text-xl">
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">Python</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">Java</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">JavaScript</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">HTML5 & CSS3</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">React / Next.js</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">C++</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/50 transition-colors shadow-xs cursor-default">Git</span>
+             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-amber-700 hover:border-amber-300 hover:bg-amber-50/50 transition-colors shadow-xs cursor-default">SQL</span>
           </div>
         </div>
       </div>
 
       {/* Selected Work */}
-      <Section id="work">
+      <Section id="work" className="section-glow">
         <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">Selected Work</h2>
-          <p className="text-neutral-400">Some of my featured projects and contributions that I've worked on.</p>
+          <h2 className="text-4xl font-bold text-slate-900 mb-4">Selected Work</h2>
+          <p className="text-slate-600">Some of my featured projects and contributions that I&apos;ve worked on.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -849,12 +773,12 @@ export default function Portfolio() {
       </Section>
 
       {/* About Section */}
-      <Section className="grid grid-cols-1 md:grid-cols-2 gap-16" id="about">
+      <Section className="grid grid-cols-1 md:grid-cols-2 gap-16 section-glow" id="about">
         <div>
-          <h2 className="text-4xl font-bold text-white mb-6">About Me</h2>
-          <p className="text-neutral-400 text-lg leading-relaxed mb-8">
+          <h2 className="text-4xl font-bold text-slate-900 mb-6">About Me</h2>
+          <p className="text-slate-600 text-lg leading-relaxed mb-8">
             As a Computer Science student, I combine technical discipline with a passion for 
-            <span className="text-white font-medium"> creative design</span>, ensuring every line of code serves a purpose.
+            <span className="text-slate-900 font-semibold"> creative design</span>, ensuring every line of code serves a purpose.
           </p>
           <div className="grid grid-cols-2 gap-4">
             {[
@@ -863,30 +787,29 @@ export default function Portfolio() {
               { icon: Globe, label: "Web Tech" },
               { icon: Cpu, label: "CS Fundamentals" },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3 p-4 rounded-lg bg-neutral-900 border border-neutral-800">
-                <item.icon className="w-5 h-5 text-indigo-400" />
-                <span className="font-medium text-neutral-300">{item.label}</span>
+              <div key={i} className="glass-panel flex items-center gap-3 p-4 rounded-lg shadow-xs bg-white/80 border-slate-200/70">
+                <item.icon className="w-5 h-5 text-cyan-600" />
+                <span className="font-semibold text-slate-800">{item.label}</span>
               </div>
             ))}
           </div>
         </div>
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur-3xl opacity-20" />
-          <div className="relative h-full bg-neutral-900/80 backdrop-blur-sm border border-neutral-800 rounded-2xl p-8">
-            <h3 className="text-xl font-bold text-white mb-6">Academic Focus</h3>
+          <div className="relative h-full glass-panel rounded-2xl p-8 shadow-xs bg-white/80 border-slate-200/70">
+            <h3 className="text-xl font-bold text-slate-900 mb-6">Academic Focus</h3>
             <ul className="space-y-4">
               <li className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-neutral-800 flex items-center justify-center shrink-0 font-bold">1</div>
+                <div className="w-12 h-12 rounded-full bg-cyan-100/80 border border-cyan-200 flex items-center justify-center shrink-0 font-bold text-cyan-800">1</div>
                 <div>
-                  <h4 className="font-bold text-neutral-200">User Interface (UI)</h4>
-                  <p className="text-sm text-neutral-400">Designing modern and accessible layouts.</p>
+                  <h4 className="font-bold text-slate-900">User Interface (UI)</h4>
+                  <p className="text-sm text-slate-600">Designing modern and accessible layouts.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-neutral-800 flex items-center justify-center shrink-0 font-bold">2</div>
+                <div className="w-12 h-12 rounded-full bg-fuchsia-100/80 border border-fuchsia-200 flex items-center justify-center shrink-0 font-bold text-fuchsia-800">2</div>
                 <div>
-                  <h4 className="font-bold text-neutral-200">User Experience (UX)</h4>
-                  <p className="text-sm text-neutral-400">Optimizing user journeys and interaction.</p>
+                  <h4 className="font-bold text-slate-900">User Experience (UX)</h4>
+                  <p className="text-sm text-slate-600">Optimizing user journeys and interaction.</p>
                 </div>
               </li>
             </ul>
@@ -895,19 +818,18 @@ export default function Portfolio() {
       </Section>
 
       {/* Contact Section */}
-      <section className="py-32 border-t border-neutral-800">
+      <section className="relative z-10 py-32 border-t border-slate-200/80">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-8">
-            Let's build something <br />
+          <h2 className="text-5xl md:text-7xl font-bold text-slate-900 mb-8">
+            Let&apos;s build something <br />
             <span className="relative inline-block">
-              <span className="text-white relative z-10">extraordinary.</span>
-              <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-60 animate-pulse"></span>
-              <span className="absolute inset-0 blur-3xl bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 opacity-40"></span>
+              <span className="aurora-text relative z-10">extraordinary.</span>
+              <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-pink-400 opacity-25 animate-pulse"></span>
             </span>
           </h2>
           <button 
             onClick={() => setIsContactModalOpen(true)}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold text-lg hover:scale-105 transition-transform"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-cyan-700 transition-all hover:shadow-lg hover:shadow-cyan-500/20 shadow-md"
           >
             <Mail className="w-5 h-5" />
             Get in Touch
@@ -916,8 +838,8 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 bg-neutral-950 border-t border-neutral-900 text-center text-neutral-500 text-sm">
-        <p>© 2026 Portfolio. Built with lots of love.</p>
+      <footer className="relative z-10 py-8 bg-slate-100/60 border-t border-slate-200/80 text-center text-slate-500 text-sm backdrop-blur-md">
+        <p>© 2026 Karlo Roel Montenegro. All rights reserved.</p>
       </footer>
 
     </div>

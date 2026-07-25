@@ -1,5 +1,6 @@
 {
-  "name": "my-portfolio",
+  "name": "karlo-roel-portfolio",
+  "description": "Professional portfolio website for Karlo Roel Montenegro.",
   "version": "0.1.0",
   "private": true,
   "scripts": {

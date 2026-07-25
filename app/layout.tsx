@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.css"; // Yellow Orange Green Aurora Theme
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "My Portfolio - Karlo Montenegro",
-  description: "Portfolio showcasing my work in UI/UX design, IoT, AI, and web development projects.",
+  title: "Karlo Roel Montenegro | Portfolio",
+  description: "Professional portfolio showcasing selected work in UI/UX, IoT, AI, and web development.",
 };
 
 export default function RootLayout({
