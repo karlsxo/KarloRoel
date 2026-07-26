@@ -669,9 +669,9 @@ export default function Portfolio() {
       />
   
       {/* Hero Section - Aurora Borealis Theme */}
-      <section className="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-[85vh] flex flex-col justify-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-cyan-100/90 text-xs text-slate-900 font-semibold mb-6 backdrop-blur-md shadow-xs shadow-cyan-200/40">
+      <section className="hero-aurora relative z-10 mt-24 mb-20 px-6 py-20 md:px-14 md:py-24 max-w-7xl mx-6 xl:mx-auto min-h-[78vh] flex flex-col justify-center overflow-hidden">
+        <motion.div className="relative z-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/78 border border-white/90 text-xs text-slate-900 font-semibold mb-6 backdrop-blur-md shadow-xs shadow-cyan-200/40">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-500 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
@@ -692,11 +692,11 @@ export default function Portfolio() {
           </p>
   
           <div className="flex flex-wrap gap-4">
-            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-slate-950 text-white rounded-full font-bold hover:bg-cyan-700 transition-all hover:shadow-lg hover:shadow-cyan-500/20 shadow-md">
+            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-slate-950 text-white rounded-full font-bold hover:bg-blue-700 transition-all hover:shadow-lg hover:shadow-blue-500/20 shadow-md">
               View Selected Work
               <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
             </a>
-            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/90 text-slate-900 border border-slate-300 rounded-full font-semibold hover:bg-white hover:border-violet-300 hover:shadow-xs transition-all backdrop-blur-md">
+            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/78 text-slate-900 border border-white/90 rounded-full font-semibold hover:bg-white hover:border-violet-300 hover:shadow-xs transition-all backdrop-blur-md">
               <Github className="w-4 h-4 text-slate-800" />
               GitHub
             </a>
