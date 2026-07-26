@@ -669,7 +669,7 @@ export default function Portfolio() {
       />
   
       {/* Hero Section - Aurora Borealis Theme */}
-      <section className="hero-aurora relative z-10 mt-24 mb-20 px-6 py-20 md:px-14 md:py-24 max-w-7xl mx-6 xl:mx-auto min-h-[78vh] flex flex-col justify-center overflow-hidden">
+      <section className="hero-aurora relative z-10 mt-20 mb-16 px-6 py-20 md:px-14 md:py-24 max-w-7xl mx-4 xl:mx-auto min-h-[78vh] flex flex-col justify-center overflow-hidden">
         <motion.div className="relative z-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/78 border border-white/90 text-xs text-slate-900 font-semibold mb-6 backdrop-blur-md shadow-xs shadow-cyan-200/40">
             <span className="relative flex h-2 w-2">
@@ -705,7 +705,7 @@ export default function Portfolio() {
       </section>
 
       {/* Tech Stack */}
-      <div className="relative z-10 mx-6 overflow-hidden glass-panel rounded-3xl py-10 bg-white/70 border-white/90">
+      <div className="relative z-10 mx-4 md:mx-6 overflow-hidden glass-panel rounded-[2rem] py-9 md:py-10 bg-white/70 border-white/90">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-slate-500 text-sm font-semibold mb-6 uppercase tracking-wider">Core Technologies</p>
           <div className="flex gap-4 md:gap-6 flex-wrap text-slate-700 font-semibold text-lg md:text-xl">
@@ -739,7 +739,13 @@ export default function Portfolio() {
             onClick={() => openProjectDetail('dalani')}
           >
             <div className="relative w-full h-full scale-90 group-hover:scale-100 transition-transform duration-500">
-              <Image src="/dalani-logo.png" alt="DalAni" fill className="object-contain" />
+              <Image
+                src="/dalani-logo.png"
+                alt="DalAni"
+                fill
+                className="object-contain p-8 md:p-12"
+                sizes="(max-width: 768px) 56vw, (max-width: 1024px) 30vw, 22vw"
+              />
             </div>
           </ProjectCard>
 
@@ -752,7 +758,13 @@ export default function Portfolio() {
             onClick={() => openProjectDetail('artery')}
           >
             <div className="relative w-full h-full scale-90 group-hover:scale-100 transition-transform duration-500">
-              <Image src="/Artery logo.png" alt="Artery" fill className="object-contain" />
+              <Image
+                src="/Artery logo.png"
+                alt="Artery"
+                fill
+                className="object-contain p-8 md:p-12"
+                sizes="(max-width: 768px) 56vw, (max-width: 1024px) 30vw, 22vw"
+              />
             </div>
           </ProjectCard>
 
@@ -765,7 +777,13 @@ export default function Portfolio() {
             href="https://reality13-metropolis.vercel.app"
           >
             <div className="relative w-full h-full scale-90 group-hover:scale-100 transition-transform duration-500">
-              <Image src="/reality13.png" alt="Metropolis" fill className="object-contain" />
+              <Image
+                src="/reality13.png"
+                alt="Metropolis"
+                fill
+                className="object-contain p-8 md:p-12"
+                sizes="(max-width: 768px) 56vw, (max-width: 1024px) 30vw, 22vw"
+              />
             </div>
           </ProjectCard>
 
