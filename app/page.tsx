@@ -60,7 +60,7 @@ const dalaniProject: ProjectData = {
   tags: ["IoT", "AI", "Agri-Tech", "Last-Mile Logistics"],
   technologies: ["ESP32", "Flutter", "Python", "TensorFlow", "GPS Module", "DHT11 Sensor", "GPRS Module", "Firebase", "Google Maps API"],
   images: [
-    "/dalani-logo.png",
+    "/assets/selected-works/dalani-final-logo.png",
     "/dalani-2.png",
     "/dalani-3.png",
     "/dalani-4.png",
@@ -106,7 +106,7 @@ const arteryProject: ProjectData = {
   tags: ["AI", "Blockchain", "Health-Tech", "Supply Chain"],
   technologies: ["React", "Node.js", "Blockchain", "TensorFlow", "PostgreSQL", "AWS", "Docker"],
   images: [
-    "/Artery logo.png",
+    "/assets/selected-works/artery-final-logo.png",
     "/Artery 1.png", 
     "/Artery 2.png",
     "/Arter 3.png",
@@ -738,13 +738,13 @@ export default function Portfolio() {
             tags={["IoT", "AI", "Agri-Tech"]}
             onClick={() => openProjectDetail('dalani')}
           >
-            <div className="relative w-full h-full scale-90 group-hover:scale-100 transition-transform duration-500">
+            <div className="relative w-full h-full scale-100 group-hover:scale-[1.03] transition-transform duration-500">
               <Image
-                src="/dalani-logo.png"
+                src="/assets/selected-works/dalani-final-logo.png"
                 alt="DalAni"
                 fill
-                className="object-contain p-8 md:p-12"
-                sizes="(max-width: 768px) 56vw, (max-width: 1024px) 30vw, 22vw"
+                className="object-contain p-3 md:p-4"
+                sizes="(max-width: 768px) 78vw, (max-width: 1024px) 42vw, 30vw"
               />
             </div>
           </ProjectCard>
@@ -757,13 +757,13 @@ export default function Portfolio() {
             tags={["AI", "Blockchain", "Health-Tech"]}
             onClick={() => openProjectDetail('artery')}
           >
-            <div className="relative w-full h-full scale-90 group-hover:scale-100 transition-transform duration-500">
+            <div className="relative w-full h-full scale-100 group-hover:scale-[1.03] transition-transform duration-500">
               <Image
-                src="/Artery logo.png"
+                src="/assets/selected-works/artery-final-logo.png"
                 alt="Artery"
                 fill
-                className="object-contain p-8 md:p-12"
-                sizes="(max-width: 768px) 56vw, (max-width: 1024px) 30vw, 22vw"
+                className="object-contain p-3 md:p-4"
+                sizes="(max-width: 768px) 78vw, (max-width: 1024px) 42vw, 30vw"
               />
             </div>
           </ProjectCard>
