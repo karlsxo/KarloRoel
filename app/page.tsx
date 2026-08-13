@@ -418,8 +418,8 @@ const ProjectDetailModal = ({
                     </span>
                   ))}
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 drop-shadow-[0_8px_24px_rgba(0,0,0,0.34)]">{project.title}</h1>
-                <p className="text-xl text-cyan-100 font-semibold mb-4 drop-shadow-[0_6px_18px_rgba(0,0,0,0.3)]">{project.subtitle}</p>
+                <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-2 drop-shadow-[0_8px_24px_rgba(96,165,250,0.12)]">{project.title}</h1>
+                <p className="text-xl text-sky-700 font-semibold mb-4">{project.subtitle}</p>
                 
                 {/* Achievements */}
                 {project.achievements && project.achievements.length > 0 && (
@@ -446,7 +446,7 @@ const ProjectDetailModal = ({
                     onClick={() => setActiveTab(tab.id as typeof activeTab)}
                     className={`px-6 py-3 rounded-lg font-medium transition-all ${
                       activeTab === tab.id
-                        ? 'bg-slate-900 text-white shadow-md'
+                        ? 'bg-sky-600 text-white shadow-md'
                         : 'bg-white/70 text-slate-600 hover:bg-white hover:text-slate-900 border border-slate-200/70'
                     }`}
                   >
@@ -596,7 +596,7 @@ const ProjectDetailModal = ({
               <div className="mt-12 text-center">
                 <button 
                   onClick={onClose}
-                  className="inline-flex items-center gap-2 text-white/68 hover:text-white transition-colors font-medium"
+                  className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors font-medium"
                 >
                   <span>Close project details</span>
                   <ChevronRight className="w-4 h-4" />
@@ -650,7 +650,7 @@ export default function Portfolio() {
   if (!mounted) return null;
 
   return (
-    <div className="portfolio-shell relative isolate min-h-screen overflow-hidden bg-transparent text-white font-sans selection:bg-cyan-300/25">
+    <div className="portfolio-shell relative isolate min-h-screen overflow-hidden bg-transparent text-slate-900 font-sans selection:bg-sky-200/80">
       <div className="aurora-stage" />
       <div className="aurora-ribbon" />
       <div className="noise-overlay" />
@@ -671,33 +671,33 @@ export default function Portfolio() {
       {/* Hero Section - Aurora Borealis Theme */}
       <section className="hero-aurora relative z-10 px-6 py-28 md:px-14 md:py-32 min-h-screen flex flex-col justify-center overflow-hidden">
         <motion.div className="relative z-10 mx-auto max-w-5xl text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/25 text-xs text-white font-semibold mb-7 backdrop-blur-md shadow-sm shadow-cyan-950/30">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-sky-200/80 text-xs text-slate-700 font-semibold mb-7 backdrop-blur-md shadow-sm shadow-sky-200/60">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
             </span>
             Open to Work & Collaboration
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-8 leading-[1.06] drop-shadow-[0_10px_28px_rgba(0,0,0,0.36)]">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.06] drop-shadow-[0_10px_24px_rgba(96,165,250,0.18)]">
             Building the <br />
             <span className="aurora-text">
               tech of tomorrow.
             </span>
           </h1>
           
-          <p className="mx-auto text-lg md:text-xl text-white/82 font-medium max-w-2xl leading-relaxed mb-12 drop-shadow-[0_6px_18px_rgba(0,0,0,0.34)]">
+          <p className="mx-auto text-lg md:text-xl text-slate-700 font-medium max-w-2xl leading-relaxed mb-12 drop-shadow-[0_6px_14px_rgba(148,163,184,0.18)]">
             Hi, I&apos;m a Computer Science student dedicated to building next-generation technologies. 
-            My focus lies in <span className="text-white font-bold">UI/UX</span>—crafting interfaces that are as intuitive as they are powerful.
+            My focus lies in <span className="text-slate-900 font-bold">UI/UX</span>—crafting interfaces that are as intuitive as they are powerful.
           </p>
   
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-white text-slate-950 rounded-full font-bold hover:bg-cyan-50 transition-all hover:shadow-lg hover:shadow-cyan-400/25 shadow-md">
+            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-white text-slate-950 rounded-full font-bold hover:bg-sky-50 transition-all hover:shadow-lg hover:shadow-sky-300/40 shadow-md border border-sky-100">
               View Selected Work
               <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
             </a>
-            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/10 text-white border border-white/25 rounded-full font-semibold hover:bg-white/18 hover:border-cyan-200/70 hover:shadow-xs transition-all backdrop-blur-md">
-              <Github className="w-4 h-4 text-white" />
+            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/80 text-slate-800 border border-sky-200/80 rounded-full font-semibold hover:bg-white hover:border-sky-300 hover:shadow-xs transition-all backdrop-blur-md">
+              <Github className="w-4 h-4 text-slate-800" />
               GitHub
             </a>
           </div>
@@ -724,8 +724,8 @@ export default function Portfolio() {
       {/* Selected Work */}
       <Section id="work" className="section-glow">
         <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-[0_8px_22px_rgba(0,0,0,0.28)]">Selected Work</h2>
-          <p className="text-white/76">Some of my featured projects and contributions that I&apos;ve worked on.</p>
+          <h2 className="text-4xl font-bold text-slate-900 mb-4 drop-shadow-[0_8px_22px_rgba(96,165,250,0.12)]">Selected Work</h2>
+          <p className="text-slate-600">Some of my featured projects and contributions that I&apos;ve worked on.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -793,10 +793,10 @@ export default function Portfolio() {
       {/* About Section */}
       <Section className="grid grid-cols-1 md:grid-cols-2 gap-16 section-glow" id="about">
         <div>
-          <h2 className="text-4xl font-bold text-white mb-6 drop-shadow-[0_8px_22px_rgba(0,0,0,0.28)]">About Me</h2>
-          <p className="text-white/76 text-lg leading-relaxed mb-8">
+          <h2 className="text-4xl font-bold text-slate-900 mb-6 drop-shadow-[0_8px_22px_rgba(96,165,250,0.12)]">About Me</h2>
+          <p className="text-slate-600 text-lg leading-relaxed mb-8">
             As a Computer Science student, I combine technical discipline with a passion for 
-            <span className="text-white font-semibold"> creative design</span>, ensuring every line of code serves a purpose.
+            <span className="text-slate-900 font-semibold"> creative design</span>, ensuring every line of code serves a purpose.
           </p>
           <div className="grid grid-cols-2 gap-4">
             {[
@@ -836,9 +836,9 @@ export default function Portfolio() {
       </Section>
 
       {/* Contact Section */}
-      <section className="relative z-10 py-32 border-t border-white/10">
+      <section className="relative z-10 py-32 border-t border-sky-100/80">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 drop-shadow-[0_12px_34px_rgba(0,0,0,0.34)]">
+          <h2 className="text-5xl md:text-7xl font-bold text-slate-900 mb-8 drop-shadow-[0_12px_34px_rgba(96,165,250,0.12)]">
             Let&apos;s build something <br />
             <span className="relative inline-block">
               <span className="aurora-text relative z-10">extraordinary.</span>
@@ -847,7 +847,7 @@ export default function Portfolio() {
           </h2>
           <button 
             onClick={() => setIsContactModalOpen(true)}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-950 rounded-full font-bold text-lg hover:scale-105 hover:bg-cyan-50 transition-all hover:shadow-lg hover:shadow-cyan-400/25 shadow-md"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-950 rounded-full font-bold text-lg hover:scale-105 hover:bg-cyan-50 transition-all hover:shadow-lg hover:shadow-sky-300/30 shadow-md border border-sky-100"
           >
             <Mail className="w-5 h-5" />
             Get in Touch
@@ -856,7 +856,7 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-8 bg-slate-950/35 border-t border-white/10 text-center text-white/62 text-sm backdrop-blur-md">
+      <footer className="relative z-10 py-8 bg-white/70 border-t border-sky-100 text-center text-slate-600 text-sm backdrop-blur-md">
         <p>© 2026 Karlo Roel Montenegro. All rights reserved.</p>
       </footer>
 
