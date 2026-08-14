@@ -221,7 +221,7 @@ const metropolisProject: ProjectData = {
   externalUrl: "https://reality13-metropolis.vercel.app"
 };
 
-const projectsData: ProjectData[] = [dalaniProject, arteryProject, tribleProject, metropolisProject];
+const projectsData: ProjectData[] = [dalaniProject, tribleProject, arteryProject, metropolisProject];
 
 // --- Spotlight Mouse Tracking Card Component ---
 const SpotlightCard = ({ 
