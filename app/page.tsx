@@ -152,6 +152,44 @@ const arteryProject: ProjectData = {
   ]
 };
 
+const tribleProject: ProjectData = {
+  id: "trible",
+  title: "Trible",
+  subtitle: "Community & Collaborative Creative Platform",
+  category: "web-ui",
+  shortDescription: "A modern platform empowering creative communities with seamless asset discovery, collaborative hubs, and interactive workspace UI.",
+  fullDescription: "Trible is a personal project designed to bridge the gap between creative team collaboration and digital community hubs. Featuring intelligent asset tagging, instant group hubs, and an elegant glassmorphic interface, Trible streamlines workflow ideation for design teams and digital creators.",
+  problemStatement: "Modern creative teams and online communities struggle with fragmented tools, unorganized file sharing, and noisy communication channels that slow down creative execution.",
+  solution: "Trible unifies group interactions and asset management into a centralized, aesthetic workspace with real-time collaboration tools and smart discovery tags.",
+  targetMarket: "Creative professionals, digital art communities, design studios, and collaborative student groups.",
+  uniqueValue: "Combines human-centered UI/UX with lightning-fast asset indexing and custom community hub spaces.",
+  tags: ["UI/UX Platform", "Community Hub", "Collaboration", "Web Tech"],
+  technologies: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Node.js", "Firebase"],
+  images: [
+    "/assets/selected-works/trible-final-logo.png"
+  ],
+  features: [
+    {
+      title: "Collaborative Workspace Hubs",
+      description: "Customizable digital hubs for creative teams to brainstorm, share assets, and manage project workflows in real time.",
+      icon: Users
+    },
+    {
+      title: "Smart Asset Indexing",
+      description: "Automated tagging and category filters to organize design files, media assets, and project documentation effortlessly.",
+      icon: Layers
+    },
+    {
+      title: "Interactive Community Feed",
+      description: "Engaging activity feeds and feedback threads designed to keep group members connected and inspired.",
+      icon: Activity
+    }
+  ],
+  achievements: [
+    "🚀 Personal Project — Next-Gen Collaborative Community Ecosystem"
+  ]
+};
+
 const metropolisProject: ProjectData = {
   id: "metropolis",
   title: "Metropolis",
@@ -183,7 +221,7 @@ const metropolisProject: ProjectData = {
   externalUrl: "https://reality13-metropolis.vercel.app"
 };
 
-const projectsData: ProjectData[] = [dalaniProject, arteryProject, metropolisProject];
+const projectsData: ProjectData[] = [dalaniProject, arteryProject, tribleProject, metropolisProject];
 
 // --- Spotlight Mouse Tracking Card Component ---
 const SpotlightCard = ({ 
