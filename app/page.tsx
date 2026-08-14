@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, 
@@ -17,11 +17,20 @@ import {
   Target,
   Users,
   Lightbulb,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
+  Copy,
+  Check,
+  Layers,
+  Terminal,
+  ShieldCheck,
+  Activity,
+  ArrowUp,
+  Maximize2
 } from "lucide-react";
 import Image from "next/image";
 
-// --- Project Data Types ---
+// --- Types ---
 interface ProjectFeature {
   title: string;
   description: string;
@@ -32,6 +41,7 @@ interface ProjectData {
   id: string;
   title: string;
   subtitle: string;
+  category: "ai-iot" | "health-tech" | "web-ui";
   shortDescription: string;
   fullDescription: string;
   problemStatement: string;
@@ -43,22 +53,23 @@ interface ProjectData {
   images: string[];
   features: ProjectFeature[];
   achievements?: string[];
-  links?: { label: string; url: string }[];
+  externalUrl?: string;
 }
 
 // --- Project Data ---
 const dalaniProject: ProjectData = {
   id: "dalani",
   title: "DalAni",
-  subtitle: "IoT & AI Cold Chain Solution",
-  shortDescription: "Solving the 40% post-harvest loss in Philippine agriculture through ESP32-based IoT modules and AI-backed quality verification.",
-  fullDescription: "Project DalAni is a last-mile logistics solution for farmer cooperatives that technically integrates a low-cost IoT device with an AI-powered platform. The system's hardware, a compact module built around an ESP32 microcontroller, collects specific, real-time data from a GPS sensor (longitude and latitude) and a DHT11 sensor (ambient temperature and relative humidity). This data is transmitted via a simple GPRS cellular module to our cloud-based AI platform.",
-  problemStatement: "The core problem we are solving is the massive and largely unaddressed issue of post-harvest loss. In the Philippines, this loss is not an abstract number; it is a tangible economic and social crisis. For our focus market of mango farmers, over 33% of their hard-earned produce is lost to spoilage. This is caused by inefficient transport in non-refrigerated, overpacked vehicles and a complete lack of real-time monitoring. This spoilage directly translates to lost income for farmers, contributes to national food insecurity, and exacerbates the carbon footprint of the agricultural sector.",
-  solution: "A critical factor in this loss is temperature. For every 10°C increase in temperature, the rate of deterioration for most perishable fruits and vegetables can double or even triple. Our solution directly targets this relationship by making temperature management a central part of the logistics process through real-time monitoring and proactive intervention.",
-  targetMarket: "Our ideal customer is the farmer cooperative. These organizations act as a collective body for small-scale farmers with the administrative and financial structure to invest in a solution that benefits all their members. We estimate there are over 9,000 such cooperatives nationwide, representing a large and receptive market.",
-  uniqueValue: "Project DalAni stands apart from traditional logistics trackers and farm management apps because it is a proactive intervention system, not just a passive monitoring tool. While other systems may show you where a truck is, our AI platform predicts spoilage risk and recommends faster routes to avoid it. Moreover, our solution introduces a physical response: a mini cooling system that activates automatically when temperatures exceed a critical threshold.",
-  tags: ["IoT", "AI", "Agri-Tech", "Last-Mile Logistics"],
-  technologies: ["ESP32", "Flutter", "Python", "TensorFlow", "GPS Module", "DHT11 Sensor", "GPRS Module", "Firebase", "Google Maps API"],
+  subtitle: "IoT & AI Cold Chain Logistics Solution",
+  category: "ai-iot",
+  shortDescription: "Solving the 40% post-harvest loss in Philippine agriculture through ESP32-based IoT hardware and AI quality verification.",
+  fullDescription: "Project DalAni is an end-to-end last-mile logistics solution designed for Philippine agricultural cooperatives. By integrating low-cost ESP32 IoT hardware with an AI-driven cloud platform, DalAni tracks ambient temperature, humidity, and location in real-time to trigger automated cooling mechanisms and reroute vehicles before perishable produce deteriorates.",
+  problemStatement: "Over 33% to 40% of harvested produce in the Philippines spoils during transport due to non-refrigerated vehicles, lack of ambient tracking, and severe traffic delays. For every 10°C rise in temperature, fruit deterioration doubles, wiping out farmer earnings and straining food security.",
+  solution: "DalAni monitors micro-climate data using ESP32, DHT11 sensors, and GPS/GPRS modules. Our AI model continuously calculates a dynamic 'Spoilage Risk' score. When temperatures exceed 75% threshold, the system alerts drivers and activates an automated mini-cooling mechanism while recalculating optimal routes.",
+  targetMarket: "9,000+ farmer cooperatives nationwide in the Philippines, acting as administrative hubs for smallholder mango and high-value crop growers.",
+  uniqueValue: "Proactive intervention over passive tracking: DalAni automatically responds to climate spikes and generates a verifiable, data-backed 'Quality Score' for buyers to prove produce freshness.",
+  tags: ["IoT Hardware", "AI Analytics", "Agri-Tech", "Cold-Chain"],
+  technologies: ["ESP32 Microcontroller", "Python", "TensorFlow", "Flutter", "GPS/GPRS Module", "DHT11 Sensor", "Firebase", "Google Maps API"],
   images: [
     "/assets/selected-works/dalani-final-logo.png",
     "/dalani-2.png",
@@ -69,42 +80,43 @@ const dalaniProject: ProjectData = {
   features: [
     {
       title: "Dynamic Route Optimization",
-      description: "The AI algorithm analyzes incoming data along with external feeds on traffic, road closures, and localized weather forecasts. It calculates the most efficient route for multi-stop pickups based on shortest possible route to save time and fuel, and identifying routes with the lowest average ambient temperature to minimize spoilage exposure.",
+      description: "AI calculates fastest pickup routes considering ambient temperature exposure, traffic congestion, and weather conditions.",
       icon: Target
     },
     {
       title: "Proactive Spoilage Prevention",
-      description: "Our AI calculates a real-time 'Spoilage Risk' score (0-100) by processing live data including ambient temperature, relative humidity, and duration of exposure. The AI is pre-trained with scientific data on mangoes, understanding their ideal storage conditions are 10°C-13°C and 90-95% relative humidity. When the score crosses a critical threshold of 75, it automatically triggers a cooling mechanism and alerts the manager and driver.",
+      description: "Calculates real-time risk scores (0-100). Triggers hardware cooling and driver alerts if storage thresholds exceed optimal 10°C-13°C.",
       icon: Zap
     },
     {
-      title: "Yield and Quality Forecasting",
-      description: "Using all gathered data—including real-time sensor data, route information, and triggered interventions—the AI generates a final 'Quality Score' for each batch of produce (e.g., 95 for a well-maintained trip vs. 60 for a high-risk one). This score is shared with buyers, adding transparency and trust to the supply chain, allowing farmers to justify premium prices for high-quality produce.",
+      title: "Yield & Quality Forecasting",
+      description: "Outputs an objective 'Quality Score' (e.g., 95/100) per batch based on exposure duration, enabling farmers to command premium prices.",
       icon: Lightbulb
     },
     {
-      title: "Verifiable Trust System",
-      description: "Our unique 'Quality Score' provides a data-backed, objective score for the freshness of produce, creating unprecedented transparency. Farmers can prove the quality of their mangoes to buyers, and buyers can trust that the product meets a certain standard. This score becomes a new form of currency in the agricultural supply chain.",
+      title: "Verifiable Trust Ledger",
+      description: "Provides buyers with a transparent log of transit conditions, establishing trust between cooperatives and commercial buyers.",
       icon: Users
     }
   ],
   achievements: [
-    "Top 10 Finalist - Innovation Olympics at University of the Philippines Los Baños (September 1-3, 2025)"
+    "🏆 Top 10 Finalist - Innovation Olympics at University of the Philippines Los Baños (September 2025)"
   ]
 };
 
 const arteryProject: ProjectData = {
   id: "artery",
   title: "Artery",
-  subtitle: "AI-Powered Blood Supply Chain",
-  shortDescription: "A unified real-time network for the Philippines' blood supply, integrating hospital dashboards and blockchain records.",
-  fullDescription: "Artery is a revolutionary healthcare technology solution designed to modernize and streamline the Philippine blood supply chain. By leveraging AI and blockchain technology, we create a unified, real-time network that connects blood banks, hospitals, and donors across the nation.",
-  problemStatement: "The Philippines faces critical challenges in blood supply management, including fragmented systems across hospitals and blood banks, lack of real-time inventory visibility, inefficient distribution leading to expired blood products, and difficulty matching donors with recipients in emergencies.",
-  solution: "Artery provides a centralized platform that integrates all stakeholders in the blood supply chain. Our AI-powered system predicts demand, optimizes distribution, and ensures traceability through blockchain technology.",
-  targetMarket: "Our primary customers are hospitals, blood banks, and healthcare facilities seeking to improve their blood supply management and reduce waste while ensuring patient safety.",
-  uniqueValue: "Unlike traditional blood bank management systems, Artery uses AI to predict blood demand patterns and blockchain to ensure complete traceability and authenticity of blood products from donor to recipient.",
-  tags: ["AI", "Blockchain", "Health-Tech", "Supply Chain"],
-  technologies: ["React", "Node.js", "Blockchain", "TensorFlow", "PostgreSQL", "AWS", "Docker"],
+  subtitle: "AI & Blockchain Blood Supply Network",
+  category: "health-tech",
+  shortDescription: "A unified real-time supply network for blood banks and hospitals with AI demand forecasting and immutable blockchain traceability.",
+  fullDescription: "Artery revolutionizes healthcare logistics in the Philippines by connecting blood banks, regional hospitals, and emergency donors onto a single transparent dashboard. AI algorithms forecast regional blood demand while blockchain ledgers guarantee authenticity from donor to patient.",
+  problemStatement: "Philippine hospitals suffer from severe blood inventory fragmentation, lack of inter-hospital visibility, expired blood units due to poor demand forecasting, and life-threatening delays in matching rare blood types during critical emergencies.",
+  solution: "Artery unifies blood bank inventories nationwide into a live grid. Machine learning predicts upcoming demand spikes per blood group, while smart contracts track blood unit storage temperatures and expiry dates on an immutable ledger.",
+  targetMarket: "Hospitals, Red Cross blood centers, regional health units, and emergency patient networks.",
+  uniqueValue: "First healthcare supply platform in the region combining predictive AI demand modeling with end-to-end blockchain auditing for total blood product traceability.",
+  tags: ["AI Demand Model", "Blockchain Ledger", "Health-Tech", "Supply Chain"],
+  technologies: ["React.js", "Node.js", "Blockchain Ledger", "TensorFlow", "PostgreSQL", "Docker", "AWS Cloud"],
   images: [
     "/assets/selected-works/artery-final-logo.png",
     "/Artery 1.png", 
@@ -115,122 +127,134 @@ const arteryProject: ProjectData = {
   ],
   features: [
     {
-      title: "Real-time Inventory Dashboard",
-      description: "A comprehensive dashboard providing hospitals with instant visibility into blood product availability across the network, enabling quick decisions during emergencies.",
-      icon: Target
+      title: "Real-Time Blood Grid",
+      description: "Live interactive map showing blood unit availability across all connected hospital facilities in real time.",
+      icon: Activity
     },
     {
-      title: "AI Demand Prediction",
-      description: "Machine learning algorithms analyze historical data to predict blood demand patterns, helping blood banks maintain optimal inventory levels and reduce wastage.",
+      title: "AI Demand Forecasting",
+      description: "Predictive ML models analyze seasonal and historical trends to prevent stockouts and minimize expired blood units.",
       icon: Zap
     },
     {
       title: "Blockchain Traceability",
-      description: "Every blood product is tracked on an immutable blockchain ledger from donation to transfusion, ensuring authenticity and enabling complete audit trails.",
-      icon: Lightbulb
+      description: "Every blood bag receives an immutable cryptographic log tracking temperature history, location, and chain of custody.",
+      icon: ShieldCheck
     },
     {
-      title: "Smart Matching System",
-      description: "AI-powered matching connects compatible donors with patients in need, prioritizing based on urgency, location, and blood type compatibility.",
+      title: "Emergency Smart Match",
+      description: "Algorithms instantly locate compatible nearby donors and facilities when urgent blood type requests are issued.",
       icon: Users
     }
   ],
-  achievements: []
+  achievements: [
+    "⚡ Healthcare Innovation Project — Unified Regional Supply Chain Architecture"
+  ]
 };
 
-const projectsData: ProjectData[] = [dalaniProject, arteryProject];
+const metropolisProject: ProjectData = {
+  id: "metropolis",
+  title: "Metropolis",
+  subtitle: "Interactive Future Urban Experience",
+  category: "web-ui",
+  shortDescription: "A futuristic web experience showcasing next-gen UI/UX aesthetics, ambient glassmorphism, and responsive web interactions.",
+  fullDescription: "Metropolis is a conceptual UI/UX web application that explores smart city monitoring, futuristic transportation nodes, and immersive web interaction patterns. Built with Next.js and advanced styling, it serves as a showcase of modern web design excellence.",
+  problemStatement: "Standard urban dashboards suffer from cluttered user interfaces and lack engaging visual storytelling, making complex urban data difficult to comprehend.",
+  solution: "Metropolis translates complex urban metrics into visually stunning glassmorphic dashboards with smooth animations and interactive 3D/ambient lighting.",
+  targetMarket: "Design enthusiasts, urban tech developers, and digital experience innovators.",
+  uniqueValue: "Pushes the boundaries of frontend visual design with high frame-rate animations, custom shaders, and responsive glass layouts.",
+  tags: ["UI/UX Design", "Next.js", "Web Aesthetics", "Interactive"],
+  technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Vercel"],
+  images: [
+    "/reality13.png"
+  ],
+  features: [
+    {
+      title: "Ambient Glassmorphism",
+      description: "Multi-layered translucent panels with dynamic backdrop blur and dynamic light reflections.",
+      icon: Layers
+    },
+    {
+      title: "Interactive Urban Metrics",
+      description: "Sleek data visualization widgets for city traffic, energy usage, and transit heatmaps.",
+      icon: Globe
+    }
+  ],
+  externalUrl: "https://reality13-metropolis.vercel.app"
+};
 
-// --- Utility Components ---
+const projectsData: ProjectData[] = [dalaniProject, arteryProject, metropolisProject];
 
-const Section = ({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => (
-  <section id={id} className={`relative z-10 px-6 py-24 md:py-32 max-w-7xl mx-auto ${className}`}>
+// --- Spotlight Mouse Tracking Card Component ---
+const SpotlightCard = ({ 
+  children, 
+  className = "",
+  onClick 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  onClick?: () => void;
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty("--mouse-x", `${x}px`);
+    cardRef.current.style.setProperty("--mouse-y", `${y}px`);
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onClick={onClick}
+      className={`spotlight-card rounded-3xl ${className}`}
+    >
+      {children}
+    </div>
+  );
+};
+
+// --- Section Component ---
+const Section = ({ 
+  children, 
+  className = "", 
+  id 
+}: { 
+  children: React.ReactNode; 
+  className?: string; 
+  id?: string;
+}) => (
+  <section id={id} className={`relative z-10 px-6 py-20 md:py-28 max-w-7xl mx-auto ${className}`}>
     {children}
   </section>
 );
 
-const ProjectCard = ({ 
-  title, 
-  subtitle, 
-  description,
-  tags,
-  onClick, 
-  href,
-  children,
-  className = ""
+// --- Contact Modal ---
+const ContactModal = ({ 
+  isOpen, 
+  onClose 
 }: { 
-  title: string; 
-  subtitle: string; 
-  description: string;
-  tags: string[];
-  onClick?: () => void;
-  href?: string;
-  children?: React.ReactNode;
-  className?: string;
+  isOpen: boolean; 
+  onClose: () => void;
 }) => {
-  const handleClick = () => {
-    if (href) {
-      window.open(href, "_blank", "noopener,noreferrer");
-    } else if (onClick) {
-      onClick();
-    }
-  };
-
-  return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      onClick={handleClick}
-      className={`group glass-card flex flex-col rounded-3xl overflow-hidden hover:border-cyan-400/60 hover:shadow-xl hover:shadow-cyan-500/10 transition-all cursor-pointer h-full ${className}`}
-    >
-      {/* Image Container */}
-      <div className="relative h-64 w-full bg-gradient-to-br from-slate-50/90 via-white to-cyan-50/40 border-b border-slate-200/60 overflow-hidden flex items-center justify-center p-8">
-        <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/5 via-transparent to-pink-500/5 z-10" />
-        {children}
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-center justify-center backdrop-blur-sm">
-          <div className="px-4 py-2 bg-slate-900 text-white rounded-full text-sm font-bold flex items-center gap-2 shadow-xl">
-            {href ? "Visit Website" : "View Gallery"} 
-            {href ? <ExternalLink className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
-          </div>
-        </div>
-      </div>
-
-      {/* Content Container */}
-      <div className="p-8 flex flex-col flex-1">
-        <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
-            <span key={tag} className="px-2.5 py-1 rounded-md bg-cyan-50 text-[10px] font-bold uppercase tracking-wider text-cyan-800 border border-cyan-200/80 shadow-xs">
-              {tag}
-            </span>
-          ))}
-        </div>
-        <h3 className="text-2xl font-bold text-slate-900 mb-1">{title}</h3>
-        <p className="text-cyan-700 text-sm font-semibold mb-4">{subtitle}</p>
-        <p className="text-slate-600 text-sm leading-relaxed">
-          {description}
-        </p>
-      </div>
-    </motion.div>
-  );
-};
-
-// --- Contact Form Modal ---
-const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Create mailto link with form data
+
     const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`);
     const mailtoLink = `mailto:montenegrokarlo@gmail.com?subject=${subject}&body=${body}`;
-    
+
     window.location.href = mailtoLink;
-    
+
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitStatus('success');
@@ -238,12 +262,8 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
         onClose();
         setFormData({ name: '', email: '', message: '' });
         setSubmitStatus('idle');
-      }, 1500);
-    }, 500);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+      }, 1800);
+    }, 400);
   };
 
   return (
@@ -257,93 +277,96 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
           onClick={onClose}
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="glass-panel relative w-full max-w-md rounded-2xl p-8 shadow-2xl border border-white/90 bg-white/90"
+            initial={{ scale: 0.94, opacity: 0, y: 16 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.94, opacity: 0, y: 16 }}
+            className="glass-panel relative w-full max-w-lg rounded-3xl p-8 md:p-10 shadow-2xl border border-white/90"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors"
+              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Get in Touch</h3>
-            <p className="text-slate-600 text-sm mb-6">Send me a message and I&apos;ll get back to you soon.</p>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2.5 bg-sky-100/80 border border-sky-200 rounded-2xl text-sky-600">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900">Let&apos;s Connect</h3>
+            </div>
+            <p className="text-slate-600 text-sm mb-6">Send a direct message or collaboration inquiry. I usually respond within 24 hours.</p>
 
             {submitStatus === 'success' ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4 border border-cyan-200">
-                  <Mail className="w-8 h-8 text-cyan-600" />
+              <div className="text-center py-10">
+                <div className="w-16 h-16 bg-emerald-100/90 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-200 shadow-sm">
+                  <Check className="w-8 h-8 text-emerald-600" />
                 </div>
-                <p className="text-cyan-700 font-medium">Opening your email client...</p>
+                <h4 className="text-lg font-bold text-slate-900 mb-1">Opening Email Client...</h4>
+                <p className="text-slate-600 text-sm">Thank you for reaching out!</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
-                    Full Name
+                  <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                    Your Name
                   </label>
                   <input
                     type="text"
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:bg-white transition-all"
-                    placeholder="Your full name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/90 border border-slate-200/90 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all text-sm"
+                    placeholder="e.g. Alex Morgan"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                    Email Address
+                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                    Your Email Address
                   </label>
                   <input
                     type="email"
                     id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:bg-white transition-all"
-                    placeholder="your.email@example.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/90 border border-slate-200/90 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all text-sm"
+                    placeholder="alex@example.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
+                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
                     Message
                   </label>
                   <textarea
                     id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
                     required
-                    rows={5}
-                    className="w-full px-4 py-3 bg-white/90 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:bg-white transition-all resize-none"
-                    placeholder="Tell me about your project or inquiry..."
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full px-4 py-3 bg-white/90 border border-slate-200/90 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition-all text-sm resize-none"
+                    placeholder="Tell me about your project, co-op opportunity, or idea..."
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                  className="w-full py-3.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-sky-600 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-md hover:shadow-lg shimmer-btn text-sm"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Sending...
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Preparing Message...
                     </>
                   ) : (
                     <>
-                      <Mail className="w-5 h-5" />
-                      Send Message
+                      <Mail className="w-4 h-4" />
+                      Send via Email Client
                     </>
                   )}
                 </button>
@@ -356,7 +379,7 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   );
 };
 
-// --- Project Detail Modal ---
+// --- Project Case Study Modal ---
 const ProjectDetailModal = ({ 
   isOpen, 
   onClose, 
@@ -367,6 +390,7 @@ const ProjectDetailModal = ({
   project: ProjectData | null;
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'gallery'>('overview');
+  const [selectedLightboxImage, setSelectedLightboxImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -388,66 +412,65 @@ const ProjectDetailModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-md overflow-y-auto"
+          className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-lg overflow-y-auto"
           onClick={onClose}
         >
           {/* Close Button */}
           <button 
             onClick={onClose} 
-            className="fixed top-6 right-6 p-3 bg-white/90 hover:bg-white text-slate-800 rounded-full backdrop-blur-md border border-slate-200/80 transition-all z-50 shadow-lg"
+            className="fixed top-6 right-6 p-3 bg-white/90 hover:bg-white text-slate-800 rounded-full backdrop-blur-md border border-slate-200/80 transition-all z-50 shadow-xl"
           >
-            <X className="w-6 h-6 text-slate-800" />
+            <X className="w-6 h-6" />
           </button>
 
-          {/* Content Container */}
           <div className="min-h-full py-12 px-4 md:px-8">
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              initial={{ scale: 0.96, opacity: 0, y: 24 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              exit={{ scale: 0.96, opacity: 0, y: 24 }}
               transition={{ duration: 0.3 }}
-              className="max-w-6xl mx-auto"
+              className="max-w-5xl mx-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header Section */}
-              <div className="mb-8">
-                <div className="flex flex-wrap items-center gap-3 mb-4">
+              {/* Header Banner */}
+              <div className="glass-panel rounded-3xl p-8 md:p-10 mb-8 border-white/90 bg-white/90">
+                <div className="flex flex-wrap items-center gap-2 mb-4">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 rounded-full bg-cyan-50 text-cyan-800 text-xs font-bold uppercase tracking-wider border border-cyan-200/80 shadow-xs">
+                    <span key={tag} className="px-3 py-1 rounded-md bg-sky-50 text-sky-800 text-[11px] font-bold uppercase tracking-wider border border-sky-200/80">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-2 drop-shadow-[0_8px_24px_rgba(96,165,250,0.12)]">{project.title}</h1>
-                <p className="text-xl text-sky-700 font-semibold mb-4">{project.subtitle}</p>
-                
-                {/* Achievements */}
+
+                <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-3 tracking-tight">{project.title}</h1>
+                <p className="text-lg md:text-xl text-sky-700 font-semibold mb-6">{project.subtitle}</p>
+
                 {project.achievements && project.achievements.length > 0 && (
-                  <div className="flex flex-wrap gap-3 mt-4">
-                    {project.achievements.map((achievement, index) => (
-                      <div key={index} className="flex items-center gap-2 px-4 py-2 bg-violet-50 border border-violet-200/80 rounded-lg backdrop-blur-md shadow-xs">
-                        <Award className="w-5 h-5 text-violet-600" />
-                        <span className="text-violet-950 text-sm font-semibold">{achievement}</span>
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    {project.achievements.map((ach, idx) => (
+                      <div key={idx} className="flex items-center gap-2.5 px-4 py-2 bg-violet-50/90 border border-violet-200/90 rounded-xl text-violet-900 text-sm font-semibold shadow-xs">
+                        <Award className="w-4 h-4 text-violet-600 shrink-0" />
+                        <span>{ach}</span>
                       </div>
                     ))}
                   </div>
                 )}
               </div>
 
-              {/* Tab Navigation */}
-              <div className="flex gap-2 mb-8 border-b border-slate-200/80 pb-4">
+              {/* Navigation Tabs */}
+              <div className="flex gap-2 mb-8 border-b border-slate-200/80 pb-4 overflow-x-auto">
                 {[
-                  { id: 'overview', label: 'Overview' },
-                  { id: 'features', label: 'Features' },
-                  { id: 'gallery', label: 'Gallery' }
+                  { id: 'overview', label: 'Overview & Impact' },
+                  { id: 'features', label: 'Architecture & Features' },
+                  { id: 'gallery', label: `Gallery (${project.images.length})` }
                 ].map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                    className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                    className={`px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${
                       activeTab === tab.id
-                        ? 'bg-sky-600 text-white shadow-md'
-                        : 'bg-white/70 text-slate-600 hover:bg-white hover:text-slate-900 border border-slate-200/70'
+                        ? 'bg-slate-900 text-white shadow-md'
+                        : 'bg-white/70 text-slate-600 hover:bg-white hover:text-slate-900 border border-slate-200/80'
                     }`}
                   >
                     {tab.label}
@@ -460,72 +483,69 @@ const ProjectDetailModal = ({
                 {activeTab === 'overview' && (
                   <motion.div
                     key="overview"
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="space-y-8"
+                    exit={{ opacity: 0, y: -12 }}
+                    className="space-y-6"
                   >
-                    {/* Main Description */}
-                    <div className="glass-panel rounded-2xl p-8 bg-white/85 shadow-xs border-white/90">
-                      <h3 className="text-2xl font-bold text-slate-900 mb-4">About the Project</h3>
-                      <p className="text-slate-700 leading-relaxed text-lg">{project.fullDescription}</p>
+                    {/* Full Description */}
+                    <div className="glass-panel rounded-3xl p-8 bg-white/90">
+                      <h3 className="text-xl font-bold text-slate-900 mb-3">Project Summary</h3>
+                      <p className="text-slate-700 leading-relaxed text-base md:text-lg">{project.fullDescription}</p>
                     </div>
 
-                    {/* Problem & Solution Grid */}
+                    {/* Problem vs Solution Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-rose-100">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90 border-rose-100">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-rose-50 rounded-lg border border-rose-200">
-                            <Target className="w-6 h-6 text-rose-600" />
+                          <div className="p-2.5 bg-rose-50 rounded-xl border border-rose-200 text-rose-600">
+                            <Target className="w-5 h-5" />
                           </div>
-                          <h3 className="text-xl font-bold text-rose-950">The Problem</h3>
+                          <h3 className="text-lg font-bold text-slate-900">The Problem</h3>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">{project.problemStatement}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.problemStatement}</p>
                       </div>
 
-                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-cyan-100">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90 border-sky-100">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-cyan-50 rounded-lg border border-cyan-200">
-                            <Lightbulb className="w-6 h-6 text-cyan-600" />
+                          <div className="p-2.5 bg-sky-50 rounded-xl border border-sky-200 text-sky-600">
+                            <Lightbulb className="w-5 h-5" />
                           </div>
-                          <h3 className="text-xl font-bold text-cyan-950">The Solution</h3>
+                          <h3 className="text-lg font-bold text-slate-900">The Solution</h3>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">{project.solution}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.solution}</p>
                       </div>
                     </div>
 
                     {/* Target Market & UVP */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-sky-100 shadow-xs">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-sky-50 rounded-lg border border-sky-200">
-                            <Users className="w-6 h-6 text-sky-600" />
+                          <div className="p-2.5 bg-violet-50 rounded-xl border border-violet-200 text-violet-600">
+                            <Users className="w-5 h-5" />
                           </div>
-                          <h3 className="text-xl font-bold text-slate-900">Target Market</h3>
+                          <h3 className="text-lg font-bold text-slate-900">Target Audience & Reach</h3>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">{project.targetMarket}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.targetMarket}</p>
                       </div>
 
-                      <div className="glass-panel rounded-2xl p-8 bg-white/85 border-fuchsia-100 shadow-xs">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 bg-fuchsia-50 rounded-lg border border-fuchsia-200">
-                            <Zap className="w-6 h-6 text-fuchsia-600" />
+                          <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-600">
+                            <Zap className="w-5 h-5" />
                           </div>
-                          <h3 className="text-xl font-bold text-slate-900">Unique Value</h3>
+                          <h3 className="text-lg font-bold text-slate-900">Unique Proposition</h3>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">{project.uniqueValue}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.uniqueValue}</p>
                       </div>
                     </div>
 
-                    {/* Technologies */}
-                    <div className="glass-panel rounded-2xl p-8 bg-white/85 shadow-xs">
-                      <h3 className="text-xl font-bold text-slate-900 mb-6">Technologies & Tools</h3>
-                      <div className="flex flex-wrap gap-3">
+                    {/* Tech Stack */}
+                    <div className="glass-panel rounded-3xl p-8 bg-white/90">
+                      <h3 className="text-lg font-bold text-slate-900 mb-4">Built With</h3>
+                      <div className="flex flex-wrap gap-2.5">
                         {project.technologies.map((tech) => (
-                          <span 
-                            key={tech} 
-                            className="px-4 py-2 bg-white/90 border border-slate-200/80 rounded-lg text-slate-700 font-medium text-sm hover:border-cyan-300 hover:bg-cyan-50/50 transition-all cursor-default shadow-xs"
-                          >
+                          <span key={tech} className="px-3.5 py-1.5 bg-white border border-slate-200/90 rounded-lg text-slate-800 text-xs font-semibold shadow-2xs">
                             {tech}
                           </span>
                         ))}
@@ -537,27 +557,21 @@ const ProjectDetailModal = ({
                 {activeTab === 'features' && (
                   <motion.div
                     key="features"
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
+                    exit={{ opacity: 0, y: -12 }}
                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                   >
-                    {project.features.map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="glass-panel rounded-2xl p-8 bg-white/85 hover:border-cyan-300/60 hover:shadow-md transition-all"
-                      >
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="p-3 bg-cyan-50 rounded-xl border border-cyan-200">
-                            <feature.icon className="w-6 h-6 text-cyan-600" />
+                    {project.features.map((feature, idx) => (
+                      <div key={idx} className="glass-panel rounded-3xl p-8 bg-white/90">
+                        <div className="flex items-center gap-3.5 mb-3">
+                          <div className="p-3 bg-sky-50 rounded-2xl border border-sky-200 text-sky-600">
+                            <feature.icon className="w-5 h-5" />
                           </div>
-                          <h3 className="text-xl font-bold text-slate-900">{feature.title}</h3>
+                          <h3 className="text-lg font-bold text-slate-900">{feature.title}</h3>
                         </div>
-                        <p className="text-slate-600 leading-relaxed">{feature.description}</p>
-                      </motion.div>
+                        <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
+                      </div>
                     ))}
                   </motion.div>
                 )}
@@ -565,44 +579,63 @@ const ProjectDetailModal = ({
                 {activeTab === 'gallery' && (
                   <motion.div
                     key="gallery"
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    exit={{ opacity: 0, y: -12 }}
+                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
                   >
-                    {project.images.map((image, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05, duration: 0.3 }}
-                        className="glass-card relative w-full aspect-[9/16] rounded-xl overflow-hidden hover:border-cyan-300/60 hover:shadow-md transition-all shadow-xs group bg-slate-50/50"
+                    {project.images.map((img, idx) => (
+                      <div 
+                        key={idx}
+                        onClick={() => setSelectedLightboxImage(img)}
+                        className="group glass-panel relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer bg-white border-slate-200/90 shadow-xs hover:border-sky-300 transition-all p-3"
                       >
-                        <Image 
-                          src={image} 
-                          alt={`${project.title} screenshot ${index + 1}`} 
-                          fill 
-                          className="object-contain p-2 group-hover:scale-[1.02] transition-transform duration-300" 
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                          priority={index < 4}
-                        />
-                      </motion.div>
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={img} 
+                            alt={`${project.title} screenshot ${idx + 1}`}
+                            fill
+                            className="object-contain group-hover:scale-105 transition-transform duration-300"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        </div>
+                        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                          <div className="px-3 py-1.5 bg-white text-slate-900 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
+                            <Maximize2 className="w-3.5 h-3.5" /> Expand
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </motion.div>
                 )}
               </AnimatePresence>
-
-              {/* Back to top hint */}
-              <div className="mt-12 text-center">
-                <button 
-                  onClick={onClose}
-                  className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors font-medium"
-                >
-                  <span>Close project details</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
             </motion.div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Lightbox Modal */}
+      {selectedLightboxImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4"
+          onClick={() => setSelectedLightboxImage(null)}
+        >
+          <button 
+            onClick={() => setSelectedLightboxImage(null)}
+            className="absolute top-6 right-6 p-3 bg-white/20 text-white hover:bg-white/40 rounded-full transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="relative max-w-4xl max-h-[85vh] w-full h-full flex items-center justify-center p-4">
+            <Image
+              src={selectedLightboxImage}
+              alt="Expanded Preview"
+              fill
+              className="object-contain"
+            />
           </div>
         </motion.div>
       )}
@@ -610,256 +643,478 @@ const ProjectDetailModal = ({
   );
 };
 
-// --- Main Page Component ---
-
+// --- Main Portfolio Component ---
 export default function Portfolio() {
   const [mounted, setMounted] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
+  const [activeFilter, setActiveFilter] = useState<"all" | "ai-iot" | "health-tech" | "web-ui">("all");
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
-    const updateAuroraPosition = () => {
+    const handleScroll = () => {
       const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
-
       document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
-      document.documentElement.style.setProperty("--scroll-y", `${window.scrollY}px`);
     };
 
-    updateAuroraPosition();
-    window.addEventListener("scroll", updateAuroraPosition, { passive: true });
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    setMounted(true);
 
-    setTimeout(() => {
-      setMounted(true);
-    }, 0);
-
-    return () => {
-      window.removeEventListener("scroll", updateAuroraPosition);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("montenegrokarlo@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2200);
+  };
+
   const openProjectDetail = (projectId: string) => {
-    const project = projectsData.find(p => p.id === projectId);
-    if (project) {
-      setSelectedProject(project);
+    const proj = projectsData.find(p => p.id === projectId);
+    if (proj) {
+      setSelectedProject(proj);
       setIsProjectDetailOpen(true);
     }
   };
 
+  const filteredProjects = activeFilter === "all" 
+    ? projectsData 
+    : projectsData.filter(p => p.category === activeFilter);
+
   if (!mounted) return null;
 
   return (
-    <div className="portfolio-shell relative isolate min-h-screen overflow-hidden bg-transparent text-slate-900 font-sans selection:bg-sky-200/80">
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-900 font-sans selection:bg-sky-200/80">
+      {/* Background Aurora Layers */}
       <div className="aurora-stage" />
       <div className="aurora-ribbon" />
       <div className="noise-overlay" />
-      
+
+      {/* Floating Toast Alert for Email Copy */}
+      <AnimatePresence>
+        {copiedEmail && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-20 right-6 z-[110] px-4 py-2.5 bg-slate-900 text-white text-xs font-bold rounded-xl shadow-xl border border-slate-700 flex items-center gap-2"
+          >
+            <Check className="w-4 h-4 text-emerald-400" />
+            Email copied to clipboard! (montenegrokarlo@gmail.com)
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Contact & Detail Modals */}
       <ContactModal 
-        key={isContactModalOpen ? 'contact-open' : 'contact-closed'}
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />
-  
       <ProjectDetailModal
-        key={selectedProject?.id ? `project-${selectedProject.id}` : 'project-closed'}
         isOpen={isProjectDetailOpen}
         onClose={() => setIsProjectDetailOpen(false)}
         project={selectedProject}
       />
-  
-      {/* Hero Section - Aurora Borealis Theme */}
-      <section className="hero-aurora relative z-10 px-6 py-28 md:px-14 md:py-32 min-h-screen flex flex-col justify-center overflow-hidden">
-        <motion.div className="relative z-10 mx-auto max-w-5xl text-center" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-sky-200/80 text-xs text-slate-700 font-semibold mb-7 backdrop-blur-md shadow-sm shadow-sky-200/60">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-            </span>
-            Open to Work & Collaboration
+
+      {/* Floating Frosted Glass Navbar */}
+      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl">
+        <nav className="glass-panel rounded-full px-5 py-3 flex items-center justify-between shadow-lg border border-white/90">
+          <a href="#" className="flex items-center gap-2.5 text-slate-900 font-extrabold text-sm md:text-base group">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-400 via-violet-400 to-pink-400 p-[1.5px] shadow-xs group-hover:scale-105 transition-transform">
+              <div className="w-full h-full bg-white rounded-full flex items-center justify-center text-xs font-black text-slate-900">
+                KR
+              </div>
+            </div>
+            <span className="hidden sm:inline tracking-tight font-bold">Karlo Montenegro</span>
+          </a>
+
+          <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-700">
+            <a href="#work" className="hover:text-sky-600 transition-colors">Work</a>
+            <a href="#tech" className="hover:text-sky-600 transition-colors">Tech Architecture</a>
+            <a href="#honors" className="hover:text-sky-600 transition-colors">Achievements</a>
+            <a href="#about" className="hover:text-sky-600 transition-colors">About</a>
           </div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.06] drop-shadow-[0_10px_24px_rgba(96,165,250,0.18)]">
+
+          <div className="flex items-center gap-2 md:gap-3">
+            <button
+              onClick={handleCopyEmail}
+              className="p-2 text-slate-600 hover:text-slate-900 bg-white/80 hover:bg-white rounded-full border border-slate-200/80 transition-all text-xs font-semibold hidden sm:flex items-center gap-1.5"
+              title="Copy email"
+            >
+              <Copy className="w-3.5 h-3.5" />
+              <span>Copy Email</span>
+            </button>
+
+            <button
+              onClick={() => setIsContactModalOpen(true)}
+              className="px-4 py-2 bg-slate-900 hover:bg-sky-600 text-white rounded-full font-bold text-xs transition-all shadow-sm shimmer-btn"
+            >
+              Contact Me
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative z-10 pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center"
+        >
+          {/* Gemini Badge */}
+          <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-slate-800 mb-8">
+            <Sparkles className="w-4 h-4 text-sky-500 animate-spin" style={{ animationDuration: '6s' }} />
+            <span>AI, IoT & UI/UX Developer</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse ml-1" />
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08]">
             Building the <br />
-            <span className="aurora-text">
-              tech of tomorrow.
-            </span>
+            <span className="aurora-text">tech of tomorrow.</span>
           </h1>
-          
-          <p className="mx-auto text-lg md:text-xl text-slate-700 font-medium max-w-2xl leading-relaxed mb-12 drop-shadow-[0_6px_14px_rgba(148,163,184,0.18)]">
-            Hi, I&apos;m a Computer Science student dedicated to building next-generation technologies. 
-            My focus lies in <span className="text-slate-900 font-bold">UI/UX</span>—crafting interfaces that are as intuitive as they are powerful.
+
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
+            Hi, I&apos;m <span className="text-slate-900 font-bold">Karlo Roel Montenegro</span> — a Computer Science student engineering last-mile IoT hardware, predictive AI networks, and intuitive user interfaces.
           </p>
-  
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href="#work" className="group flex items-center gap-2 px-6 py-3 bg-white text-slate-950 rounded-full font-bold hover:bg-sky-50 transition-all hover:shadow-lg hover:shadow-sky-300/40 shadow-md border border-sky-100">
-              View Selected Work
-              <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap justify-center gap-3.5 mb-14">
+            <a 
+              href="#work" 
+              className="px-7 py-3.5 bg-slate-900 text-white rounded-full font-bold text-sm hover:bg-sky-600 transition-all shadow-lg hover:shadow-sky-500/25 flex items-center gap-2 shimmer-btn"
+            >
+              Explore Projects
+              <ArrowUpRight className="w-4 h-4" />
             </a>
-            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-6 py-3 bg-white/80 text-slate-800 border border-sky-200/80 rounded-full font-semibold hover:bg-white hover:border-sky-300 hover:shadow-xs transition-all backdrop-blur-md">
-              <Github className="w-4 h-4 text-slate-800" />
+            <a 
+              href="https://github.com/karlsxo/KarloRoel" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="px-6 py-3.5 bg-white/90 hover:bg-white text-slate-800 border border-slate-200/90 rounded-full font-bold text-sm shadow-xs transition-all flex items-center gap-2 backdrop-blur-md"
+            >
+              <Github className="w-4 h-4" />
               GitHub
             </a>
+          </div>
+
+          {/* Quick Stat Chips */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
+            <SpotlightCard className="p-5 text-center">
+              <div className="text-sky-600 font-extrabold text-2xl mb-1">Top 10 Finalist</div>
+              <div className="text-slate-500 text-xs font-semibold">UP Los Baños Innovation Olympics</div>
+            </SpotlightCard>
+
+            <SpotlightCard className="p-5 text-center">
+              <div className="text-violet-600 font-extrabold text-2xl mb-1">IoT + AI</div>
+              <div className="text-slate-500 text-xs font-semibold">ESP32 Cold Chain Hardware</div>
+            </SpotlightCard>
+
+            <SpotlightCard className="p-5 text-center">
+              <div className="text-emerald-600 font-extrabold text-2xl mb-1">Blockchain</div>
+              <div className="text-slate-500 text-xs font-semibold">Healthcare Blood Supply Chain</div>
+            </SpotlightCard>
           </div>
         </motion.div>
       </section>
 
-      {/* Tech Stack */}
-      <div className="relative z-10 mx-4 md:mx-6 overflow-hidden glass-panel rounded-[2rem] py-9 md:py-10 bg-white/90 border-white/90">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-slate-500 text-sm font-semibold mb-6 uppercase tracking-wider">Core Technologies</p>
-          <div className="flex gap-4 md:gap-6 flex-wrap text-slate-700 font-semibold text-lg md:text-xl">
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-cyan-700 hover:border-cyan-300 hover:bg-cyan-50/60 transition-colors shadow-xs cursor-default">Python</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-violet-700 hover:border-violet-300 hover:bg-violet-50/60 transition-colors shadow-xs cursor-default">Java</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-teal-700 hover:border-teal-300 hover:bg-teal-50/60 transition-colors shadow-xs cursor-default">JavaScript</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-fuchsia-700 hover:border-fuchsia-300 hover:bg-fuchsia-50/60 transition-colors shadow-xs cursor-default">HTML5 & CSS3</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-cyan-700 hover:border-cyan-300 hover:bg-cyan-50/60 transition-colors shadow-xs cursor-default">React / Next.js</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-violet-700 hover:border-violet-300 hover:bg-violet-50/60 transition-colors shadow-xs cursor-default">C++</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-teal-700 hover:border-teal-300 hover:bg-teal-50/60 transition-colors shadow-xs cursor-default">Git</span>
-             <span className="rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 hover:text-fuchsia-700 hover:border-fuchsia-300 hover:bg-fuchsia-50/60 transition-colors shadow-xs cursor-default">SQL</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Selected Work */}
+      {/* Selected Work Section */}
       <Section id="work" className="section-glow">
-        <div className="mb-12">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4 drop-shadow-[0_8px_22px_rgba(96,165,250,0.12)]">Selected Work</h2>
-          <p className="text-slate-600">Some of my featured projects and contributions that I&apos;ve worked on.</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          {/* DALANI PROJECT */}
-          <ProjectCard 
-            title="DalAni"
-            subtitle="IoT & AI Cold Chain Solution"
-            description="Solving the 40% post-harvest loss in Philippine agriculture through ESP32-based IoT modules and AI-backed quality verification."
-            tags={["IoT", "AI", "Agri-Tech"]}
-            onClick={() => openProjectDetail('dalani')}
-          >
-            <div className="relative w-full h-full scale-100 group-hover:scale-[1.03] transition-transform duration-500">
-              <Image
-                src="/assets/selected-works/dalani-final-logo.png"
-                alt="DalAni"
-                fill
-                className="object-contain p-3 md:p-4"
-                sizes="(max-width: 768px) 78vw, (max-width: 1024px) 42vw, 30vw"
-              />
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-sky-600 font-bold text-xs uppercase tracking-wider mb-2">
+              <Layers className="w-4 h-4" /> Portfolio Showcase
             </div>
-          </ProjectCard>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Selected Work</h2>
+          </div>
 
-          {/* ARTERY PROJECT */}
-          <ProjectCard 
-            title="Artery"
-            subtitle="AI-Powered Blood Supply Chain"
-            description="A unified real-time network for the Philippines' blood supply, integrating hospital dashboards and blockchain records."
-            tags={["AI", "Blockchain", "Health-Tech"]}
-            onClick={() => openProjectDetail('artery')}
-          >
-            <div className="relative w-full h-full scale-100 group-hover:scale-[1.03] transition-transform duration-500">
-              <Image
-                src="/assets/selected-works/artery-final-logo.png"
-                alt="Artery"
-                fill
-                className="object-contain p-3 md:p-4"
-                sizes="(max-width: 768px) 78vw, (max-width: 1024px) 42vw, 30vw"
-              />
-            </div>
-          </ProjectCard>
-
-          {/* METROPOLIS PROJECT (NEW) */}
-          <ProjectCard 
-            title="Metropolis"
-            subtitle="Interactive Urban Experience"
-            description="A visionary exploration into future urban environments. This project showcases advanced UI design and interactive web elements."
-            tags={["UI/UX", "Next.js", "Web Design"]}
-            href="https://reality13-metropolis.vercel.app"
-          >
-            <div className="relative w-full h-full scale-90 group-hover:scale-100 transition-transform duration-500">
-              <Image
-                src="/reality13.png"
-                alt="Metropolis"
-                fill
-                className="object-contain p-8 md:p-12"
-                sizes="(max-width: 768px) 56vw, (max-width: 1024px) 30vw, 22vw"
-              />
-            </div>
-          </ProjectCard>
-
-        </div>
-      </Section>
-
-      {/* About Section */}
-      <Section className="grid grid-cols-1 md:grid-cols-2 gap-16 section-glow" id="about">
-        <div>
-          <h2 className="text-4xl font-bold text-slate-900 mb-6 drop-shadow-[0_8px_22px_rgba(96,165,250,0.12)]">About Me</h2>
-          <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            As a Computer Science student, I combine technical discipline with a passion for 
-            <span className="text-slate-900 font-semibold"> creative design</span>, ensuring every line of code serves a purpose.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
+          {/* Category Filter Tabs */}
+          <div className="flex items-center gap-1.5 p-1.5 bg-white/80 border border-slate-200/80 rounded-2xl backdrop-blur-md overflow-x-auto">
             {[
-              { icon: Code2, label: "Frontend Dev" },
-              { icon: Database, label: "Backend Logic" },
-              { icon: Globe, label: "Web Tech" },
-              { icon: Cpu, label: "CS Fundamentals" },
-            ].map((item, i) => (
-              <div key={i} className="glass-panel flex items-center gap-3 p-4 rounded-lg shadow-xs bg-white/80 border-slate-200/70">
-                <item.icon className="w-5 h-5 text-cyan-600" />
-                <span className="font-semibold text-slate-800">{item.label}</span>
-              </div>
+              { id: "all", label: "All Projects" },
+              { id: "ai-iot", label: "AI & IoT" },
+              { id: "health-tech", label: "Health-Tech" },
+              { id: "web-ui", label: "Web & UI/UX" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id as typeof activeFilter)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  activeFilter === tab.id
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
+                }`}
+              >
+                {tab.label}
+              </button>
             ))}
           </div>
         </div>
-        <div className="relative">
-          <div className="relative h-full glass-panel rounded-2xl p-8 shadow-xs bg-white/80 border-slate-200/70">
-            <h3 className="text-xl font-bold text-slate-900 mb-6">Academic Focus</h3>
-            <ul className="space-y-4">
-              <li className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-cyan-100/80 border border-cyan-200 flex items-center justify-center shrink-0 font-bold text-cyan-800">1</div>
-                <div>
-                  <h4 className="font-bold text-slate-900">User Interface (UI)</h4>
-                  <p className="text-sm text-slate-600">Designing modern and accessible layouts.</p>
+
+        {/* Project Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project) => (
+            <SpotlightCard
+              key={project.id}
+              onClick={() => {
+                if (project.externalUrl) {
+                  window.open(project.externalUrl, "_blank");
+                } else {
+                  openProjectDetail(project.id);
+                }
+              }}
+              className="cursor-pointer group flex flex-col h-full"
+            >
+              {/* Media Preview Box */}
+              <div className="relative h-60 w-full bg-gradient-to-br from-slate-50 via-white to-sky-50/50 border-b border-slate-200/60 p-6 flex items-center justify-center overflow-hidden">
+                <div className="relative w-full h-full scale-95 group-hover:scale-100 transition-transform duration-500">
+                  <Image
+                    src={project.images[0]}
+                    alt={project.title}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  />
                 </div>
-              </li>
-              <li className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-fuchsia-100/80 border border-fuchsia-200 flex items-center justify-center shrink-0 font-bold text-fuchsia-800">2</div>
-                <div>
-                  <h4 className="font-bold text-slate-900">User Experience (UX)</h4>
-                  <p className="text-sm text-slate-600">Optimizing user journeys and interaction.</p>
+                <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                  <span className="px-4 py-2 bg-white text-slate-900 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
+                    {project.externalUrl ? "Visit Live Site" : "View Case Study"}
+                    {project.externalUrl ? <ExternalLink className="w-3.5 h-3.5" /> : <ArrowUpRight className="w-3.5 h-3.5" />}
+                  </span>
                 </div>
-              </li>
-            </ul>
+              </div>
+
+              {/* Card Meta Content */}
+              <div className="p-7 flex flex-col flex-1">
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 rounded-md bg-sky-50 text-[10px] font-bold uppercase tracking-wider text-sky-700 border border-sky-200/60">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-900 mb-1 group-hover:text-sky-600 transition-colors">{project.title}</h3>
+                <p className="text-sky-700 text-xs font-bold mb-3">{project.subtitle}</p>
+                <p className="text-slate-600 text-xs leading-relaxed mb-6 flex-1">{project.shortDescription}</p>
+
+                <div className="flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold text-slate-800">
+                  <span className="text-sky-600 font-semibold">{project.externalUrl ? "External Web App" : "Deep Dive Case Study"}</span>
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </SpotlightCard>
+          ))}
+        </div>
+      </Section>
+
+      {/* Tech Architecture Section */}
+      <Section id="tech" className="section-glow">
+        <div className="mb-12">
+          <div className="inline-flex items-center gap-1.5 text-violet-600 font-bold text-xs uppercase tracking-wider mb-2">
+            <Terminal className="w-4 h-4" /> Technical Capability
+          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Core Stack & Technologies</h2>
+          <p className="text-slate-600 text-sm max-w-xl">Tools, programming languages, and hardware frameworks I leverage for software and IoT development.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Frontend */}
+          <SpotlightCard className="p-7">
+            <div className="p-3 bg-sky-50 rounded-2xl border border-sky-200 text-sky-600 w-fit mb-5">
+              <Code2 className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Frontend & UI/UX</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Designing accessible, high-performance interfaces.</p>
+            <div className="flex flex-wrap gap-1.5">
+              {["React", "Next.js 16", "Tailwind CSS", "TypeScript", "Framer Motion"].map(t => (
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </SpotlightCard>
+
+          {/* Backend */}
+          <SpotlightCard className="p-7">
+            <div className="p-3 bg-violet-50 rounded-2xl border border-violet-200 text-violet-600 w-fit mb-5">
+              <Globe className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Backend & Systems</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Architecting scalable APIs and algorithmic logic.</p>
+            <div className="flex flex-wrap gap-1.5">
+              {["Python", "Java", "C++", "Node.js", "JavaScript", "REST APIs"].map(t => (
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </SpotlightCard>
+
+          {/* AI & Hardware */}
+          <SpotlightCard className="p-7">
+            <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-600 w-fit mb-5">
+              <Cpu className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">AI & Hardware (IoT)</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Hardware prototyping and machine learning model implementation.</p>
+            <div className="flex flex-wrap gap-1.5">
+              {["ESP32", "TensorFlow", "DHT11 Sensor", "GPS/GPRS", "Flutter"].map(t => (
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </SpotlightCard>
+
+          {/* Cloud & Databases */}
+          <SpotlightCard className="p-7">
+            <div className="p-3 bg-pink-50 rounded-2xl border border-pink-200 text-pink-600 w-fit mb-5">
+              <Database className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Databases & Tools</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Data management, version control, and cloud deployment.</p>
+            <div className="flex flex-wrap gap-1.5">
+              {["PostgreSQL", "Firebase", "SQL", "Docker", "Git", "AWS"].map(t => (
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </SpotlightCard>
+        </div>
+      </Section>
+
+      {/* Achievements & Honors Section */}
+      <Section id="honors">
+        <div className="mb-12 text-center max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 text-amber-600 font-bold text-xs uppercase tracking-wider mb-2">
+            <Award className="w-4 h-4" /> Recognition & Milestones
+          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Honors & Achievements</h2>
+          <p className="text-slate-600 text-sm">Key competition results and engineering achievements.</p>
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          <SpotlightCard className="p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 border-amber-200/70">
+            <div className="p-4 bg-gradient-to-br from-amber-100 to-amber-50 border border-amber-300/80 rounded-2xl text-amber-700 shrink-0">
+              <Award className="w-8 h-8" />
+            </div>
+            <div>
+              <div className="px-3 py-1 bg-amber-100/80 text-amber-900 rounded-md text-[11px] font-bold uppercase tracking-wider w-fit mb-3">
+                September 1–3, 2025
+              </div>
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-2">Top 10 Finalist — Innovation Olympics</h3>
+              <p className="text-slate-700 text-sm font-semibold mb-3">University of the Philippines Los Baños (UPLB)</p>
+              <p className="text-slate-600 text-xs leading-relaxed">
+                Selected as a national Top 10 finalist for Project DalAni — recognized for technical feasibility and social impact in solving agricultural post-harvest loss through ESP32 IoT modules and AI verification.
+              </p>
+            </div>
+          </SpotlightCard>
+        </div>
+      </Section>
+
+      {/* About Me Section */}
+      <Section id="about" className="section-glow">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-7">
+            <div className="inline-flex items-center gap-1.5 text-sky-600 font-bold text-xs uppercase tracking-wider mb-2">
+              <Users className="w-4 h-4" /> Background
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">About Me</h2>
+            <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
+              <p>
+                I am a Computer Science student driven by the belief that hardware sensors, artificial intelligence, and great UI/UX design can transform traditional industries.
+              </p>
+              <p>
+                Whether engineering last-mile agricultural sensors in <strong className="text-slate-900">Project DalAni</strong> or standardizing healthcare supply records in <strong className="text-slate-900">Artery</strong>, my core focus is building human-centered solutions with real-world impact.
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5">
+            <SpotlightCard className="p-8 space-y-6">
+              <h3 className="text-lg font-bold text-slate-900 border-b border-slate-200/80 pb-4">Core Principles</h3>
+              <div className="space-y-4 text-xs font-medium">
+                <div className="flex gap-3.5 items-start">
+                  <div className="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 font-bold">1</div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Intuitive Micro-Interactions</h4>
+                    <p className="text-slate-500">Interfaces should feel tactile, fast, and responsive.</p>
+                  </div>
+                </div>
+                <div className="flex gap-3.5 items-start">
+                  <div className="w-6 h-6 rounded-full bg-violet-100 text-violet-700 flex items-center justify-center shrink-0 font-bold">2</div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Practical Hardware Integration</h4>
+                    <p className="text-slate-500">Low-cost IoT sensors collecting reliable physical data.</p>
+                  </div>
+                </div>
+                <div className="flex gap-3.5 items-start">
+                  <div className="w-6 h-6 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center shrink-0 font-bold">3</div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Data Integrity & Trust</h4>
+                    <p className="text-slate-500">AI and blockchain providing verifiable metrics for decision making.</p>
+                  </div>
+                </div>
+              </div>
+            </SpotlightCard>
           </div>
         </div>
       </Section>
 
       {/* Contact Section */}
-      <section className="relative z-10 py-32 border-t border-sky-100/80">
+      <section className="relative z-10 py-24 md:py-32 border-t border-slate-200/80">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-7xl font-bold text-slate-900 mb-8 drop-shadow-[0_12px_34px_rgba(96,165,250,0.12)]">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6">
             Let&apos;s build something <br />
-            <span className="relative inline-block">
-              <span className="aurora-text relative z-10">extraordinary.</span>
-              <span className="absolute inset-0 blur-2xl bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 opacity-25 animate-pulse"></span>
-            </span>
+            <span className="aurora-text">extraordinary together.</span>
           </h2>
-          <button 
-            onClick={() => setIsContactModalOpen(true)}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-950 rounded-full font-bold text-lg hover:scale-105 hover:bg-cyan-50 transition-all hover:shadow-lg hover:shadow-sky-300/30 shadow-md border border-sky-100"
-          >
-            <Mail className="w-5 h-5" />
-            Get in Touch
-          </button>
+          <p className="text-slate-600 text-base md:text-lg max-w-xl mx-auto mb-10">
+            I am currently open to internship, co-op, project collaboration, and developer opportunities.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setIsContactModalOpen(true)}
+              className="px-8 py-4 bg-slate-900 hover:bg-sky-600 text-white rounded-full font-bold text-base transition-all shadow-xl hover:shadow-sky-500/25 flex items-center gap-2.5 shimmer-btn"
+            >
+              <Mail className="w-5 h-5" />
+              Get in Touch
+            </button>
+            <button
+              onClick={handleCopyEmail}
+              className="px-6 py-4 bg-white/90 hover:bg-white text-slate-800 border border-slate-200/90 rounded-full font-bold text-base shadow-xs transition-all flex items-center gap-2"
+            >
+              <Copy className="w-5 h-5" />
+              <span>Copy Email</span>
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-8 bg-white/70 border-t border-sky-100 text-center text-slate-600 text-sm backdrop-blur-md">
-        <p>© 2026 Karlo Roel Montenegro. All rights reserved.</p>
+      <footer className="relative z-10 py-8 bg-white/80 border-t border-slate-200/80 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs font-semibold">
+          <p>© 2026 Karlo Roel Montenegro. Designed in Gemini & Antigravity Light Aurora Aesthetic.</p>
+          
+          <div className="flex items-center gap-6">
+            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors flex items-center gap-1">
+              <Github className="w-4 h-4" /> GitHub
+            </a>
+            <button 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-700 transition-colors"
+              title="Back to Top"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </footer>
-
     </div>
   );
 }
