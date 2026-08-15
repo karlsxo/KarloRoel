@@ -155,38 +155,43 @@ const arteryProject: ProjectData = {
 const tribleProject: ProjectData = {
   id: "trible",
   title: "Trible",
-  subtitle: "Community & Collaborative Creative Platform",
+  subtitle: "Smart campus tricycle booking platform",
   category: "web-ui",
-  shortDescription: "A modern platform empowering creative communities with seamless asset discovery, collaborative hubs, and interactive workspace UI.",
-  fullDescription: "Trible is a personal project designed to bridge the gap between creative team collaboration and digital community hubs. Featuring intelligent asset tagging, instant group hubs, and an elegant glassmorphic interface, Trible streamlines workflow ideation for design teams and digital creators.",
-  problemStatement: "Modern creative teams and online communities struggle with fragmented tools, unorganized file sharing, and noisy communication channels that slow down creative execution.",
-  solution: "Trible unifies group interactions and asset management into a centralized, aesthetic workspace with real-time collaboration tools and smart discovery tags.",
-  targetMarket: "Creative professionals, digital art communities, design studios, and collaborative student groups.",
-  uniqueValue: "Combines human-centered UI/UX with lightning-fast asset indexing and custom community hub spaces.",
-  tags: ["UI/UX Platform", "Community Hub", "Collaboration", "Web Tech"],
-  technologies: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Node.js", "Firebase"],
+  shortDescription: "Trible is a real-time transportation booking platform that connects students with tricycle drivers for faster, easier, and more organized campus travel. It helps riders find available drivers, reserve seats, and communicate instantly without delays.",
+  fullDescription: "This is a personal project commissioned by an Agricultural Engineering student. Trible is a real-time campus mobility solution that helps students book tricycle rides quickly and reliably while giving drivers a simple way to manage availability, routes, terminals, and seat bookings. The platform is designed to reduce waiting time, improve transportation efficiency, and create a more organized flow for students moving between campus areas and terminals.",
+  problemStatement: "Students often struggle with unreliable transportation, long waiting times, and unclear driver availability at campus terminals. Without a proper booking system, riders are forced to wait in queues, guess which drivers are available, or miss transport opportunities altogether. Drivers also face difficulty managing passenger demand and updating their route and seat status in real time.",
+  solution: "Trible solves this by providing a real-time booking platform where students can see active drivers, available seats, terminal locations, and routes. Drivers can update their online status, destination, terminal, and seat count instantly, allowing passengers to make quick decisions and reserve rides with confidence.",
+  targetMarket: "College and university students, tricycle drivers operating in campus or local transport routes, campus transport coordinators and transport service users, and students who travel regularly between terminals and campus zones.",
+  uniqueValue: "Trible combines real-time transportation visibility, seat booking, driver status management, and in-app communication into one streamlined platform. It is built to make campus mobility faster, more transparent, and more efficient for both drivers and students.",
+  tags: ["Real-Time Booking", "Campus Mobility", "Student Transport", "Driver Network"],
+  technologies: ["React", "Vite", "Tailwind CSS", "Firebase Authentication", "Firebase Realtime Database", "Zustand", "Framer Motion", "React Router", "Responsive UI design"],
   images: [
     "/assets/selected-works/trible-final-logo.png"
   ],
   features: [
     {
-      title: "Collaborative Workspace Hubs",
-      description: "Customizable digital hubs for creative teams to brainstorm, share assets, and manage project workflows in real time.",
+      title: "Real-Time Driver & Seat Visibility",
+      description: "Students can instantly see active drivers on their route, available seats, terminal locations, and destinations without delays.",
+      icon: Activity
+    },
+    {
+      title: "Instant Booking & Seat Reservation",
+      description: "Reserve seats with a tap and receive immediate confirmation. Drivers instantly see booking updates across connected devices.",
+      icon: Zap
+    },
+    {
+      title: "Driver Status Management",
+      description: "Drivers easily update their online status, destination, terminal, available seats, and route information in real time.",
       icon: Users
     },
     {
-      title: "Smart Asset Indexing",
-      description: "Automated tagging and category filters to organize design files, media assets, and project documentation effortlessly.",
-      icon: Layers
-    },
-    {
-      title: "Interactive Community Feed",
-      description: "Engaging activity feeds and feedback threads designed to keep group members connected and inspired.",
-      icon: Activity
+      title: "In-App Messaging & Communication",
+      description: "Real-time chat system between students and drivers for instant coordination, questions, and seamless trip communication.",
+      icon: Terminal
     }
   ],
   achievements: [
-    "🚀 Personal Project — Next-Gen Collaborative Community Ecosystem"
+    "🚀 Personal Project — Real-Time Campus Mobility Solution"
   ]
 };
 
