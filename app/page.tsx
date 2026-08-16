@@ -841,23 +841,6 @@ export default function Portfolio() {
             </a>
           </div>
 
-          {/* Quick Stat Chips */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
-            <SpotlightCard className="p-5 text-center">
-              <div className="text-cyan-600 font-extrabold text-2xl mb-1">Top 10 Finalist</div>
-              <div className="text-slate-600 text-xs font-semibold">UP Los Baños Innovation Olympics</div>
-            </SpotlightCard>
-
-            <SpotlightCard className="p-5 text-center">
-              <div className="text-fuchsia-600 font-extrabold text-2xl mb-1">IoT + AI</div>
-              <div className="text-slate-600 text-xs font-semibold">ESP32 Cold Chain Hardware</div>
-            </SpotlightCard>
-
-            <SpotlightCard className="p-5 text-center">
-              <div className="text-emerald-600 font-extrabold text-2xl mb-1">Blockchain</div>
-              <div className="text-slate-600 text-xs font-semibold">Healthcare Blood Supply Chain</div>
-            </SpotlightCard>
-          </div>
         </motion.div>
       </section>
 
@@ -1023,35 +1006,6 @@ export default function Portfolio() {
                   {t}
                 </span>
               ))}
-            </div>
-          </SpotlightCard>
-        </div>
-      </Section>
-
-      {/* Achievements & Honors Section */}
-      <Section id="honors">
-        <div className="mb-12 text-center max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 text-amber-600 font-bold text-xs uppercase tracking-wider mb-2">
-            <Award className="w-4 h-4" /> Recognition & Milestones
-          </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Honors & Achievements</h2>
-          <p className="text-slate-600 text-sm">Key competition results and engineering achievements.</p>
-        </div>
-
-        <div className="max-w-3xl mx-auto">
-          <SpotlightCard className="p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 border-amber-300 bg-gradient-to-br from-white to-amber-50/60 shadow-md">
-            <div className="p-4 bg-amber-100 border border-amber-300 rounded-2xl text-amber-700 shrink-0">
-              <Award className="w-8 h-8" />
-            </div>
-            <div>
-              <div className="px-3 py-1 bg-amber-100 text-amber-800 border border-amber-300 rounded-md text-[11px] font-bold uppercase tracking-wider w-fit mb-3">
-                September 1–3, 2025
-              </div>
-              <h3 className="text-2xl font-extrabold text-slate-900 mb-2">Top 10 Finalist — Innovation Olympics</h3>
-              <p className="text-amber-700 text-sm font-semibold mb-3">University of the Philippines Los Baños (UPLB)</p>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Selected as a national Top 10 finalist for Project DalAni — recognized for technical feasibility and social impact in solving agricultural post-harvest loss through ESP32 IoT modules and AI verification.
-              </p>
             </div>
           </SpotlightCard>
         </div>
