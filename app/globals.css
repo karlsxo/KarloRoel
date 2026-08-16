@@ -36,13 +36,14 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  background-attachment: fixed;
   background-image:
-    radial-gradient(circle at 10% 12%, rgba(0, 210, 255, 0.15), transparent 38rem),
-    radial-gradient(circle at 85% 18%, rgba(255, 0, 127, 0.15), transparent 42rem),
-    radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.16), transparent 48rem),
-    radial-gradient(circle at 20% 82%, rgba(0, 245, 212, 0.14), transparent 36rem),
-    radial-gradient(circle at 80% 88%, rgba(251, 191, 36, 0.15), transparent 35rem),
-    linear-gradient(180deg, #f8fafc 0%, #f1f5f9 30%, #f5f3ff 70%, #f8fafc 100%);
+    radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.5), transparent 26rem),
+    radial-gradient(circle at 78% 18%, rgba(236, 72, 153, 0.38), transparent 28rem),
+    radial-gradient(circle at 52% 42%, rgba(168, 85, 247, 0.42), transparent 38rem),
+    radial-gradient(circle at 20% 80%, rgba(34, 211, 238, 0.38), transparent 28rem),
+    radial-gradient(circle at 82% 84%, rgba(251, 191, 36, 0.28), transparent 24rem),
+    linear-gradient(135deg, #f6fbff 0%, #fdf2ff 18%, #f2ecff 38%, #fff7ed 62%, #f7fafc 100%);
 }
 
 /* Custom Scrollbar */
@@ -80,16 +81,17 @@ body {
   background:
     conic-gradient(from 120deg at 50% 40%,
       transparent 0deg,
-      rgba(0, 210, 255, 0.3) 40deg,
-      rgba(56, 189, 248, 0.28) 85deg,
-      rgba(168, 85, 247, 0.3) 130deg,
-      rgba(255, 0, 127, 0.32) 175deg,
-      transparent 210deg,
-      rgba(251, 191, 36, 0.25) 260deg,
-      rgba(0, 245, 212, 0.28) 305deg,
-      rgba(0, 210, 255, 0.3) 345deg,
+      rgba(14, 165, 233, 0.52) 24deg,
+      rgba(99, 102, 241, 0.48) 56deg,
+      rgba(168, 85, 247, 0.56) 88deg,
+      rgba(236, 72, 153, 0.56) 124deg,
+      rgba(244, 114, 182, 0.5) 160deg,
+      transparent 200deg,
+      rgba(251, 191, 36, 0.38) 254deg,
+      rgba(34, 211, 238, 0.56) 292deg,
+      rgba(59, 130, 246, 0.46) 332deg,
       transparent 360deg);
-  filter: blur(85px) saturate(200%);
+  filter: blur(110px) saturate(300%) contrast(1.08);
   transform:
     translate3d(calc(var(--scroll-progress) * -6vw), calc(var(--scroll-progress) * 12vh), 0)
     rotate(calc(var(--scroll-progress) * 25deg));
@@ -106,13 +108,14 @@ body {
   pointer-events: none;
   background:
     linear-gradient(110deg,
-      transparent 5%,
-      rgba(0, 210, 255, 0.25) 20%,
-      rgba(168, 85, 247, 0.28) 40%,
-      rgba(255, 0, 127, 0.3) 60%,
-      rgba(251, 191, 36, 0.22) 80%,
-      transparent 95%);
-  filter: blur(65px) saturate(220%);
+      transparent 4%,
+      rgba(59, 130, 246, 0.42) 16%,
+      rgba(168, 85, 247, 0.48) 30%,
+      rgba(236, 72, 153, 0.54) 50%,
+      rgba(251, 191, 36, 0.32) 68%,
+      rgba(34, 211, 238, 0.36) 82%,
+      transparent 100%);
+  filter: blur(86px) saturate(260%) brightness(1.12);
   transform: translateY(calc(var(--scroll-progress) * 15vh)) skewY(-7deg);
   animation: galaxy-plasma-wave 18s ease-in-out infinite alternate;
 }
@@ -139,12 +142,12 @@ body {
 /* Galaxy Shimmer Text */
 .aurora-text {
   color: transparent;
-  background-image: linear-gradient(110deg, #0f172a 0%, #0284c7 18%, #00b4d8 32%, #e11d48 55%, #9333ea 78%, #d97706 92%, #0f172a 100%);
-  background-size: 250% 100%;
+  background-image: linear-gradient(110deg, #0f172a 0%, #2dd4ff 16%, #62b6ff 30%, #7c6df9 46%, #ff67c8 64%, #ffb14a 80%, #0ea5e9 92%, #0f172a 100%);
+  background-size: 240% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   animation: shimmer-galaxy-text 8s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 12px rgba(2, 132, 199, 0.25));
+  filter: drop-shadow(0 0 18px rgba(45, 212, 255, 0.26));
 }
 
 /* Glassmorphism Light Panel */
@@ -179,11 +182,12 @@ body {
   border-radius: inherit;
   padding: 1.5px;
   background: radial-gradient(
-    600px circle at var(--mouse-x) var(--mouse-y),
-    rgba(2, 132, 199, 0.7),
-    rgba(236, 72, 153, 0.6) 30%,
-    rgba(168, 85, 247, 0.45) 55%,
-    transparent 75%
+    700px circle at var(--mouse-x) var(--mouse-y),
+    rgba(59, 130, 246, 0.9),
+    rgba(168, 85, 247, 0.8) 26%,
+    rgba(236, 72, 153, 0.72) 46%,
+    rgba(251, 191, 36, 0.38) 60%,
+    transparent 76%
   );
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
@@ -225,36 +229,39 @@ body {
 .section-glow::before {
   content: "";
   position: absolute;
-  inset: -50px -30px auto;
-  height: 220px;
+  inset: -60px -30px auto;
+  height: 260px;
   z-index: -1;
   pointer-events: none;
   background: linear-gradient(90deg,
-    rgba(2, 132, 199, 0.15),
-    rgba(168, 85, 247, 0.16),
-    rgba(236, 72, 153, 0.15),
-    rgba(251, 191, 36, 0.14));
-  filter: blur(75px);
-  opacity: 0.85;
+    rgba(14, 165, 233, 0.2),
+    rgba(168, 85, 247, 0.22),
+    rgba(236, 72, 153, 0.22),
+    rgba(251, 191, 36, 0.18),
+    rgba(34, 211, 238, 0.18));
+  filter: blur(90px) saturate(220%);
+  opacity: 1;
 }
 
 /* Shimmer Galaxy Button */
 .shimmer-btn {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0284c7 0%, #9333ea 50%, #e11d48 100%) !important;
+  background: linear-gradient(135deg, #2dd4ff 0%, #7c6df9 32%, #ff67c8 66%, #ffb14a 100%) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
   box-shadow:
-    0 4px 20px rgba(2, 132, 199, 0.35),
-    0 0 15px rgba(225, 29, 72, 0.25) !important;
+    0 10px 24px rgba(45, 212, 255, 0.35),
+    0 0 22px rgba(124, 109, 249, 0.22),
+    0 0 14px rgba(255, 103, 200, 0.18) !important;
 }
 
 .shimmer-btn:hover {
-  background: linear-gradient(135deg, #0369a1 0%, #7e22ce 50%, #be123c 100%) !important;
+  background: linear-gradient(135deg, #1ec7ff 0%, #6d5df4 34%, #ff5fc1 69%, #ff9f2e 100%) !important;
   box-shadow:
-    0 6px 28px rgba(2, 132, 199, 0.5),
-    0 0 20px rgba(225, 29, 72, 0.4) !important;
+    0 12px 30px rgba(45, 212, 255, 0.42),
+    0 0 24px rgba(124, 109, 249, 0.26),
+    0 0 16px rgba(255, 103, 200, 0.2) !important;
 }
 
 .shimmer-btn::after {
