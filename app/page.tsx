@@ -316,43 +316,43 @@ const ContactModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-xl flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-xl flex items-center justify-center p-4"
           onClick={onClose}
         >
           <motion.div
             initial={{ scale: 0.94, opacity: 0, y: 16 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.94, opacity: 0, y: 16 }}
-            className="glass-panel relative w-full max-w-lg rounded-3xl p-8 md:p-10 shadow-2xl border border-white/20 bg-slate-950/85"
+            className="glass-panel relative w-full max-w-lg rounded-3xl p-8 md:p-10 shadow-2xl border border-slate-200 bg-white/90"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+              className="absolute top-5 right-5 p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-2.5 bg-cyan-500/20 border border-cyan-400/40 rounded-2xl text-cyan-300">
+              <div className="p-2.5 bg-cyan-50 border border-cyan-200 rounded-2xl text-cyan-600">
                 <Sparkles className="w-5 h-5" />
               </div>
-              <h3 className="text-2xl font-bold text-white">Let&apos;s Connect</h3>
+              <h3 className="text-2xl font-bold text-slate-900">Let&apos;s Connect</h3>
             </div>
-            <p className="text-slate-300 text-sm mb-6">Send a direct message or collaboration inquiry. I usually respond within 24 hours.</p>
+            <p className="text-slate-600 text-sm mb-6">Send a direct message or collaboration inquiry. I usually respond within 24 hours.</p>
 
             {submitStatus === 'success' ? (
               <div className="text-center py-10">
-                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-400/40 shadow-sm">
-                  <Check className="w-8 h-8 text-emerald-400" />
+                <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-200 shadow-sm">
+                  <Check className="w-8 h-8 text-emerald-600" />
                 </div>
-                <h4 className="text-lg font-bold text-white mb-1">Opening Email Client...</h4>
-                <p className="text-slate-300 text-sm">Thank you for reaching out!</p>
+                <h4 className="text-lg font-bold text-slate-900 mb-1">Opening Email Client...</h4>
+                <p className="text-slate-600 text-sm">Thank you for reaching out!</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-cyan-300 mb-2">
+                  <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-cyan-700 mb-2">
                     Your Name
                   </label>
                   <input
@@ -361,13 +361,13 @@ const ContactModal = ({
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-900/90 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30 transition-all text-sm"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
                     placeholder="e.g. Alex Morgan"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-cyan-300 mb-2">
+                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-cyan-700 mb-2">
                     Your Email Address
                   </label>
                   <input
@@ -376,13 +376,13 @@ const ContactModal = ({
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-900/90 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30 transition-all text-sm"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm"
                     placeholder="alex@example.com"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-cyan-300 mb-2">
+                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-cyan-700 mb-2">
                     Message
                   </label>
                   <textarea
@@ -391,7 +391,7 @@ const ContactModal = ({
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-900/90 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30 transition-all text-sm resize-none"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition-all text-sm resize-none"
                     placeholder="Tell me about your project, co-op opportunity, or idea..."
                   />
                 </div>
@@ -455,13 +455,13 @@ const ProjectDetailModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-xl overflow-y-auto"
+          className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-xl overflow-y-auto"
           onClick={onClose}
         >
           {/* Close Button */}
           <button 
             onClick={onClose} 
-            className="fixed top-6 right-6 p-3 bg-slate-900/90 hover:bg-slate-800 text-white rounded-full backdrop-blur-md border border-white/20 transition-all z-50 shadow-2xl"
+            className="fixed top-6 right-6 p-3 bg-white hover:bg-slate-100 text-slate-800 rounded-full backdrop-blur-md border border-slate-200 transition-all z-50 shadow-lg"
           >
             <X className="w-6 h-6" />
           </button>
@@ -476,23 +476,23 @@ const ProjectDetailModal = ({
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header Banner */}
-              <div className="glass-panel rounded-3xl p-8 md:p-10 mb-8 border-white/20 bg-slate-950/85">
+              <div className="glass-panel rounded-3xl p-8 md:p-10 mb-8 border-slate-200 bg-white/90 shadow-lg">
                 <div className="flex flex-wrap items-center gap-2 mb-4">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 rounded-md bg-cyan-950/80 text-cyan-300 text-[11px] font-bold uppercase tracking-wider border border-cyan-500/50">
+                    <span key={tag} className="px-3 py-1 rounded-md bg-cyan-50 text-cyan-700 text-[11px] font-bold uppercase tracking-wider border border-cyan-200">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-3 tracking-tight">{project.title}</h1>
-                <p className="text-lg md:text-xl text-fuchsia-400 font-semibold mb-6">{project.subtitle}</p>
+                <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-3 tracking-tight">{project.title}</h1>
+                <p className="text-lg md:text-xl text-fuchsia-600 font-semibold mb-6">{project.subtitle}</p>
 
                 {project.achievements && project.achievements.length > 0 && (
                   <div className="flex flex-wrap gap-3 pt-2">
                     {project.achievements.map((ach, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 px-4 py-2 bg-purple-950/80 border border-purple-500/40 rounded-xl text-purple-200 text-sm font-semibold shadow-xs">
-                        <Award className="w-4 h-4 text-purple-400 shrink-0" />
+                      <div key={idx} className="flex items-center gap-2.5 px-4 py-2 bg-purple-50 border border-purple-200 rounded-xl text-purple-800 text-sm font-semibold shadow-xs">
+                        <Award className="w-4 h-4 text-purple-600 shrink-0" />
                         <span>{ach}</span>
                       </div>
                     ))}
@@ -501,7 +501,7 @@ const ProjectDetailModal = ({
               </div>
 
               {/* Navigation Tabs */}
-              <div className="flex gap-2 mb-8 border-b border-white/15 pb-4 overflow-x-auto">
+              <div className="flex gap-2 mb-8 border-b border-slate-200 pb-4 overflow-x-auto">
                 {[
                   { id: 'overview', label: 'Overview & Impact' },
                   { id: 'features', label: 'Architecture & Features' },
@@ -513,7 +513,7 @@ const ProjectDetailModal = ({
                     className={`px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap ${
                       activeTab === tab.id
                         ? 'bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-pink-500 text-white shadow-lg shadow-cyan-500/30'
-                        : 'bg-slate-900/70 text-slate-300 hover:bg-slate-800 hover:text-white border border-white/15'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 border border-slate-200'
                     }`}
                   >
                     {tab.label}
@@ -532,63 +532,63 @@ const ProjectDetailModal = ({
                     className="space-y-6"
                   >
                     {/* Full Description */}
-                    <div className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-white/15">
-                      <h3 className="text-xl font-bold text-white mb-3">Project Summary</h3>
-                      <p className="text-slate-300 leading-relaxed text-base md:text-lg">{project.fullDescription}</p>
+                    <div className="glass-panel rounded-3xl p-8 bg-white/90 border-slate-200">
+                      <h3 className="text-xl font-bold text-slate-900 mb-3">Project Summary</h3>
+                      <p className="text-slate-600 leading-relaxed text-base md:text-lg">{project.fullDescription}</p>
                     </div>
 
                     {/* Problem vs Solution Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-rose-500/40">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90 border-rose-200">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2.5 bg-rose-500/20 rounded-xl border border-rose-400/40 text-rose-300">
+                          <div className="p-2.5 bg-rose-50 rounded-xl border border-rose-200 text-rose-600">
                             <Target className="w-5 h-5" />
                           </div>
-                          <h3 className="text-lg font-bold text-white">The Problem</h3>
+                          <h3 className="text-lg font-bold text-slate-900">The Problem</h3>
                         </div>
-                        <p className="text-slate-300 text-sm leading-relaxed">{project.problemStatement}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.problemStatement}</p>
                       </div>
 
-                      <div className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-cyan-500/40">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90 border-cyan-200">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2.5 bg-cyan-500/20 rounded-xl border border-cyan-400/40 text-cyan-300">
+                          <div className="p-2.5 bg-cyan-50 rounded-xl border border-cyan-200 text-cyan-600">
                             <Lightbulb className="w-5 h-5" />
                           </div>
-                          <h3 className="text-lg font-bold text-white">The Solution</h3>
+                          <h3 className="text-lg font-bold text-slate-900">The Solution</h3>
                         </div>
-                        <p className="text-slate-300 text-sm leading-relaxed">{project.solution}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.solution}</p>
                       </div>
                     </div>
 
                     {/* Target Market & UVP */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-purple-500/40">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90 border-purple-200">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2.5 bg-purple-500/20 rounded-xl border border-purple-400/40 text-purple-300">
+                          <div className="p-2.5 bg-purple-50 rounded-xl border border-purple-200 text-purple-600">
                             <Users className="w-5 h-5" />
                           </div>
-                          <h3 className="text-lg font-bold text-white">Target Audience & Reach</h3>
+                          <h3 className="text-lg font-bold text-slate-900">Target Audience & Reach</h3>
                         </div>
-                        <p className="text-slate-300 text-sm leading-relaxed">{project.targetMarket}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.targetMarket}</p>
                       </div>
 
-                      <div className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-emerald-500/40">
+                      <div className="glass-panel rounded-3xl p-8 bg-white/90 border-emerald-200">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2.5 bg-emerald-500/20 rounded-xl border border-emerald-400/40 text-emerald-300">
+                          <div className="p-2.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-600">
                             <Zap className="w-5 h-5" />
                           </div>
-                          <h3 className="text-lg font-bold text-white">Unique Proposition</h3>
+                          <h3 className="text-lg font-bold text-slate-900">Unique Proposition</h3>
                         </div>
-                        <p className="text-slate-300 text-sm leading-relaxed">{project.uniqueValue}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{project.uniqueValue}</p>
                       </div>
                     </div>
 
                     {/* Tech Stack */}
-                    <div className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-white/15">
-                      <h3 className="text-lg font-bold text-white mb-4">Built With</h3>
+                    <div className="glass-panel rounded-3xl p-8 bg-white/90 border-slate-200">
+                      <h3 className="text-lg font-bold text-slate-900 mb-4">Built With</h3>
                       <div className="flex flex-wrap gap-2.5">
                         {project.technologies.map((tech) => (
-                          <span key={tech} className="px-3.5 py-1.5 bg-slate-900 border border-white/20 rounded-lg text-slate-200 text-xs font-semibold shadow-2xs">
+                          <span key={tech} className="px-3.5 py-1.5 bg-slate-100 border border-slate-200 rounded-lg text-slate-700 text-xs font-semibold shadow-2xs">
                             {tech}
                           </span>
                         ))}
@@ -606,14 +606,14 @@ const ProjectDetailModal = ({
                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                   >
                     {project.features.map((feature, idx) => (
-                      <div key={idx} className="glass-panel rounded-3xl p-8 bg-slate-950/80 border-white/15">
+                      <div key={idx} className="glass-panel rounded-3xl p-8 bg-white/90 border-slate-200">
                         <div className="flex items-center gap-3.5 mb-3">
-                          <div className="p-3 bg-cyan-500/20 rounded-2xl border border-cyan-400/40 text-cyan-300">
+                          <div className="p-3 bg-cyan-50 rounded-2xl border border-cyan-200 text-cyan-600">
                             <feature.icon className="w-5 h-5" />
                           </div>
-                          <h3 className="text-lg font-bold text-white">{feature.title}</h3>
+                          <h3 className="text-lg font-bold text-slate-900">{feature.title}</h3>
                         </div>
-                        <p className="text-slate-300 text-sm leading-relaxed">{feature.description}</p>
+                        <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
                       </div>
                     ))}
                   </motion.div>
@@ -631,7 +631,7 @@ const ProjectDetailModal = ({
                       <div 
                         key={idx}
                         onClick={() => setSelectedLightboxImage(img)}
-                        className="group glass-panel relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer bg-slate-900 border-white/20 shadow-xs hover:border-cyan-400 transition-all p-3"
+                        className="group glass-panel relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer bg-slate-100 border-slate-200 shadow-xs hover:border-cyan-500 transition-all p-3"
                       >
                         <div className="relative w-full h-full">
                           <Image 
@@ -642,7 +642,7 @@ const ProjectDetailModal = ({
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
                         </div>
-                        <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
                           <div className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
                             <Maximize2 className="w-3.5 h-3.5" /> Expand
                           </div>
@@ -663,7 +663,7 @@ const ProjectDetailModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-xl flex items-center justify-center p-4"
+          className="fixed inset-0 z-[120] bg-slate-900/60 backdrop-blur-xl flex items-center justify-center p-4"
           onClick={() => setSelectedLightboxImage(null)}
         >
           <button 
@@ -726,7 +726,7 @@ export default function Portfolio() {
     : projectsData.filter(p => p.category === activeFilter);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#030014] text-slate-100 font-sans selection:bg-pink-500/40 selection:text-pink-100">
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-900 font-sans selection:bg-pink-500/30 selection:text-pink-900">
       {/* Background Aurora Layers */}
       <div className="aurora-stage" />
       <div className="aurora-ribbon" />
@@ -739,9 +739,9 @@ export default function Portfolio() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-20 right-6 z-[110] px-4 py-2.5 bg-slate-900/90 text-white text-xs font-bold rounded-xl shadow-2xl border border-emerald-500/40 flex items-center gap-2 backdrop-blur-md"
+            className="fixed top-20 right-6 z-[110] px-4 py-2.5 bg-white text-slate-900 text-xs font-bold rounded-xl shadow-2xl border border-emerald-300 flex items-center gap-2 backdrop-blur-md"
           >
-            <Check className="w-4 h-4 text-emerald-400" />
+            <Check className="w-4 h-4 text-emerald-600" />
             Email copied to clipboard! (montenegrokarlo@gmail.com)
           </motion.div>
         )}
@@ -760,27 +760,27 @@ export default function Portfolio() {
 
       {/* Floating Frosted Glass Navbar */}
       <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl">
-        <nav className="glass-panel rounded-full px-5 py-3 flex items-center justify-between shadow-xl border border-white/20 bg-slate-950/70 backdrop-blur-xl">
-          <a href="#" className="flex items-center gap-2.5 text-white font-extrabold text-sm md:text-base group">
+        <nav className="glass-panel rounded-full px-5 py-3 flex items-center justify-between shadow-md border border-slate-200/80 bg-white/80 backdrop-blur-xl">
+          <a href="#" className="flex items-center gap-2.5 text-slate-900 font-extrabold text-sm md:text-base group">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-pink-500 p-[1.5px] shadow-xs group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-xs font-black text-white">
+              <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center text-xs font-black text-white">
                 KR
               </div>
             </div>
-            <span className="hidden sm:inline tracking-tight font-bold text-white">Karlo Montenegro</span>
+            <span className="hidden sm:inline tracking-tight font-bold text-slate-900">Karlo Montenegro</span>
           </a>
 
-          <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
-            <a href="#work" className="hover:text-cyan-300 transition-colors">Work</a>
-            <a href="#tech" className="hover:text-cyan-300 transition-colors">Tech Architecture</a>
-            <a href="#honors" className="hover:text-cyan-300 transition-colors">Achievements</a>
-            <a href="#about" className="hover:text-cyan-300 transition-colors">About</a>
+          <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
+            <a href="#work" className="hover:text-cyan-600 transition-colors">Work</a>
+            <a href="#tech" className="hover:text-cyan-600 transition-colors">Tech Architecture</a>
+            <a href="#honors" className="hover:text-cyan-600 transition-colors">Achievements</a>
+            <a href="#about" className="hover:text-cyan-600 transition-colors">About</a>
           </div>
 
           <div className="flex items-center gap-2 md:gap-3">
             <button
               onClick={handleCopyEmail}
-              className="p-2 text-slate-300 hover:text-white bg-white/10 hover:bg-white/20 rounded-full border border-white/15 transition-all text-xs font-semibold hidden sm:flex items-center gap-1.5 backdrop-blur-md"
+              className="p-2 text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-full border border-slate-200 transition-all text-xs font-semibold hidden sm:flex items-center gap-1.5 backdrop-blur-md"
               title="Copy email"
             >
               <Copy className="w-3.5 h-3.5" />
@@ -806,19 +806,19 @@ export default function Portfolio() {
           className="flex flex-col items-center"
         >
           {/* Gemini Badge */}
-          <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-cyan-200 mb-8 border border-cyan-400/40">
-            <Sparkles className="w-4 h-4 text-cyan-400 animate-spin" style={{ animationDuration: '6s' }} />
+          <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-cyan-800 mb-8 border border-cyan-300">
+            <Sparkles className="w-4 h-4 text-cyan-600 animate-spin" style={{ animationDuration: '6s' }} />
             <span>AI, IoT & UI/UX Developer</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse ml-1" />
+            <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse ml-1" />
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white mb-6 leading-[1.08]">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08]">
             Building the <br />
             <span className="aurora-text">tech of tomorrow.</span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-slate-300 font-medium max-w-2xl leading-relaxed mb-10">
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-fuchsia-300 to-pink-300 font-bold">Karlo Roel Montenegro</span> — a Computer Science student engineering last-mile IoT hardware, predictive AI networks, and intuitive user interfaces.
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student engineering last-mile IoT hardware, predictive AI networks, and intuitive user interfaces.
           </p>
 
           {/* CTA Buttons */}
@@ -834,7 +834,7 @@ export default function Portfolio() {
               href="https://github.com/karlsxo/KarloRoel" 
               target="_blank" 
               rel="noreferrer" 
-              className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-cyan-400/50 rounded-full font-bold text-sm shadow-xs transition-all flex items-center gap-2 backdrop-blur-md"
+              className="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 hover:border-cyan-400 rounded-full font-bold text-sm shadow-xs transition-all flex items-center gap-2 backdrop-blur-md"
             >
               <Github className="w-4 h-4" />
               GitHub
@@ -844,18 +844,18 @@ export default function Portfolio() {
           {/* Quick Stat Chips */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
             <SpotlightCard className="p-5 text-center">
-              <div className="text-cyan-400 font-extrabold text-2xl mb-1">Top 10 Finalist</div>
-              <div className="text-slate-300 text-xs font-semibold">UP Los Baños Innovation Olympics</div>
+              <div className="text-cyan-600 font-extrabold text-2xl mb-1">Top 10 Finalist</div>
+              <div className="text-slate-600 text-xs font-semibold">UP Los Baños Innovation Olympics</div>
             </SpotlightCard>
 
             <SpotlightCard className="p-5 text-center">
-              <div className="text-fuchsia-400 font-extrabold text-2xl mb-1">IoT + AI</div>
-              <div className="text-slate-300 text-xs font-semibold">ESP32 Cold Chain Hardware</div>
+              <div className="text-fuchsia-600 font-extrabold text-2xl mb-1">IoT + AI</div>
+              <div className="text-slate-600 text-xs font-semibold">ESP32 Cold Chain Hardware</div>
             </SpotlightCard>
 
             <SpotlightCard className="p-5 text-center">
-              <div className="text-emerald-400 font-extrabold text-2xl mb-1">Blockchain</div>
-              <div className="text-slate-300 text-xs font-semibold">Healthcare Blood Supply Chain</div>
+              <div className="text-emerald-600 font-extrabold text-2xl mb-1">Blockchain</div>
+              <div className="text-slate-600 text-xs font-semibold">Healthcare Blood Supply Chain</div>
             </SpotlightCard>
           </div>
         </motion.div>
@@ -865,14 +865,14 @@ export default function Portfolio() {
       <Section id="work" className="section-glow">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-cyan-400 font-bold text-xs uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-1.5 text-cyan-600 font-bold text-xs uppercase tracking-wider mb-2">
               <Layers className="w-4 h-4" /> Portfolio Showcase
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">Selected Work</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Selected Work</h2>
           </div>
 
           {/* Category Filter Tabs */}
-          <div className="flex items-center gap-1.5 p-1.5 bg-slate-950/80 border border-white/15 rounded-2xl backdrop-blur-md overflow-x-auto">
+          <div className="flex items-center gap-1.5 p-1.5 bg-white/80 border border-slate-200 rounded-2xl backdrop-blur-md overflow-x-auto shadow-xs">
             {[
               { id: "all", label: "All Projects" },
               { id: "ai-iot", label: "AI & IoT" },
@@ -885,7 +885,7 @@ export default function Portfolio() {
                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   activeFilter === tab.id
                     ? "bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-pink-500 text-white shadow-lg shadow-cyan-500/25"
-                    : "text-slate-300 hover:text-white hover:bg-white/10"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 {tab.label}
@@ -909,7 +909,7 @@ export default function Portfolio() {
               className="cursor-pointer group flex flex-col h-full"
             >
               {/* Media Preview Box */}
-              <div className="relative h-60 w-full bg-gradient-to-br from-slate-900/90 via-purple-950/50 to-slate-950 border-b border-white/15 p-6 flex items-center justify-center overflow-hidden">
+              <div className="relative h-60 w-full bg-gradient-to-br from-slate-100 via-purple-50/60 to-slate-50 border-b border-slate-200/80 p-6 flex items-center justify-center overflow-hidden">
                 <div className="relative w-full h-full scale-95 group-hover:scale-100 transition-transform duration-500">
                   <Image
                     src={project.images[0]}
@@ -919,7 +919,7 @@ export default function Portfolio() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   />
                 </div>
-                <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
                   <span className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
                     {project.externalUrl ? "Visit Live Site" : "View Case Study"}
                     {project.externalUrl ? <ExternalLink className="w-3.5 h-3.5" /> : <ArrowUpRight className="w-3.5 h-3.5" />}
@@ -931,18 +931,18 @@ export default function Portfolio() {
               <div className="p-7 flex flex-col flex-1">
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 rounded-md bg-cyan-950/80 text-[10px] font-bold uppercase tracking-wider text-cyan-300 border border-cyan-500/40">
+                    <span key={tag} className="px-2.5 py-1 rounded-md bg-cyan-50 text-[10px] font-bold uppercase tracking-wider text-cyan-700 border border-cyan-200">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-cyan-300 transition-colors">{project.title}</h3>
-                <p className="text-fuchsia-400 text-xs font-bold mb-3">{project.subtitle}</p>
-                <p className="text-slate-300 text-xs leading-relaxed mb-6 flex-1">{project.shortDescription}</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-1 group-hover:text-cyan-600 transition-colors">{project.title}</h3>
+                <p className="text-fuchsia-600 text-xs font-bold mb-3">{project.subtitle}</p>
+                <p className="text-slate-600 text-xs leading-relaxed mb-6 flex-1">{project.shortDescription}</p>
 
-                <div className="flex items-center justify-between pt-4 border-t border-white/10 text-xs font-bold text-slate-200">
-                  <span className="text-cyan-400 font-semibold">{project.externalUrl ? "External Web App" : "Deep Dive Case Study"}</span>
+                <div className="flex items-center justify-between pt-4 border-t border-slate-200 text-xs font-bold text-slate-700">
+                  <span className="text-cyan-600 font-semibold">{project.externalUrl ? "External Web App" : "Deep Dive Case Study"}</span>
                   <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -954,24 +954,24 @@ export default function Portfolio() {
       {/* Tech Architecture Section */}
       <Section id="tech" className="section-glow">
         <div className="mb-12">
-          <div className="inline-flex items-center gap-1.5 text-fuchsia-400 font-bold text-xs uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 text-fuchsia-600 font-bold text-xs uppercase tracking-wider mb-2">
             <Terminal className="w-4 h-4" /> Technical Capability
           </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-3">Core Stack & Technologies</h2>
-          <p className="text-slate-300 text-sm max-w-xl">Tools, programming languages, and hardware frameworks I leverage for software and IoT development.</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Core Stack & Technologies</h2>
+          <p className="text-slate-600 text-sm max-w-xl">Tools, programming languages, and hardware frameworks I leverage for software and IoT development.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Frontend */}
           <SpotlightCard className="p-7">
-            <div className="p-3 bg-cyan-500/20 rounded-2xl border border-cyan-400/40 text-cyan-300 w-fit mb-5">
+            <div className="p-3 bg-cyan-50 rounded-2xl border border-cyan-200 text-cyan-600 w-fit mb-5">
               <Code2 className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Frontend & UI/UX</h3>
-            <p className="text-slate-400 text-xs leading-relaxed mb-4">Designing accessible, high-performance interfaces.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Frontend & UI/UX</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Designing accessible, high-performance interfaces.</p>
             <div className="flex flex-wrap gap-1.5">
               {["React", "Next.js 16", "Tailwind CSS", "TypeScript", "Framer Motion"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-slate-900/90 border border-white/15 rounded-md text-[11px] font-semibold text-slate-200">
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
                   {t}
                 </span>
               ))}
@@ -980,14 +980,14 @@ export default function Portfolio() {
 
           {/* Backend */}
           <SpotlightCard className="p-7">
-            <div className="p-3 bg-purple-500/20 rounded-2xl border border-purple-400/40 text-purple-300 w-fit mb-5">
+            <div className="p-3 bg-purple-50 rounded-2xl border border-purple-200 text-purple-600 w-fit mb-5">
               <Globe className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Backend & Systems</h3>
-            <p className="text-slate-400 text-xs leading-relaxed mb-4">Architecting scalable APIs and algorithmic logic.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Backend & Systems</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Architecting scalable APIs and algorithmic logic.</p>
             <div className="flex flex-wrap gap-1.5">
               {["Python", "Java", "C++", "Node.js", "JavaScript", "REST APIs"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-slate-900/90 border border-white/15 rounded-md text-[11px] font-semibold text-slate-200">
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
                   {t}
                 </span>
               ))}
@@ -996,14 +996,14 @@ export default function Portfolio() {
 
           {/* AI & Hardware */}
           <SpotlightCard className="p-7">
-            <div className="p-3 bg-emerald-500/20 rounded-2xl border border-emerald-400/40 text-emerald-300 w-fit mb-5">
+            <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-600 w-fit mb-5">
               <Cpu className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">AI & Hardware (IoT)</h3>
-            <p className="text-slate-400 text-xs leading-relaxed mb-4">Hardware prototyping and machine learning model implementation.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">AI & Hardware (IoT)</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Hardware prototyping and machine learning model implementation.</p>
             <div className="flex flex-wrap gap-1.5">
               {["ESP32", "TensorFlow", "DHT11 Sensor", "GPS/GPRS", "Flutter"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-slate-900/90 border border-white/15 rounded-md text-[11px] font-semibold text-slate-200">
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
                   {t}
                 </span>
               ))}
@@ -1012,14 +1012,14 @@ export default function Portfolio() {
 
           {/* Cloud & Databases */}
           <SpotlightCard className="p-7">
-            <div className="p-3 bg-pink-500/20 rounded-2xl border border-pink-400/40 text-pink-300 w-fit mb-5">
+            <div className="p-3 bg-pink-50 rounded-2xl border border-pink-200 text-pink-600 w-fit mb-5">
               <Database className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white mb-2">Databases & Tools</h3>
-            <p className="text-slate-400 text-xs leading-relaxed mb-4">Data management, version control, and cloud deployment.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Databases & Tools</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Data management, version control, and cloud deployment.</p>
             <div className="flex flex-wrap gap-1.5">
               {["PostgreSQL", "Firebase", "SQL", "Docker", "Git", "AWS"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-slate-900/90 border border-white/15 rounded-md text-[11px] font-semibold text-slate-200">
+                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
                   {t}
                 </span>
               ))}
@@ -1031,25 +1031,25 @@ export default function Portfolio() {
       {/* Achievements & Honors Section */}
       <Section id="honors">
         <div className="mb-12 text-center max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 text-amber-400 font-bold text-xs uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 text-amber-600 font-bold text-xs uppercase tracking-wider mb-2">
             <Award className="w-4 h-4" /> Recognition & Milestones
           </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-3">Honors & Achievements</h2>
-          <p className="text-slate-300 text-sm">Key competition results and engineering achievements.</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Honors & Achievements</h2>
+          <p className="text-slate-600 text-sm">Key competition results and engineering achievements.</p>
         </div>
 
         <div className="max-w-3xl mx-auto">
-          <SpotlightCard className="p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 border-amber-500/40 bg-gradient-to-br from-slate-950/90 to-amber-950/30">
-            <div className="p-4 bg-amber-500/20 border border-amber-400/50 rounded-2xl text-amber-300 shrink-0">
+          <SpotlightCard className="p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 border-amber-300 bg-gradient-to-br from-white to-amber-50/60 shadow-md">
+            <div className="p-4 bg-amber-100 border border-amber-300 rounded-2xl text-amber-700 shrink-0">
               <Award className="w-8 h-8" />
             </div>
             <div>
-              <div className="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-400/40 rounded-md text-[11px] font-bold uppercase tracking-wider w-fit mb-3">
+              <div className="px-3 py-1 bg-amber-100 text-amber-800 border border-amber-300 rounded-md text-[11px] font-bold uppercase tracking-wider w-fit mb-3">
                 September 1–3, 2025
               </div>
-              <h3 className="text-2xl font-extrabold text-white mb-2">Top 10 Finalist — Innovation Olympics</h3>
-              <p className="text-amber-300 text-sm font-semibold mb-3">University of the Philippines Los Baños (UPLB)</p>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-2">Top 10 Finalist — Innovation Olympics</h3>
+              <p className="text-amber-700 text-sm font-semibold mb-3">University of the Philippines Los Baños (UPLB)</p>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 Selected as a national Top 10 finalist for Project DalAni — recognized for technical feasibility and social impact in solving agricultural post-harvest loss through ESP32 IoT modules and AI verification.
               </p>
             </div>
@@ -1061,43 +1061,43 @@ export default function Portfolio() {
       <Section id="about" className="section-glow">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-1.5 text-cyan-400 font-bold text-xs uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-1.5 text-cyan-600 font-bold text-xs uppercase tracking-wider mb-2">
               <Users className="w-4 h-4" /> Background
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6">About Me</h2>
-            <div className="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">About Me</h2>
+            <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
               <p>
                 I am a Computer Science student driven by the belief that hardware sensors, artificial intelligence, and great UI/UX design can transform traditional industries.
               </p>
               <p>
-                Whether engineering last-mile agricultural sensors in <strong className="text-white font-bold">Project DalAni</strong> or standardizing healthcare supply records in <strong className="text-white font-bold">Artery</strong>, my core focus is building human-centered solutions with real-world impact.
+                Whether engineering last-mile agricultural sensors in <strong className="text-slate-900 font-bold">Project DalAni</strong> or standardizing healthcare supply records in <strong className="text-slate-900 font-bold">Artery</strong>, my core focus is building human-centered solutions with real-world impact.
               </p>
             </div>
           </div>
 
           <div className="lg:col-span-5">
             <SpotlightCard className="p-8 space-y-6">
-              <h3 className="text-lg font-bold text-white border-b border-white/15 pb-4">Core Principles</h3>
+              <h3 className="text-lg font-bold text-slate-900 border-b border-slate-200 pb-4">Core Principles</h3>
               <div className="space-y-4 text-xs font-medium">
                 <div className="flex gap-3.5 items-start">
-                  <div className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0 font-bold border border-cyan-400/40">1</div>
+                  <div className="w-6 h-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center shrink-0 font-bold border border-cyan-300">1</div>
                   <div>
-                    <h4 className="font-bold text-white mb-0.5">Intuitive Micro-Interactions</h4>
-                    <p className="text-slate-400">Interfaces should feel tactile, fast, and responsive.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Intuitive Micro-Interactions</h4>
+                    <p className="text-slate-500">Interfaces should feel tactile, fast, and responsive.</p>
                   </div>
                 </div>
                 <div className="flex gap-3.5 items-start">
-                  <div className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center shrink-0 font-bold border border-purple-400/40">2</div>
+                  <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 font-bold border border-purple-300">2</div>
                   <div>
-                    <h4 className="font-bold text-white mb-0.5">Practical Hardware Integration</h4>
-                    <p className="text-slate-400">Low-cost IoT sensors collecting reliable physical data.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Practical Hardware Integration</h4>
+                    <p className="text-slate-500">Low-cost IoT sensors collecting reliable physical data.</p>
                   </div>
                 </div>
                 <div className="flex gap-3.5 items-start">
-                  <div className="w-6 h-6 rounded-full bg-pink-500/20 text-pink-300 flex items-center justify-center shrink-0 font-bold border border-pink-400/40">3</div>
+                  <div className="w-6 h-6 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center shrink-0 font-bold border border-pink-300">3</div>
                   <div>
-                    <h4 className="font-bold text-white mb-0.5">Data Integrity & Trust</h4>
-                    <p className="text-slate-400">AI and blockchain providing verifiable metrics for decision making.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Data Integrity & Trust</h4>
+                    <p className="text-slate-500">AI and blockchain providing verifiable metrics for decision making.</p>
                   </div>
                 </div>
               </div>
@@ -1107,13 +1107,13 @@ export default function Portfolio() {
       </Section>
 
       {/* Contact Section */}
-      <section className="relative z-10 py-24 md:py-32 border-t border-white/15">
+      <section className="relative z-10 py-24 md:py-32 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight mb-6">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6">
             Let&apos;s build something <br />
             <span className="aurora-text">extraordinary together.</span>
           </h2>
-          <p className="text-slate-300 text-base md:text-lg max-w-xl mx-auto mb-10">
+          <p className="text-slate-600 text-base md:text-lg max-w-xl mx-auto mb-10">
             I am currently open to internship, co-op, project collaboration, and developer opportunities.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -1126,7 +1126,7 @@ export default function Portfolio() {
             </button>
             <button
               onClick={handleCopyEmail}
-              className="px-6 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/20 rounded-full font-bold text-base shadow-xs transition-all flex items-center gap-2 backdrop-blur-md"
+              className="px-6 py-4 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-full font-bold text-base shadow-xs transition-all flex items-center gap-2 backdrop-blur-md"
             >
               <Copy className="w-5 h-5" />
               <span>Copy Email</span>
@@ -1136,17 +1136,17 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 py-8 bg-slate-950/80 border-t border-white/10 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 text-xs font-semibold">
+      <footer className="relative z-10 py-8 bg-white/80 border-t border-slate-200 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs font-semibold">
           <p>© 2026 Karlo Roel Montenegro. Designed in Vibrant Cosmic Galaxy Aesthetic.</p>
           
           <div className="flex items-center gap-6">
-            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-1">
+            <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors flex items-center gap-1">
               <Github className="w-4 h-4" /> GitHub
             </a>
             <button 
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors border border-white/15"
+              className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-800 transition-colors border border-slate-200"
               title="Back to Top"
             >
               <ArrowUp className="w-4 h-4" />
