@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --galaxy-cyan: #0284c7;
-  --galaxy-blue: #38bdf8;
-  --galaxy-indigo: #6366f1;
-  --galaxy-violet: #a855f7;
-  --galaxy-magenta: #ff007f;
-  --galaxy-pink: #ec4899;
-  --galaxy-teal: #00f5d4;
+  --background: #f7f9ff;
+  --foreground: #111827;
+  --galaxy-cyan: #0891b2;
+  --galaxy-blue: #2563eb;
+  --galaxy-indigo: #4f46e5;
+  --galaxy-violet: #7c3aed;
+  --galaxy-magenta: #c026d3;
+  --galaxy-pink: #db2777;
+  --galaxy-teal: #14b8a6;
   --galaxy-amber: #d97706;
-  --galaxy-silver: #0f172a;
+  --galaxy-silver: #111827;
   --scroll-progress: 0;
   --mouse-x: 50%;
   --mouse-y: 50%;
@@ -30,18 +30,14 @@ html {
 }
 
 body {
-  background-color: #f8fafc;
+  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
   background-attachment: fixed;
-  background-image:
-    radial-gradient(circle at 85% 12%, rgba(0, 240, 255, 0.22), transparent 32rem),
-    radial-gradient(circle at 15% 42%, rgba(147, 51, 234, 0.2), transparent 30rem),
-    radial-gradient(circle at 80% 78%, rgba(255, 0, 127, 0.18), transparent 32rem),
-    linear-gradient(165deg, #f8fafc 0%, #f1f5f9 45%, #f8fafc 100%);
+  background-image: linear-gradient(150deg, #fbfdff 0%, #f3f6ff 48%, #faf7ff 100%);
 }
 
 /* Custom Scrollbar */
@@ -61,7 +57,7 @@ body {
   background: linear-gradient(180deg, #38bdf8 0%, #c084fc 50%, #f43f5e 100%);
 }
 
-/* Refined Vibrant Aurora Canvas Layer */
+/* Aurora is kept at the edge of the viewport so it frames content, rather than competing with it. */
 .aurora-stage {
   position: fixed;
   inset: 0;
@@ -69,87 +65,96 @@ body {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .aurora-stage::before {
   content: "";
   position: absolute;
-  top: -15vh;
-  right: -5vw;
-  width: 80vw;
-  height: 70vh;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 130deg at 50% 50%,
-    transparent 0deg,
-    rgba(0, 240, 255, 0.65) 40deg,
-    rgba(56, 189, 248, 0.7) 75deg,
-    rgba(124, 58, 237, 0.75) 130deg,
-    rgba(217, 70, 239, 0.8) 180deg,
-    rgba(255, 0, 127, 0.7) 230deg,
-    transparent 310deg
-  );
-  filter: blur(70px) saturate(280%) brightness(1.15);
+  top: -24vh;
+  right: -18vw;
+  width: min(78rem, 96vw);
+  height: min(48rem, 78vh);
+  border-radius: 44% 56% 62% 38% / 48% 45% 55% 52%;
+  background: radial-gradient(ellipse at 36% 62%, rgba(34, 211, 238, 0.48) 0%, rgba(59, 130, 246, 0.34) 30%, rgba(124, 58, 237, 0.28) 55%, transparent 73%);
+  filter: blur(48px) saturate(145%);
   transform:
     translate3d(calc(var(--scroll-progress) * -4vw), calc(var(--scroll-progress) * 8vh), 0)
     rotate(calc(var(--scroll-progress) * 15deg));
-  animation: galaxy-nebula-spin 22s ease-in-out infinite alternate;
+  animation: galaxy-nebula-drift 24s ease-in-out infinite alternate;
+}
+
+.aurora-stage::after {
+  content: "";
+  position: absolute;
+  left: -26vw;
+  top: 44vh;
+  width: min(52rem, 86vw);
+  height: min(42rem, 62vh);
+  border-radius: 58% 42% 46% 54% / 44% 52% 48% 56%;
+  background: radial-gradient(ellipse at 62% 42%, rgba(192, 132, 252, 0.28) 0%, rgba(236, 72, 153, 0.2) 34%, rgba(56, 189, 248, 0.16) 54%, transparent 74%);
+  filter: blur(58px) saturate(135%);
+  transform: translate3d(calc(var(--scroll-progress) * 4vw), calc(var(--scroll-progress) * -7vh), 0);
+  animation: galaxy-nebula-drift 30s ease-in-out infinite alternate-reverse;
 }
 
 .aurora-ribbon {
   position: fixed;
-  top: 5vh;
-  left: -15vw;
-  width: 130vw;
-  height: 40vh;
+  top: 3vh;
+  left: 9vw;
+  width: 82vw;
+  height: 25vh;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    105deg,
-    transparent 8%,
-    rgba(0, 240, 255, 0.55) 22%,
-    rgba(99, 102, 241, 0.68) 42%,
-    rgba(168, 85, 247, 0.75) 62%,
-    rgba(255, 0, 127, 0.65) 82%,
-    transparent 96%
-  );
-  filter: blur(52px) saturate(320%) brightness(1.2);
-  transform: translateY(calc(var(--scroll-progress) * 10vh)) skewY(-5deg);
-  animation: galaxy-plasma-wave 16s ease-in-out infinite alternate;
+  border-radius: 50%;
+  background: linear-gradient(98deg, transparent 4%, rgba(34, 211, 238, 0.22) 24%, rgba(99, 102, 241, 0.32) 48%, rgba(192, 132, 252, 0.24) 70%, transparent 96%);
+  filter: blur(34px) saturate(150%);
+  opacity: 0.78;
+  transform: translateY(calc(var(--scroll-progress) * 7vh)) skewY(-4deg);
+  animation: galaxy-plasma-wave 18s ease-in-out infinite alternate;
 }
 
 /* Dynamic Aurora Ambient Light Core */
 .aurora-ribbon::after {
   content: "";
   position: absolute;
-  inset: 15% 10%;
+  inset: 24% 16%;
   border-radius: 9999px;
   background: linear-gradient(
     90deg,
-    rgba(0, 240, 255, 0.8),
-    rgba(192, 132, 252, 0.85),
-    rgba(255, 0, 127, 0.8)
+    rgba(34, 211, 238, 0.38),
+    rgba(99, 102, 241, 0.42),
+    rgba(192, 132, 252, 0.34)
   );
-  filter: blur(35px) saturate(350%);
-  opacity: 0.65;
+  filter: blur(28px) saturate(140%);
+  opacity: 0.68;
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: radial-gradient(rgba(15, 23, 42, 0.15) 0.55px, transparent 0.7px);
+  background-size: 7px 7px;
 }
 
 /* Galaxy Shimmer Text */
 .aurora-text {
   color: transparent;
-  background-image: linear-gradient(110deg, #0f172a 0%, #2dd4ff 16%, #62b6ff 30%, #7c6df9 46%, #ff67c8 64%, #ffb14a 80%, #0ea5e9 92%, #0f172a 100%);
+  background-image: linear-gradient(110deg, #0369a1 0%, #2563eb 24%, #6d28d9 48%, #c026d3 72%, #be185d 100%);
   background-size: 240% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   animation: shimmer-galaxy-text 8s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 18px rgba(45, 212, 255, 0.26));
+  filter: drop-shadow(0 3px 12px rgba(79, 70, 229, 0.18));
 }
 
 /* Glassmorphism Light Panel */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(248, 250, 252, 0.90));
-  border: 1px solid rgba(203, 213, 225, 0.6);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.94));
+  border: 1px solid rgba(203, 213, 225, 0.78);
   box-shadow:
     0 20px 50px -20px rgba(168, 85, 247, 0.15),
     0 10px 30px -15px rgba(0, 180, 216, 0.18),
@@ -160,8 +165,8 @@ body {
 /* Spotlight Card (Mouse Follow Galaxy Light) */
 .spotlight-card {
   position: relative;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(241, 245, 249, 0.92));
-  border: 1px solid rgba(203, 213, 225, 0.65);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.93), rgba(248, 250, 252, 0.96));
+  border: 1px solid rgba(203, 213, 225, 0.78);
   box-shadow:
     0 20px 45px -25px rgba(15, 23, 42, 0.08),
     0 8px 25px -15px rgba(168, 85, 247, 0.15),
@@ -225,17 +230,27 @@ body {
 .section-glow::before {
   content: "";
   position: absolute;
-  inset: -60px -30px auto;
-  height: 220px;
+  inset: -45px 10% auto;
+  height: 125px;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(90deg,
-    rgba(0, 240, 255, 0.22),
-    rgba(147, 51, 234, 0.25),
-    rgba(255, 0, 127, 0.22),
-    rgba(56, 189, 248, 0.2));
-  filter: blur(75px) saturate(260%);
-  opacity: 0.9;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.2), rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.15), transparent);
+  filter: blur(52px) saturate(130%);
+  opacity: 0.7;
+}
+
+.hero-shell {
+  isolation: isolate;
+}
+
+.hero-shell::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 4rem 8% 2rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.82) 18%, rgba(255, 255, 255, 0.5) 48%, transparent 74%);
+  filter: blur(12px);
 }
 
 /* Shimmer Galaxy Button */
@@ -281,18 +296,18 @@ body {
 }
 
 /* Keyframe Animations */
-@keyframes galaxy-nebula-spin {
+@keyframes galaxy-nebula-drift {
   0% {
     transform:
-      translate3d(calc(var(--scroll-progress) * -6vw - 1vw), calc(var(--scroll-progress) * 12vh - 1vh), 0)
-      rotate(calc(var(--scroll-progress) * 25deg - 5deg))
+      translate3d(calc(var(--scroll-progress) * -3vw - 1vw), calc(var(--scroll-progress) * 5vh - 1vh), 0)
+      rotate(calc(var(--scroll-progress) * 12deg - 3deg))
       scale(1);
   }
   100% {
     transform:
-      translate3d(calc(var(--scroll-progress) * -6vw + 4vw), calc(var(--scroll-progress) * 12vh + 3vh), 0)
-      rotate(calc(var(--scroll-progress) * 25deg + 8deg))
-      scale(1.08);
+      translate3d(calc(var(--scroll-progress) * -3vw + 3vw), calc(var(--scroll-progress) * 5vh + 2vh), 0)
+      rotate(calc(var(--scroll-progress) * 12deg + 5deg))
+      scale(1.04);
   }
 }
 
@@ -336,5 +351,33 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .aurora-stage::before {
+    top: -12vh;
+    right: -48vw;
+    width: 120vw;
+    height: 48vh;
+    filter: blur(40px) saturate(125%);
+  }
+
+  .aurora-stage::after {
+    left: -55vw;
+    top: 52vh;
+    width: 120vw;
+  }
+
+  .aurora-ribbon {
+    top: 8vh;
+    left: -12vw;
+    width: 124vw;
+    height: 18vh;
+    filter: blur(30px) saturate(125%);
+  }
+
+  .hero-shell::before {
+    inset: 4rem -2rem 1rem;
   }
 }

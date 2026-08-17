@@ -798,7 +798,7 @@ export default function Portfolio() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center">
+      <section className="hero-shell relative z-10 pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
