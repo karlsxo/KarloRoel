@@ -1121,7 +1121,7 @@ export default function Portfolio() {
       {/* Footer */}
       <footer className="relative z-10 py-8 bg-white/80 border-t border-slate-200 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs font-semibold">
-          <p>© 2026 Karlo Roel Montenegro. Designed in Vibrant Cosmic Galaxy Aesthetic.</p>
+          <p>© Karlo Roel Montenegro. Made With Special Love.</p>
           
           <div className="flex items-center gap-6">
             <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors flex items-center gap-1">
