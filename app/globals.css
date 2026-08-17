@@ -30,7 +30,7 @@ html {
 }
 
 body {
-  background-color: var(--background);
+  background-color: #f8fafc;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
@@ -38,12 +38,10 @@ body {
   position: relative;
   background-attachment: fixed;
   background-image:
-    radial-gradient(circle at 12% 8%, rgba(56, 189, 248, 0.5), transparent 26rem),
-    radial-gradient(circle at 78% 18%, rgba(236, 72, 153, 0.38), transparent 28rem),
-    radial-gradient(circle at 52% 42%, rgba(168, 85, 247, 0.42), transparent 38rem),
-    radial-gradient(circle at 20% 80%, rgba(34, 211, 238, 0.38), transparent 28rem),
-    radial-gradient(circle at 82% 84%, rgba(251, 191, 36, 0.28), transparent 24rem),
-    linear-gradient(135deg, #f6fbff 0%, #fdf2ff 18%, #f2ecff 38%, #fff7ed 62%, #f7fafc 100%);
+    radial-gradient(circle at 85% 12%, rgba(0, 240, 255, 0.22), transparent 32rem),
+    radial-gradient(circle at 15% 42%, rgba(147, 51, 234, 0.2), transparent 30rem),
+    radial-gradient(circle at 80% 78%, rgba(255, 0, 127, 0.18), transparent 32rem),
+    linear-gradient(165deg, #f8fafc 0%, #f1f5f9 45%, #f8fafc 100%);
 }
 
 /* Custom Scrollbar */
@@ -63,7 +61,7 @@ body {
   background: linear-gradient(180deg, #38bdf8 0%, #c084fc 50%, #f43f5e 100%);
 }
 
-/* Dynamic Galaxy Canvas Layer */
+/* Refined Vibrant Aurora Canvas Layer */
 .aurora-stage {
   position: fixed;
   inset: 0;
@@ -71,53 +69,70 @@ body {
   pointer-events: none;
   overflow: hidden;
   isolation: isolate;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 .aurora-stage::before {
   content: "";
   position: absolute;
-  inset: -25% -15%;
-  background:
-    conic-gradient(from 120deg at 50% 40%,
-      transparent 0deg,
-      rgba(14, 165, 233, 0.52) 24deg,
-      rgba(99, 102, 241, 0.48) 56deg,
-      rgba(168, 85, 247, 0.56) 88deg,
-      rgba(236, 72, 153, 0.56) 124deg,
-      rgba(244, 114, 182, 0.5) 160deg,
-      transparent 200deg,
-      rgba(251, 191, 36, 0.38) 254deg,
-      rgba(34, 211, 238, 0.56) 292deg,
-      rgba(59, 130, 246, 0.46) 332deg,
-      transparent 360deg);
-  filter: blur(110px) saturate(300%) contrast(1.08);
+  top: -15vh;
+  right: -5vw;
+  width: 80vw;
+  height: 70vh;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 130deg at 50% 50%,
+    transparent 0deg,
+    rgba(0, 240, 255, 0.65) 40deg,
+    rgba(56, 189, 248, 0.7) 75deg,
+    rgba(124, 58, 237, 0.75) 130deg,
+    rgba(217, 70, 239, 0.8) 180deg,
+    rgba(255, 0, 127, 0.7) 230deg,
+    transparent 310deg
+  );
+  filter: blur(70px) saturate(280%) brightness(1.15);
   transform:
-    translate3d(calc(var(--scroll-progress) * -6vw), calc(var(--scroll-progress) * 12vh), 0)
-    rotate(calc(var(--scroll-progress) * 25deg));
-  animation: galaxy-nebula-spin 25s ease-in-out infinite alternate;
+    translate3d(calc(var(--scroll-progress) * -4vw), calc(var(--scroll-progress) * 8vh), 0)
+    rotate(calc(var(--scroll-progress) * 15deg));
+  animation: galaxy-nebula-spin 22s ease-in-out infinite alternate;
 }
 
 .aurora-ribbon {
   position: fixed;
-  top: -15vh;
+  top: 5vh;
   left: -15vw;
-  right: -15vw;
-  height: 85vh;
+  width: 130vw;
+  height: 40vh;
   z-index: 1;
   pointer-events: none;
-  background:
-    linear-gradient(110deg,
-      transparent 4%,
-      rgba(59, 130, 246, 0.42) 16%,
-      rgba(168, 85, 247, 0.48) 30%,
-      rgba(236, 72, 153, 0.54) 50%,
-      rgba(251, 191, 36, 0.32) 68%,
-      rgba(34, 211, 238, 0.36) 82%,
-      transparent 100%);
-  filter: blur(86px) saturate(260%) brightness(1.12);
-  transform: translateY(calc(var(--scroll-progress) * 15vh)) skewY(-7deg);
-  animation: galaxy-plasma-wave 18s ease-in-out infinite alternate;
+  background: linear-gradient(
+    105deg,
+    transparent 8%,
+    rgba(0, 240, 255, 0.55) 22%,
+    rgba(99, 102, 241, 0.68) 42%,
+    rgba(168, 85, 247, 0.75) 62%,
+    rgba(255, 0, 127, 0.65) 82%,
+    transparent 96%
+  );
+  filter: blur(52px) saturate(320%) brightness(1.2);
+  transform: translateY(calc(var(--scroll-progress) * 10vh)) skewY(-5deg);
+  animation: galaxy-plasma-wave 16s ease-in-out infinite alternate;
+}
+
+/* Dynamic Aurora Ambient Light Core */
+.aurora-ribbon::after {
+  content: "";
+  position: absolute;
+  inset: 15% 10%;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 240, 255, 0.8),
+    rgba(192, 132, 252, 0.85),
+    rgba(255, 0, 127, 0.8)
+  );
+  filter: blur(35px) saturate(350%);
+  opacity: 0.65;
 }
 
 /* Galaxy Shimmer Text */
@@ -211,17 +226,16 @@ body {
   content: "";
   position: absolute;
   inset: -60px -30px auto;
-  height: 260px;
+  height: 220px;
   z-index: -1;
   pointer-events: none;
   background: linear-gradient(90deg,
-    rgba(14, 165, 233, 0.2),
-    rgba(168, 85, 247, 0.22),
-    rgba(236, 72, 153, 0.22),
-    rgba(251, 191, 36, 0.18),
-    rgba(34, 211, 238, 0.18));
-  filter: blur(90px) saturate(220%);
-  opacity: 1;
+    rgba(0, 240, 255, 0.22),
+    rgba(147, 51, 234, 0.25),
+    rgba(255, 0, 127, 0.22),
+    rgba(56, 189, 248, 0.2));
+  filter: blur(75px) saturate(260%);
+  opacity: 0.9;
 }
 
 /* Shimmer Galaxy Button */
