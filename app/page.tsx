@@ -847,7 +847,7 @@ export default function Portfolio() {
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student engineering last-mile IoT hardware, predictive AI networks, and intuitive user interfaces.
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student building across the full stack. I enjoy creating practical digital tools that combine seamless front-end design with smart, back-end functionality.
           </p>
 
           {/* CTA Buttons */}
