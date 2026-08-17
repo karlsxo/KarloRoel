@@ -54,6 +54,7 @@ interface ProjectData {
   features: ProjectFeature[];
   achievements?: string[];
   externalUrl?: string;
+  galleryReplacementUrl?: string;
 }
 
 // --- Project Data ---
@@ -192,7 +193,8 @@ const tribleProject: ProjectData = {
   ],
   achievements: [
     "🚀 Personal Project — Real-Time Campus Mobility Solution"
-  ]
+  ],
+  galleryReplacementUrl: "https://trible-gamma.vercel.app/"
 };
 
 const metropolisProject: ProjectData = {
@@ -505,7 +507,13 @@ const ProjectDetailModal = ({
                 {[
                   { id: 'overview', label: 'Overview & Impact' },
                   { id: 'features', label: 'Architecture & Features' },
-                  { id: 'gallery', label: `Gallery (${project.images.length})` }
+                  {
+                    id: 'gallery',
+                    label:
+                      project.id === 'trible' && project.galleryReplacementUrl
+                        ? 'Live Site'
+                        : `Gallery (${project.images.length})`
+                  }
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -620,36 +628,57 @@ const ProjectDetailModal = ({
                 )}
 
                 {activeTab === 'gallery' && (
-                  <motion.div
-                    key="gallery"
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-                  >
-                    {project.images.map((img, idx) => (
-                      <div 
-                        key={idx}
-                        onClick={() => setSelectedLightboxImage(img)}
-                        className="group glass-panel relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer bg-slate-100 border-slate-200 shadow-xs hover:border-cyan-500 transition-all p-3"
+                  project.id === 'trible' && project.galleryReplacementUrl ? (
+                    <motion.div
+                      key="gallery-live-site"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      className="glass-panel rounded-3xl p-8 bg-white/90 border-slate-200"
+                    >
+                      <h3 className="text-xl font-bold text-slate-900 mb-3">Visit Trible Live</h3>
+                      <a
+                        href={project.galleryReplacementUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-pink-500 text-white shadow-lg shadow-cyan-500/30 hover:opacity-95 transition-opacity"
                       >
-                        <div className="relative w-full h-full">
-                          <Image 
-                            src={img} 
-                            alt={`${project.title} screenshot ${idx + 1}`}
-                            fill
-                            className="object-contain group-hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          />
-                        </div>
-                        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
-                          <div className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
-                            <Maximize2 className="w-3.5 h-3.5" /> Expand
+                        Open trible-gamma.vercel.app
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="gallery"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+                    >
+                      {project.images.map((img, idx) => (
+                        <div 
+                          key={idx}
+                          onClick={() => setSelectedLightboxImage(img)}
+                          className="group glass-panel relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer bg-slate-100 border-slate-200 shadow-xs hover:border-cyan-500 transition-all p-3"
+                        >
+                          <div className="relative w-full h-full">
+                            <Image 
+                              src={img} 
+                              alt={`${project.title} screenshot ${idx + 1}`}
+                              fill
+                              className="object-contain group-hover:scale-105 transition-transform duration-300"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-xs">
+                            <div className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
+                              <Maximize2 className="w-3.5 h-3.5" /> Expand
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </motion.div>
+                      ))}
+                    </motion.div>
+                  )
                 )}
               </AnimatePresence>
             </motion.div>
