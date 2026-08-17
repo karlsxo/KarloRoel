@@ -1047,13 +1047,16 @@ export default function Portfolio() {
             <div className="inline-flex items-center gap-1.5 text-cyan-600 font-bold text-xs uppercase tracking-wider mb-2">
               <Users className="w-4 h-4" /> Background
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">About Me</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Get to Know Me</h2>
             <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
               <p>
-                I am a Computer Science student driven by the belief that hardware sensors, artificial intelligence, and great UI/UX design can transform traditional industries.
+                Glad you&apos;re here. I&apos;m a Computer Science student dedicated to creating practical software solutions that solve real-world problems. My journey in tech is fueled by a curiosity for how software shapes daily human experiences and a drive to build tools that are as functional as they are impactful. Focused primarily on full-stack development, I aim to bridge theoretical computer science fundamentals with modern engineering practices to build robust, end-to-end digital products.
               </p>
               <p>
-                Whether engineering last-mile agricultural sensors in <strong className="text-slate-900 font-bold">Project DalAni</strong> or standardizing healthcare supply records in <strong className="text-slate-900 font-bold">Artery</strong>, my core focus is building human-centered solutions with real-world impact.
+                My technical approach centers on crafting seamless, user-centric software. On the frontend, I specialize in designing clean, responsive interfaces that prioritize intuitive user experience and accessibility. On the backend, I focus on structuring performant architectures and integrating intelligent, AI-powered workflows. I view modern AI tools not as a substitute for fundamentals, but as a force multiplier-allowing me to write cleaner code, debug complex problems faster, and deliver value efficiently without compromising software quality.
+              </p>
+              <p>
+                As I prepare to step into the software industry, I am constantly refining my skills in modern web frameworks, system architecture, and cloud technologies. I thrive in environments that challenge me to solve tricky logic, learn new stacks, and collaborate with other builders. Feel free to explore my portfolio or reach out directly-I am always open to connecting, collaborating on innovative projects, or discussing opportunities in software development.
               </p>
             </div>
           </div>
