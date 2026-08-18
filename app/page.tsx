@@ -920,12 +920,12 @@ export default function Portfolio() {
       </header>
 
       {/* Hero Section */}
-      <section className="hero-shell relative z-10 min-h-[88svh] pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center justify-center">
+      <section className="hero-shell relative z-10 min-h-[88svh] pt-32 pb-20 md:pt-40 md:pb-28 px-6 w-full flex flex-col items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center"
+          className="w-full max-w-[1200px] flex flex-col items-center text-center"
         >
           {/* Gemini Badge */}
           <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-cyan-800 mb-8 border border-cyan-300">
@@ -934,13 +934,13 @@ export default function Portfolio() {
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse ml-1" />
           </div>
 
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08]">
-            Building the <br />
-            <span className="aurora-text">tech of tomorrow.</span>
+          <h1 className="max-w-[1180px] text-4xl sm:text-6xl md:text-7xl lg:text-[7rem] xl:text-[8rem] font-black tracking-[-0.06em] text-slate-900 mb-6 leading-[0.9]">
+            Let&apos;s build something <br />
+            <span className="aurora-text">extraordinary together.</span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student building across the full stack. I enjoy creating practical digital tools that combine seamless front-end design with smart, back-end functionality.
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-3xl leading-relaxed mb-10">
+            I am currently open to internship, co-op, project collaboration, and developer opportunities.
           </p>
 
           {/* CTA Buttons */}
