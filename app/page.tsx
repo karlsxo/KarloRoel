@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { 
   ArrowUpRight, 
   Github, 
@@ -256,7 +256,7 @@ const SpotlightCard = ({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onClick={onClick}
-      className={`spotlight-card rounded-3xl ${className}`}
+      className={`spotlight-card scroll-glass rounded-3xl ${className}`}
     >
       {children}
     </div>
@@ -277,6 +277,31 @@ const Section = ({
     {children}
   </section>
 );
+
+// Keeps scroll reveals consistent while honoring each visitor's motion preference.
+const Reveal = ({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      className={className}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 28, filter: "blur(6px)" }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.14 }}
+      transition={{ duration: 0.62, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 // --- Contact Modal ---
 const ContactModal = ({ 
@@ -722,18 +747,50 @@ export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "ai-iot" | "health-tech" | "web-ui">("all");
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let animationFrame = 0;
+
+    const updateScrollEffects = () => {
       const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+      const auroraPhase = progress * Math.PI * 3;
+      const horizontalDrift = Math.sin(auroraPhase) * 52;
+      const primarySweep = Math.sin(auroraPhase) * window.innerHeight * 0.24;
+      const secondarySweep = Math.cos(auroraPhase * 0.8) * window.innerHeight * 0.18;
+
       document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
+      document.documentElement.style.setProperty("--glass-shift", `${Math.round(progress * 100)}%`);
+      document.documentElement.style.setProperty("--aurora-flow-x", `${Math.round(horizontalDrift)}px`);
+      document.documentElement.style.setProperty("--aurora-flow-y", `${Math.round(primarySweep)}px`);
+      document.documentElement.style.setProperty("--aurora-flow-x-reverse", `${Math.round(-horizontalDrift * 0.7)}px`);
+      document.documentElement.style.setProperty("--aurora-flow-y-reverse", `${Math.round(secondarySweep)}px`);
+      document.documentElement.style.setProperty("--aurora-stage-x", `${Math.round(horizontalDrift * 0.55)}px`);
+      document.documentElement.style.setProperty("--aurora-stage-y", `${Math.round(progress * 135)}px`);
+      document.documentElement.style.setProperty("--aurora-stage-x-reverse", `${Math.round(-horizontalDrift * 0.3)}px`);
+      document.documentElement.style.setProperty("--aurora-stage-y-reverse", `${Math.round(-progress * 48)}px`);
+      document.documentElement.style.setProperty("--aurora-ribbon-y", `${Math.round(primarySweep * 0.38 - 24)}px`);
+      setHasScrolled((current) => {
+        const next = window.scrollY > 24;
+        return current === next ? current : next;
+      });
+      animationFrame = 0;
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (!animationFrame) {
+        animationFrame = window.requestAnimationFrame(updateScrollEffects);
+      }
+    };
+
+    updateScrollEffects();
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+    };
   }, []);
 
   const handleCopyEmail = () => {
@@ -759,7 +816,12 @@ export default function Portfolio() {
       {/* Background Aurora Layers */}
       <div className="aurora-stage" />
       <div className="aurora-ribbon" />
+      <div className="aurora-scroll-field" aria-hidden="true">
+        <div className="aurora-flow aurora-flow-primary" />
+        <div className="aurora-flow aurora-flow-secondary" />
+      </div>
       <div className="noise-overlay" />
+      <div className="scroll-progress" aria-hidden="true" />
 
       {/* Floating Toast Alert for Email Copy */}
       <AnimatePresence>
@@ -788,8 +850,8 @@ export default function Portfolio() {
       />
 
       {/* Floating Frosted Glass Navbar */}
-      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl">
-        <nav className="glass-panel rounded-full px-5 py-3 flex items-center justify-between shadow-md border border-slate-200/80 bg-white/80 backdrop-blur-xl">
+      <header className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl ${hasScrolled ? "nav-scrolled" : ""}`}>
+        <nav className="glass-panel scroll-glass rounded-full px-5 py-3 flex items-center justify-between shadow-md border border-slate-200/80 bg-white/80 backdrop-blur-xl">
           <a href="#" className="flex items-center gap-2.5 text-slate-900 font-extrabold text-sm md:text-base group">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-pink-500 p-[1.5px] shadow-xs group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-slate-900 rounded-full flex items-center justify-center text-xs font-black text-white">
@@ -802,7 +864,6 @@ export default function Portfolio() {
           <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <a href="#work" className="hover:text-cyan-600 transition-colors">Work</a>
             <a href="#tech" className="hover:text-cyan-600 transition-colors">Tech Architecture</a>
-            <a href="#honors" className="hover:text-cyan-600 transition-colors">Achievements</a>
             <a href="#about" className="hover:text-cyan-600 transition-colors">About</a>
           </div>
 
@@ -875,6 +936,7 @@ export default function Portfolio() {
 
       {/* Selected Work Section */}
       <Section id="work" className="section-glow">
+        <Reveal>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div>
             <div className="inline-flex items-center gap-1.5 text-cyan-600 font-bold text-xs uppercase tracking-wider mb-2">
@@ -908,8 +970,9 @@ export default function Portfolio() {
 
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <SpotlightCard
+          {filteredProjects.map((project, index) => (
+            <Reveal key={project.id} className="h-full" delay={index * 0.07}>
+              <SpotlightCard
               key={project.id}
               onClick={() => {
                 if (project.externalUrl) {
@@ -958,13 +1021,16 @@ export default function Portfolio() {
                   <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
-            </SpotlightCard>
+              </SpotlightCard>
+            </Reveal>
           ))}
         </div>
+        </Reveal>
       </Section>
 
       {/* Tech Architecture Section */}
       <Section id="tech" className="section-glow">
+        <Reveal>
         <div className="mb-12">
           <div className="inline-flex items-center gap-1.5 text-fuchsia-600 font-bold text-xs uppercase tracking-wider mb-2">
             <Terminal className="w-4 h-4" /> Technical Capability
@@ -1038,10 +1104,12 @@ export default function Portfolio() {
             </div>
           </SpotlightCard>
         </div>
+        </Reveal>
       </Section>
 
       {/* About Me Section */}
       <Section id="about" className="section-glow">
+        <Reveal>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7">
             <div className="inline-flex items-center gap-1.5 text-cyan-600 font-bold text-xs uppercase tracking-wider mb-2">
@@ -1090,10 +1158,12 @@ export default function Portfolio() {
             </SpotlightCard>
           </div>
         </div>
+        </Reveal>
       </Section>
 
       {/* Contact Section */}
       <section className="relative z-10 py-24 md:py-32 border-t border-slate-200">
+        <Reveal>
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6">
             Let&apos;s build something <br />
@@ -1119,6 +1189,7 @@ export default function Portfolio() {
             </button>
           </div>
         </div>
+        </Reveal>
       </section>
 
       {/* Footer */}
