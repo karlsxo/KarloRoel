@@ -1194,17 +1194,17 @@ export default function Portfolio() {
       </Section>
 
       {/* Contact Section */}
-      <section className="relative z-10 min-h-[72svh] py-24 md:py-32 border-t border-slate-200 flex items-center">
-        <Reveal>
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6">
+      <section className="relative z-10 min-h-[72svh] py-24 md:py-32 border-t border-slate-200 flex items-center justify-center">
+        <Reveal className="w-full">
+        <div className="max-w-5xl mx-auto px-6 text-center flex flex-col items-center justify-center">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6 text-center">
             Let&apos;s build something <br />
             <span className="aurora-text">extraordinary together.</span>
           </h2>
-          <p className="text-slate-600 text-base md:text-lg max-w-xl mx-auto mb-10">
+          <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-10 text-center">
             I am currently open to internship, co-op, project collaboration, and developer opportunities.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center items-center gap-4">
             <button
               onClick={() => setIsContactModalOpen(true)}
               className="px-8 py-4 text-white rounded-full font-bold text-base transition-all shadow-xl flex items-center gap-2.5 shimmer-btn"
