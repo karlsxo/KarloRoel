@@ -173,6 +173,84 @@ body {
   transform: translate3d(var(--aurora-flow-x-reverse), var(--aurora-flow-y-reverse), 0) rotate(8deg);
 }
 
+/* Framer Motion supplies the transforms; these layers only paint the atmospheric materials. */
+.aurora-environment {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.aurora-orb {
+  position: absolute;
+  left: -26vw;
+  width: 152vw;
+  border-radius: 48% 52% 54% 46% / 52% 45% 55% 48%;
+  filter: blur(42px) saturate(145%);
+  will-change: transform;
+}
+
+.aurora-orb-primary {
+  top: 0;
+  height: 42vh;
+  opacity: 0.76;
+  background: linear-gradient(105deg, transparent 2%, rgba(45, 212, 191, 0.34) 20%, rgba(34, 211, 238, 0.42) 39%, rgba(59, 130, 246, 0.34) 54%, rgba(139, 92, 246, 0.38) 70%, transparent 96%);
+}
+
+.aurora-orb-secondary {
+  top: 24vh;
+  height: 36vh;
+  opacity: 0.64;
+  background: linear-gradient(82deg, transparent 4%, rgba(16, 185, 129, 0.28) 22%, rgba(6, 182, 212, 0.34) 43%, rgba(99, 102, 241, 0.4) 61%, rgba(192, 132, 252, 0.3) 80%, transparent 98%);
+}
+
+.aurora-orb-tertiary {
+  top: 46vh;
+  height: 30vh;
+  opacity: 0.48;
+  background: linear-gradient(100deg, transparent 6%, rgba(34, 211, 238, 0.24) 29%, rgba(124, 58, 237, 0.32) 52%, rgba(217, 70, 239, 0.22) 74%, transparent 96%);
+}
+
+.aurora-transition-glass {
+  position: absolute;
+  inset: 7vh -8vw;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 46% 54% 48% 52% / 22% 24% 76% 78%;
+  background:
+    linear-gradient(112deg, rgba(255, 255, 255, 0.24), rgba(224, 242, 254, 0.1) 33%, rgba(237, 233, 254, 0.14) 62%, rgba(255, 255, 255, 0.2)),
+    radial-gradient(ellipse at 28% 38%, rgba(45, 212, 191, 0.17), transparent 42%),
+    radial-gradient(ellipse at 72% 64%, rgba(139, 92, 246, 0.16), transparent 44%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 28px 110px -48px rgba(79, 70, 229, 0.42);
+  backdrop-filter: blur(16px) saturate(135%);
+  will-change: transform, opacity;
+}
+
+/* This sits above the page, but remains translucent and non-interactive. */
+.aurora-foreground-wave {
+  position: fixed;
+  top: 18vh;
+  left: -22vw;
+  z-index: 20;
+  width: 144vw;
+  height: 34vh;
+  pointer-events: none;
+  border: 1px solid rgba(224, 242, 254, 0.42);
+  border-radius: 50%;
+  background:
+    linear-gradient(102deg, transparent 2%, rgba(45, 212, 191, 0.2) 19%, rgba(34, 211, 238, 0.32) 37%, rgba(99, 102, 241, 0.28) 57%, rgba(192, 132, 252, 0.24) 76%, transparent 98%),
+    linear-gradient(180deg, transparent 16%, rgba(255, 255, 255, 0.18) 50%, transparent 84%);
+  box-shadow:
+    0 0 70px rgba(34, 211, 238, 0.2),
+    0 0 92px rgba(124, 58, 237, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  filter: blur(18px) saturate(155%);
+  will-change: transform, opacity;
+}
+
 .noise-overlay {
   position: fixed;
   inset: 0;
@@ -446,6 +524,25 @@ header.nav-scrolled .glass-panel {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
   }
+
+  .aurora-environment {
+    opacity: 0.35;
+  }
+
+  .aurora-foreground-wave {
+    display: none;
+  }
+
+  .aurora-transition-glass {
+    backdrop-filter: blur(8px);
+  }
+
+  .aurora-foreground-wave {
+    left: -56vw;
+    width: 212vw;
+    height: 24vh;
+    filter: blur(14px) saturate(130%);
+  }
 }
 
 @media (max-width: 640px) {
@@ -469,6 +566,32 @@ header.nav-scrolled .glass-panel {
     width: 124vw;
     height: 18vh;
     filter: blur(30px) saturate(125%);
+  }
+
+  .aurora-orb {
+    left: -45vw;
+    width: 190vw;
+    filter: blur(32px) saturate(115%);
+  }
+
+  .aurora-orb-primary {
+    height: 34vh;
+    opacity: 0.48;
+  }
+
+  .aurora-orb-secondary {
+    top: 32vh;
+    height: 28vh;
+    opacity: 0.4;
+  }
+
+  .aurora-orb-tertiary {
+    display: none;
+  }
+
+  .aurora-transition-glass {
+    inset: 10vh -36vw;
+    backdrop-filter: blur(10px) saturate(120%);
   }
 
   .hero-shell::before {

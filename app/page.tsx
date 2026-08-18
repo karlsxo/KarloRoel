@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { 
   ArrowUpRight, 
   Github, 
@@ -30,7 +30,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-// --- Types ---
+// --- Content Model ---
+// These interfaces shape each project entry used by the portfolio carousel, filters,
+// and the detailed case-study modal shown when a project is selected.
 interface ProjectFeature {
   title: string;
   description: string;
@@ -57,7 +59,10 @@ interface ProjectData {
   galleryReplacementUrl?: string;
 }
 
-// --- Project Data ---
+// --- Portfolio Project Data ---
+// Each object represents a featured project with its narrative, technical stack,
+// visuals, and success highlights. Keeping this data centralized makes it easier
+// to update portfolio content without altering the page layout logic.
 const dalaniProject: ProjectData = {
   id: "dalani",
   title: "DalAni",
@@ -230,7 +235,9 @@ const metropolisProject: ProjectData = {
 
 const projectsData: ProjectData[] = [dalaniProject, tribleProject, arteryProject, metropolisProject];
 
-// --- Spotlight Mouse Tracking Card Component ---
+// --- Spotlight Mouse Tracking Card ---
+// This component adds a subtle cursor-reactive glow for cards while preserving
+// a clean, low-overhead interaction pattern for the portfolio gallery.
 const SpotlightCard = ({ 
   children, 
   className = "",
@@ -263,7 +270,9 @@ const SpotlightCard = ({
   );
 };
 
-// --- Section Component ---
+// --- Reusable Scroll Section ---
+// The section wrapper applies a consistent motion-based reveal and scroll fade so
+// each content block feels premium without requiring custom logic on every page.
 const Section = ({ 
   children, 
   className = "", 
@@ -272,11 +281,79 @@ const Section = ({
   children: React.ReactNode; 
   className?: string; 
   id?: string;
-}) => (
-  <section id={id} className={`relative z-10 px-6 py-20 md:py-28 max-w-7xl mx-auto ${className}`}>
-    {children}
-  </section>
-);
+}) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
+  const opacity = useTransform(progress, [0, 0.16, 0.82, 1], [0.38, 1, 1, 0.48]);
+  const y = useTransform(progress, [0, 0.16, 0.82, 1], [74, 0, 0, -58]);
+  const scale = useTransform(progress, [0, 0.16, 0.82, 1], [0.955, 1, 1, 0.965]);
+  const filter = useTransform(progress, [0, 0.16, 0.82, 1], ["blur(8px)", "blur(0px)", "blur(0px)", "blur(5px)"]);
+
+  return (
+    <motion.section
+      ref={sectionRef}
+      id={id}
+      className={`relative z-10 min-h-[72svh] px-6 py-20 md:py-28 max-w-7xl mx-auto ${className}`}
+      style={shouldReduceMotion ? undefined : { opacity, y, scale, filter }}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
+const AuroraGlassTransition = () => {
+  const shouldReduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 72, damping: 26, mass: 0.45 });
+  const primaryY = useTransform(progress, [0, 0.3, 0.68, 1], ["-28vh", "18vh", "42vh", "-6vh"]);
+  const secondaryY = useTransform(progress, [0, 0.35, 0.72, 1], ["58vh", "-4vh", "62vh", "16vh"]);
+  const tertiaryY = useTransform(progress, [0, 0.4, 1], ["78vh", "22vh", "64vh"]);
+  const primaryX = useTransform(progress, [0, 0.5, 1], ["-16vw", "12vw", "-6vw"]);
+  const secondaryX = useTransform(progress, [0, 0.5, 1], ["16vw", "-14vw", "9vw"]);
+  const primaryRotate = useTransform(progress, [0, 1], [-16, 14]);
+  const secondaryRotate = useTransform(progress, [0, 1], [13, -12]);
+  const glassOpacity = useTransform(progress, [0, 0.2, 0.5, 0.8, 1], [0.04, 0.22, 0.38, 0.2, 0.06]);
+  const glassScale = useTransform(progress, [0, 0.5, 1], [0.88, 1.1, 0.93]);
+  const foregroundY = useTransform(progress, [0, 0.3, 0.72, 1], ["-42vh", "6vh", "46vh", "8vh"]);
+  const foregroundX = useTransform(progress, [0, 0.5, 1], ["-14vw", "10vw", "-4vw"]);
+  const foregroundRotate = useTransform(progress, [0, 1], [-12, 11]);
+  const foregroundOpacity = useTransform(progress, [0, 0.12, 0.46, 0.82, 1], [0, 0.5, 0.68, 0.42, 0.12]);
+  const foregroundScale = useTransform(progress, [0, 0.5, 1], [0.82, 1.08, 0.94]);
+
+  return (
+    <>
+      <div className="aurora-environment" aria-hidden="true">
+        <motion.div
+          className="aurora-orb aurora-orb-primary"
+          style={shouldReduceMotion ? undefined : { x: primaryX, y: primaryY, rotate: primaryRotate }}
+        />
+        <motion.div
+          className="aurora-orb aurora-orb-secondary"
+          style={shouldReduceMotion ? undefined : { x: secondaryX, y: secondaryY, rotate: secondaryRotate }}
+        />
+        <motion.div
+          className="aurora-orb aurora-orb-tertiary"
+          style={shouldReduceMotion ? undefined : { y: tertiaryY }}
+        />
+        <motion.div
+          className="aurora-transition-glass"
+          style={shouldReduceMotion ? undefined : { opacity: glassOpacity, scale: glassScale }}
+        />
+      </div>
+      <motion.div
+        className="aurora-foreground-wave"
+        aria-hidden="true"
+        style={shouldReduceMotion ? undefined : { x: foregroundX, y: foregroundY, rotate: foregroundRotate, opacity: foregroundOpacity, scale: foregroundScale }}
+      />
+      <motion.div className="scroll-progress" aria-hidden="true" style={{ scaleX: progress }} />
+    </>
+  );
+};
 
 // Keeps scroll reveals consistent while honoring each visitor's motion preference.
 const Reveal = ({
@@ -304,6 +381,8 @@ const Reveal = ({
 };
 
 // --- Contact Modal ---
+// This modal opens the user’s default email client with a prefilled message to keep
+// the contact flow lightweight and uncluttered for portfolio visitors.
 const ContactModal = ({ 
   isOpen, 
   onClose 
@@ -449,7 +528,9 @@ const ContactModal = ({
   );
 };
 
-// --- Project Case Study Modal ---
+// --- Case Study Modal ---
+// The detailed modal groups project context, architecture notes, key features, and
+// image previews into a single storytelling experience for each selected work item.
 const ProjectDetailModal = ({ 
   isOpen, 
   onClose, 
@@ -740,58 +821,15 @@ const ProjectDetailModal = ({
   );
 };
 
-// --- Main Portfolio Component ---
+// --- Main Portfolio Page ---
+// This is the top-level page composition: hero content, project filtering, stack
+// overview, about section, and the final call-to-action for potential clients or teams.
 export default function Portfolio() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
   const [activeFilter, setActiveFilter] = useState<"all" | "ai-iot" | "health-tech" | "web-ui">("all");
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  useEffect(() => {
-    let animationFrame = 0;
-
-    const updateScrollEffects = () => {
-      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
-      const auroraPhase = progress * Math.PI * 3;
-      const horizontalDrift = Math.sin(auroraPhase) * 52;
-      const primarySweep = Math.sin(auroraPhase) * window.innerHeight * 0.24;
-      const secondarySweep = Math.cos(auroraPhase * 0.8) * window.innerHeight * 0.18;
-
-      document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
-      document.documentElement.style.setProperty("--glass-shift", `${Math.round(progress * 100)}%`);
-      document.documentElement.style.setProperty("--aurora-flow-x", `${Math.round(horizontalDrift)}px`);
-      document.documentElement.style.setProperty("--aurora-flow-y", `${Math.round(primarySweep)}px`);
-      document.documentElement.style.setProperty("--aurora-flow-x-reverse", `${Math.round(-horizontalDrift * 0.7)}px`);
-      document.documentElement.style.setProperty("--aurora-flow-y-reverse", `${Math.round(secondarySweep)}px`);
-      document.documentElement.style.setProperty("--aurora-stage-x", `${Math.round(horizontalDrift * 0.55)}px`);
-      document.documentElement.style.setProperty("--aurora-stage-y", `${Math.round(progress * 135)}px`);
-      document.documentElement.style.setProperty("--aurora-stage-x-reverse", `${Math.round(-horizontalDrift * 0.3)}px`);
-      document.documentElement.style.setProperty("--aurora-stage-y-reverse", `${Math.round(-progress * 48)}px`);
-      document.documentElement.style.setProperty("--aurora-ribbon-y", `${Math.round(primarySweep * 0.38 - 24)}px`);
-      setHasScrolled((current) => {
-        const next = window.scrollY > 24;
-        return current === next ? current : next;
-      });
-      animationFrame = 0;
-    };
-
-    const handleScroll = () => {
-      if (!animationFrame) {
-        animationFrame = window.requestAnimationFrame(updateScrollEffects);
-      }
-    };
-
-    updateScrollEffects();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (animationFrame) window.cancelAnimationFrame(animationFrame);
-    };
-  }, []);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("montenegrokarlo@gmail.com");
@@ -813,15 +851,9 @@ export default function Portfolio() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-900 font-sans selection:bg-pink-500/30 selection:text-pink-900">
-      {/* Background Aurora Layers */}
-      <div className="aurora-stage" />
-      <div className="aurora-ribbon" />
-      <div className="aurora-scroll-field" aria-hidden="true">
-        <div className="aurora-flow aurora-flow-primary" />
-        <div className="aurora-flow aurora-flow-secondary" />
-      </div>
+      {/* Scroll-linked Aurora & Glass Environment */}
+      <AuroraGlassTransition />
       <div className="noise-overlay" />
-      <div className="scroll-progress" aria-hidden="true" />
 
       {/* Floating Toast Alert for Email Copy */}
       <AnimatePresence>
@@ -850,7 +882,7 @@ export default function Portfolio() {
       />
 
       {/* Floating Frosted Glass Navbar */}
-      <header className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl ${hasScrolled ? "nav-scrolled" : ""}`}>
+      <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-6xl">
         <nav className="glass-panel scroll-glass rounded-full px-5 py-3 flex items-center justify-between shadow-md border border-slate-200/80 bg-white/80 backdrop-blur-xl">
           <a href="#" className="flex items-center gap-2.5 text-slate-900 font-extrabold text-sm md:text-base group">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-pink-500 p-[1.5px] shadow-xs group-hover:scale-105 transition-transform">
@@ -888,7 +920,7 @@ export default function Portfolio() {
       </header>
 
       {/* Hero Section */}
-      <section className="hero-shell relative z-10 pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center">
+      <section className="hero-shell relative z-10 min-h-[88svh] pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -1162,7 +1194,7 @@ export default function Portfolio() {
       </Section>
 
       {/* Contact Section */}
-      <section className="relative z-10 py-24 md:py-32 border-t border-slate-200">
+      <section className="relative z-10 min-h-[72svh] py-24 md:py-32 border-t border-slate-200 flex items-center">
         <Reveal>
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6">
