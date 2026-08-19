@@ -743,6 +743,7 @@ const ProjectDetailModal = ({
                       className="glass-panel rounded-3xl p-8 bg-white/90 border-slate-200"
                     >
                       <h3 className="text-xl font-bold text-slate-900 mb-3">Visit Trible Live</h3>
+                      <p className="text-slate-500 text-sm mb-3">Prototype build — core functionality first, not a fully finished release.</p>
                       <a
                         href={project.galleryReplacementUrl}
                         target="_blank"
