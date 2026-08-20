@@ -921,12 +921,12 @@ export default function Portfolio() {
       </header>
 
       {/* Hero Section */}
-      <section className="hero-shell relative z-10 min-h-[88svh] pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center flex flex-col items-center justify-center">
+      <section className="hero-shell relative z-10 min-h-[88svh] pt-36 pb-20 md:pt-44 md:pb-28 px-6 max-w-6xl mx-auto text-center md:text-left flex flex-col items-center md:items-start justify-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center"
+          className="flex flex-col items-center md:items-start"
         >
           {/* Gemini Badge */}
           <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-cyan-800 mb-8 border border-cyan-300">
@@ -945,7 +945,7 @@ export default function Portfolio() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap justify-center gap-3.5 mb-14">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3.5 mb-14">
             <a 
               href="#work" 
               className="px-7 py-3.5 text-white rounded-full font-bold text-sm transition-all shadow-lg flex items-center gap-2 shimmer-btn"
