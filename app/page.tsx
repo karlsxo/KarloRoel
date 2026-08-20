@@ -937,7 +937,7 @@ export default function Portfolio() {
 
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08]">
             Building the <br />
-            <span className="aurora-text">tech of tomorrow.</span>
+            <span className="aurora-text whitespace-nowrap">tech of tomorrow.</span>
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
@@ -1198,9 +1198,9 @@ export default function Portfolio() {
       <section className="relative z-10 min-h-[72svh] py-24 md:py-32 border-t border-slate-200 flex items-center justify-center">
         <Reveal className="w-full">
         <div className="max-w-5xl mx-auto px-6 text-center flex flex-col items-center justify-center">
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight mb-6 text-center">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-slate-900 tracking-tight mb-6 text-center">
             Let&apos;s build something <br />
-            <span className="aurora-text">extraordinary together.</span>
+            <span className="aurora-text whitespace-nowrap">extraordinary together.</span>
           </h2>
           <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-10 text-center">
             I am currently open to internship, co-op, project collaboration, and developer opportunities.
