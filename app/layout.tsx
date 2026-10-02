@@ -12,10 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Keep search metadata aligned with the roles and project themes presented on the page.
 export const metadata: Metadata = {
-  title: "Karlo Roel Montenegro | AI, IoT & UI/UX Developer",
-  description: "Portfolio of Karlo Roel Montenegro — Computer Science Student crafting next-generation technologies in AI, IoT cold-chain logistics, healthcare supply chains, and UI/UX design.",
-  keywords: ["Karlo Roel Montenegro", "Portfolio", "UI/UX Developer", "IoT Specialist", "AI Developer", "DalAni", "Artery", "Next.js"],
+  title: "Karlo Roel Montenegro | UI/UX, Data & Software Portfolio",
+  description: "Portfolio of Karlo Roel Montenegro, a Computer Science student focused on UI/UX, data analysis, data engineering, and practical software systems.",
+  keywords: ["Karlo Roel Montenegro", "Portfolio", "UI/UX", "Data Analyst", "Data Engineer", "Data Science", "DalAni", "Artery", "Next.js"],
   authors: [{ name: "Karlo Roel Montenegro" }],
 };
 

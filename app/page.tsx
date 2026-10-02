@@ -60,21 +60,21 @@ interface ProjectData {
 }
 
 // --- Portfolio Project Data ---
-// Each object represents a featured project with its narrative, technical stack,
-// visuals, and success highlights. Keeping this data centralized makes it easier
-// to update portfolio content without altering the page layout logic.
+// Keep project narratives in this data layer so the cards and case-study modal
+// stay presentational. Update descriptions here without changing the UI logic.
+// The copy emphasizes observed project behavior and avoids unsupported metrics.
 const dalaniProject: ProjectData = {
   id: "dalani",
   title: "DalAni",
-  subtitle: "IoT & AI Cold Chain Logistics Solution",
+  subtitle: "Data-informed IoT cold-chain monitoring",
   category: "ai-iot",
-  shortDescription: "Solving the 40% post-harvest loss in Philippine agriculture through ESP32-based IoT hardware and AI quality verification.",
-  fullDescription: "Project DalAni is an end-to-end last-mile logistics solution designed for Philippine agricultural cooperatives. By integrating low-cost ESP32 IoT hardware with an AI-driven cloud platform, DalAni tracks ambient temperature, humidity, and location in real-time to trigger automated cooling mechanisms and reroute vehicles before perishable produce deteriorates.",
+  shortDescription: "A data collection and decision-support concept for reducing post-harvest loss through sensor monitoring, risk scoring, and clearer cold-chain visibility.",
+  fullDescription: "DalAni is an end-to-end logistics concept for Philippine agricultural cooperatives. It combines low-cost ESP32 sensors with a cloud-based data workflow to collect temperature, humidity, and location signals in real time. Those signals are translated into spoilage-risk insights, alerts, and route decisions that help teams respond before produce deteriorates.",
   problemStatement: "Over 33% to 40% of harvested produce in the Philippines spoils during transport due to non-refrigerated vehicles, lack of ambient tracking, and severe traffic delays. For every 10°C rise in temperature, fruit deterioration doubles, wiping out farmer earnings and straining food security.",
-  solution: "DalAni monitors micro-climate data using ESP32, DHT11 sensors, and GPS/GPRS modules. Our AI model continuously calculates a dynamic 'Spoilage Risk' score. When temperatures exceed 75% threshold, the system alerts drivers and activates an automated mini-cooling mechanism while recalculating optimal routes.",
+  solution: "DalAni collects micro-climate data using ESP32, DHT11 sensors, and GPS/GPRS modules, then turns those observations into a dynamic spoilage-risk score. When conditions move beyond the defined threshold, the system provides driver alerts and supports cooling and route decisions through one shared operational view.",
   targetMarket: "9,000+ farmer cooperatives nationwide in the Philippines, acting as administrative hubs for smallholder mango and high-value crop growers.",
-  uniqueValue: "Proactive intervention over passive tracking: DalAni automatically responds to climate spikes and generates a verifiable, data-backed 'Quality Score' for buyers to prove produce freshness.",
-  tags: ["IoT Hardware", "AI Analytics", "Agri-Tech", "Cold-Chain"],
+  uniqueValue: "It connects reliable field data with practical decisions: teams can monitor conditions, identify risk earlier, and use a transparent record of transit conditions to support quality assessments.",
+  tags: ["Data Collection", "Risk Analytics", "Agri-Tech", "Cold-Chain"],
   technologies: ["ESP32 Microcontroller", "Python", "TensorFlow", "Flutter", "GPS/GPRS Module", "DHT11 Sensor", "Firebase", "Google Maps API"],
   images: [
     "/assets/selected-works/dalani-final-logo.png",
@@ -86,22 +86,22 @@ const dalaniProject: ProjectData = {
   features: [
     {
       title: "Dynamic Route Optimization",
-      description: "AI calculates fastest pickup routes considering ambient temperature exposure, traffic congestion, and weather conditions.",
+      description: "Combines temperature exposure, traffic context, and weather observations to support faster, lower-risk pickup decisions.",
       icon: Target
     },
     {
       title: "Proactive Spoilage Prevention",
-      description: "Calculates real-time risk scores (0-100). Triggers hardware cooling and driver alerts if storage thresholds exceed optimal 10°C-13°C.",
+      description: "Calculates a real-time risk score from sensor readings and surfaces alerts when storage conditions move outside the defined range.",
       icon: Zap
     },
     {
       title: "Yield & Quality Forecasting",
-      description: "Outputs an objective 'Quality Score' (e.g., 95/100) per batch based on exposure duration, enabling farmers to command premium prices.",
+      description: "Summarizes exposure duration and transit conditions into a batch-level quality indicator for clearer analysis and reporting.",
       icon: Lightbulb
     },
     {
       title: "Verifiable Trust Ledger",
-      description: "Provides buyers with a transparent log of transit conditions, establishing trust between cooperatives and commercial buyers.",
+      description: "Keeps a transparent record of transit conditions so cooperatives and buyers can review the data behind quality decisions.",
       icon: Users
     }
   ],
@@ -113,15 +113,15 @@ const dalaniProject: ProjectData = {
 const arteryProject: ProjectData = {
   id: "artery",
   title: "Artery",
-  subtitle: "AI & Blockchain Blood Supply Network",
+  subtitle: "Predictive analytics for blood supply operations",
   category: "health-tech",
-  shortDescription: "A unified real-time supply network for blood banks and hospitals with AI demand forecasting and immutable blockchain traceability.",
-  fullDescription: "Artery revolutionizes healthcare logistics in the Philippines by connecting blood banks, regional hospitals, and emergency donors onto a single transparent dashboard. AI algorithms forecast regional blood demand while blockchain ledgers guarantee authenticity from donor to patient.",
+  shortDescription: "A data-driven supply network concept that gives hospitals shared inventory visibility, demand insights, and traceable records for faster decisions.",
+  fullDescription: "Artery is a healthcare logistics concept that brings blood banks, regional hospitals, and emergency donors into one transparent dashboard. It combines live inventory data with demand forecasting and traceability so teams can understand supply conditions, anticipate pressure points, and coordinate response more effectively.",
   problemStatement: "Philippine hospitals suffer from severe blood inventory fragmentation, lack of inter-hospital visibility, expired blood units due to poor demand forecasting, and life-threatening delays in matching rare blood types during critical emergencies.",
   solution: "Artery unifies blood bank inventories nationwide into a live grid. Machine learning predicts upcoming demand spikes per blood group, while smart contracts track blood unit storage temperatures and expiry dates on an immutable ledger.",
   targetMarket: "Hospitals, Red Cross blood centers, regional health units, and emergency patient networks.",
-  uniqueValue: "First healthcare supply platform in the region combining predictive AI demand modeling with end-to-end blockchain auditing for total blood product traceability.",
-  tags: ["AI Demand Model", "Blockchain Ledger", "Health-Tech", "Supply Chain"],
+  uniqueValue: "It brings operational data, forecasting, and auditability together so healthcare teams can make supply decisions with more context and accountability.",
+  tags: ["Data Analytics", "Demand Forecasting", "Health-Tech", "Supply Chain"],
   technologies: ["React.js", "Node.js", "Blockchain Ledger", "TensorFlow", "PostgreSQL", "Docker", "AWS Cloud"],
   images: [
     "/assets/selected-works/artery-final-logo.png",
@@ -134,22 +134,22 @@ const arteryProject: ProjectData = {
   features: [
     {
       title: "Real-Time Blood Grid",
-      description: "Live interactive map showing blood unit availability across all connected hospital facilities in real time.",
+      description: "Presents blood-unit availability across connected facilities so teams can compare supply conditions at a glance.",
       icon: Activity
     },
     {
       title: "AI Demand Forecasting",
-      description: "Predictive ML models analyze seasonal and historical trends to prevent stockouts and minimize expired blood units.",
+      description: "Uses historical and seasonal patterns to surface demand signals that can inform replenishment and allocation decisions.",
       icon: Zap
     },
     {
       title: "Blockchain Traceability",
-      description: "Every blood bag receives an immutable cryptographic log tracking temperature history, location, and chain of custody.",
+      description: "Maintains a traceable record of temperature history, location, and chain of custody for review across the supply network.",
       icon: ShieldCheck
     },
     {
       title: "Emergency Smart Match",
-      description: "Algorithms instantly locate compatible nearby donors and facilities when urgent blood type requests are issued.",
+      description: "Helps identify compatible nearby donors and facilities when an urgent blood-type request is issued.",
       icon: Users
     }
   ],
@@ -161,15 +161,15 @@ const arteryProject: ProjectData = {
 const tribleProject: ProjectData = {
   id: "trible",
   title: "Trible",
-  subtitle: "Smart campus tricycle booking platform",
+  subtitle: "User-centered campus mobility platform",
   category: "web-ui",
-  shortDescription: "Trible is a real-time transportation booking platform that connects students with tricycle drivers for faster, easier, and more organized campus travel. It helps riders find available drivers, reserve seats, and communicate instantly without delays.",
-  fullDescription: "This is a personal project commissioned by an Agricultural Engineering student. Trible is a real-time campus mobility solution that helps students book tricycle rides quickly and reliably while giving drivers a simple way to manage availability, routes, terminals, and seat bookings. The platform is designed to reduce waiting time, improve transportation efficiency, and create a more organized flow for students moving between campus areas and terminals.",
+  shortDescription: "A user-centered booking experience that makes driver availability, seat capacity, routes, and trip communication easier to understand and act on.",
+  fullDescription: "Trible is a personal project commissioned by an Agricultural Engineering student. It explores how a real-time campus mobility service can make transportation information easier to scan and use for both riders and drivers. The experience brings availability, routes, terminals, seat bookings, and communication into one workflow designed around quicker decisions and clearer status updates.",
   problemStatement: "Students often struggle with unreliable transportation, long waiting times, and unclear driver availability at campus terminals. Without a proper booking system, riders are forced to wait in queues, guess which drivers are available, or miss transport opportunities altogether. Drivers also face difficulty managing passenger demand and updating their route and seat status in real time.",
   solution: "Trible solves this by providing a real-time booking platform where students can see active drivers, available seats, terminal locations, and routes. Drivers can update their online status, destination, terminal, and seat count instantly, allowing passengers to make quick decisions and reserve rides with confidence.",
   targetMarket: "College and university students, tricycle drivers operating in campus or local transport routes, campus transport coordinators and transport service users, and students who travel regularly between terminals and campus zones.",
-  uniqueValue: "Trible combines real-time transportation visibility, seat booking, driver status management, and in-app communication into one streamlined platform. It is built to make campus mobility faster, more transparent, and more efficient for both drivers and students.",
-  tags: ["Real-Time Booking", "Campus Mobility", "Student Transport", "Driver Network"],
+  uniqueValue: "Trible combines real-time visibility, booking, status management, and communication in one focused workflow that reduces uncertainty for both riders and drivers.",
+  tags: ["UX Design", "Real-Time Data", "Campus Mobility", "Booking Flow"],
   technologies: ["React", "Vite", "Tailwind CSS", "Firebase Authentication", "Firebase Realtime Database", "Zustand", "Framer Motion", "React Router", "Responsive UI design"],
   images: [
     "/assets/selected-works/trible-final-logo.png"
@@ -205,15 +205,15 @@ const tribleProject: ProjectData = {
 const metropolisProject: ProjectData = {
   id: "metropolis",
   title: "Metropolis",
-  subtitle: "Interactive Future Urban Experience",
+  subtitle: "UI/UX concept for data-rich urban interfaces",
   category: "web-ui",
-  shortDescription: "A futuristic web experience showcasing next-gen UI/UX aesthetics, ambient glassmorphism, and responsive web interactions.",
-  fullDescription: "Metropolis is a conceptual UI/UX web application that explores smart city monitoring, futuristic transportation nodes, and immersive web interaction patterns. Built with Next.js and advanced styling, it serves as a showcase of modern web design excellence.",
+  shortDescription: "A UI/UX concept exploring how complex urban signals can become clear, responsive, and engaging through hierarchy, motion, and interactive data views.",
+  fullDescription: "Metropolis is a conceptual UI/UX application focused on presenting smart-city monitoring, transportation nodes, and urban metrics through an expressive interface. Built with Next.js and responsive interaction patterns, it explores how visual hierarchy and motion can make data-rich experiences easier to navigate and understand.",
   problemStatement: "Standard urban dashboards suffer from cluttered user interfaces and lack engaging visual storytelling, making complex urban data difficult to comprehend.",
-  solution: "Metropolis translates complex urban metrics into visually stunning glassmorphic dashboards with smooth animations and interactive 3D/ambient lighting.",
+  solution: "Metropolis translates complex urban metrics into structured dashboard views with clear visual grouping, responsive layouts, smooth transitions, and interactive ambient styling.",
   targetMarket: "Design enthusiasts, urban tech developers, and digital experience innovators.",
-  uniqueValue: "Pushes the boundaries of frontend visual design with high frame-rate animations, custom shaders, and responsive glass layouts.",
-  tags: ["UI/UX Design", "Next.js", "Web Aesthetics", "Interactive"],
+  uniqueValue: "It treats visual design as an information-design problem, using hierarchy, motion, and responsive layouts to make complex interfaces more legible and engaging.",
+  tags: ["UI/UX Design", "Data Visualization", "Next.js", "Interactive"],
   technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Vercel"],
   images: [
     "/reality13.png"
@@ -931,17 +931,17 @@ export default function Portfolio() {
           {/* Gemini Badge */}
           <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-cyan-800 mb-8 border border-cyan-300">
             <Sparkles className="w-4 h-4 text-cyan-600 animate-spin" style={{ animationDuration: '6s' }} />
-            <span>AI, IoT & UI/UX Developer</span>
+            <span>UI/UX, Data & Technology</span>
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse ml-1" />
           </div>
 
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08]">
-            Building the <br />
-            <span className="aurora-text whitespace-nowrap">tech of tomorrow.</span>
+            Designing clearer <br />
+            <span className="aurora-text whitespace-nowrap">digital and data experiences.</span>
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student building across the full stack. I enjoy creating practical digital tools that combine seamless front-end design with smart, back-end functionality.
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student exploring UI/UX, data analysis, and data-driven software systems. I turn complex workflows and information into practical, understandable digital experiences.
           </p>
 
           {/* CTA Buttons */}
@@ -1069,7 +1069,7 @@ export default function Portfolio() {
             <Terminal className="w-4 h-4" /> Technical Capability
           </div>
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Core Stack & Technologies</h2>
-          <p className="text-slate-600 text-sm max-w-xl">Tools, programming languages, and hardware frameworks I leverage for software and IoT development.</p>
+          <p className="text-slate-600 text-sm max-w-xl">Tools and technical foundations I use to design interfaces, work with data, and build reliable software and connected systems.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1094,8 +1094,8 @@ export default function Portfolio() {
             <div className="p-3 bg-purple-50 rounded-2xl border border-purple-200 text-purple-600 w-fit mb-5">
               <Globe className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Backend & Systems</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Architecting scalable APIs and algorithmic logic.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Data & Backend</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Building application logic, APIs, and data-aware services.</p>
             <div className="flex flex-wrap gap-1.5">
               {["Python", "Java", "C++", "Node.js", "JavaScript", "REST APIs"].map(t => (
                 <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
@@ -1110,8 +1110,8 @@ export default function Portfolio() {
             <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-600 w-fit mb-5">
               <Cpu className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">AI & Hardware (IoT)</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Hardware prototyping and machine learning model implementation.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">AI, Analytics & IoT</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Connecting sensor data, analytical models, and practical decisions.</p>
             <div className="flex flex-wrap gap-1.5">
               {["ESP32", "TensorFlow", "DHT11 Sensor", "GPS/GPRS", "Flutter"].map(t => (
                 <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
@@ -1126,8 +1126,8 @@ export default function Portfolio() {
             <div className="p-3 bg-pink-50 rounded-2xl border border-pink-200 text-pink-600 w-fit mb-5">
               <Database className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Databases & Tools</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Data management, version control, and cloud deployment.</p>
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Data Platforms & Tools</h3>
+            <p className="text-slate-500 text-xs leading-relaxed mb-4">Managing structured data, development workflows, and deployment foundations.</p>
             <div className="flex flex-wrap gap-1.5">
               {["PostgreSQL", "Firebase", "SQL", "Docker", "Git", "AWS"].map(t => (
                 <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
@@ -1151,13 +1151,13 @@ export default function Portfolio() {
             <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Get to Know Me</h2>
             <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
               <p>
-                Glad you&apos;re here. I&apos;m a Computer Science student dedicated to creating practical software solutions that solve real-world problems. My journey in tech is fueled by a curiosity for how software shapes daily human experiences and a drive to build tools that are as functional as they are impactful. Focused primarily on full-stack development, I aim to bridge theoretical computer science fundamentals with modern engineering practices to build robust, end-to-end digital products.
+                Glad you&apos;re here. I&apos;m a Computer Science student interested in the intersection of people, interfaces, and data. I enjoy understanding how a workflow works, where information becomes difficult to use, and how thoughtful design and engineering can make a tool more useful in practice.
               </p>
               <p>
-                My technical approach centers on crafting seamless, user-centric software. On the frontend, I specialize in designing clean, responsive interfaces that prioritize intuitive user experience and accessibility. On the backend, I focus on structuring performant architectures and integrating intelligent, AI-powered workflows. I view modern AI tools not as a substitute for fundamentals, but as a force multiplier-allowing me to write cleaner code, debug complex problems faster, and deliver value efficiently without compromising software quality.
+                My approach combines user-centered UI/UX thinking with data analysis and software engineering fundamentals. I work toward interfaces that are clear and accessible, data workflows that are understandable and dependable, and systems that connect frontend experiences to practical backend logic. I use AI tools to support research, iteration, and debugging while keeping the reasoning and quality of the work grounded in fundamentals.
               </p>
               <p>
-                As I prepare to step into the software industry, I am constantly refining my skills in modern web frameworks, system architecture, and cloud technologies. I thrive in environments that challenge me to solve tricky logic, learn new stacks, and collaborate with other builders. Feel free to explore my portfolio or reach out directly-I am always open to connecting, collaborating on innovative projects, or discussing opportunities in software development.
+                As I prepare to step into the technology industry, I am developing my skills across interface design, data analysis, data engineering, application development, and cloud technologies. I enjoy working through ambiguous problems, learning new tools, and collaborating with people who care about making technology useful. I am open to internships, co-ops, project collaborations, and early-career opportunities in these areas.
               </p>
             </div>
           </div>
@@ -1169,22 +1169,22 @@ export default function Portfolio() {
                 <div className="flex gap-3.5 items-start">
                   <div className="w-6 h-6 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center shrink-0 font-bold border border-cyan-300">1</div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-0.5">Intuitive Micro-Interactions</h4>
-                    <p className="text-slate-500">Interfaces should feel tactile, fast, and responsive.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Clear User Experiences</h4>
+                    <p className="text-slate-500">Interfaces should make important actions and information easy to understand.</p>
                   </div>
                 </div>
                 <div className="flex gap-3.5 items-start">
                   <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 font-bold border border-purple-300">2</div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-0.5">Practical Hardware Integration</h4>
-                    <p className="text-slate-500">Low-cost IoT sensors collecting reliable physical data.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Useful Data Collection</h4>
+                    <p className="text-slate-500">Reliable inputs create stronger analysis and more useful decisions.</p>
                   </div>
                 </div>
                 <div className="flex gap-3.5 items-start">
                   <div className="w-6 h-6 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center shrink-0 font-bold border border-pink-300">3</div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-0.5">Data Integrity & Trust</h4>
-                    <p className="text-slate-500">AI and blockchain providing verifiable metrics for decision making.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Responsible Decisions</h4>
+                    <p className="text-slate-500">Data should be traceable, contextualized, and applied with care.</p>
                   </div>
                 </div>
               </div>
@@ -1203,7 +1203,7 @@ export default function Portfolio() {
             <span className="aurora-text whitespace-nowrap">extraordinary together.</span>
           </h2>
           <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-10 text-center">
-            I am currently open to internship, co-op, project collaboration, and developer opportunities.
+            I am currently open to UI/UX, data, and software opportunities across internships, co-ops, and project collaborations.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4">
             <button
