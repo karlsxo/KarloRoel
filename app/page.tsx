@@ -29,6 +29,7 @@ import {
   Maximize2
 } from "lucide-react";
 import Image from "next/image";
+import CertificationGallery from "./components/CertificationGallery";
 
 // --- Content Model ---
 // These interfaces shape each project entry used by the portfolio carousel, filters,
@@ -970,7 +971,7 @@ export default function Portfolio() {
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse ml-1" />
           </div>
 
-          <h1 className="max-w-5xl text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08] break-words">
+          <h1 className="max-w-5xl text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08] break-words">
             Building interfaces. <br />
             <span className="aurora-text">Connecting data & AI.</span>
           </h1>
@@ -1136,6 +1137,11 @@ export default function Portfolio() {
         </div>
         </Reveal>
       </Section>
+
+      {/* Certifications Section */}
+      <section id="certifications" className="section-glow relative z-10 mx-auto max-w-7xl scroll-mt-28 px-6 py-20 md:py-28">
+        <CertificationGallery />
+      </section>
 
       {/* About Me Section */}
       <Section id="about" className="section-glow">
