@@ -66,15 +66,15 @@ interface ProjectData {
 const dalaniProject: ProjectData = {
   id: "dalani",
   title: "DalAni",
-  subtitle: "Data-informed IoT cold-chain monitoring",
+  subtitle: "Sensor data pipelines & automated risk alerts",
   category: "ai-iot",
-  shortDescription: "A data collection and decision-support concept for reducing post-harvest loss through sensor monitoring, risk scoring, and clearer cold-chain visibility.",
+  shortDescription: "An IoT and data engineering concept that connects sensor readings, spoilage-risk analysis, and automated alerts to support cold-chain decisions.",
   fullDescription: "DalAni is an end-to-end logistics concept for Philippine agricultural cooperatives. It combines low-cost ESP32 sensors with a cloud-based data workflow to collect temperature, humidity, and location signals in real time. Those signals are translated into spoilage-risk insights, alerts, and route decisions that help teams respond before produce deteriorates.",
   problemStatement: "Over 33% to 40% of harvested produce in the Philippines spoils during transport due to non-refrigerated vehicles, lack of ambient tracking, and severe traffic delays. For every 10°C rise in temperature, fruit deterioration doubles, wiping out farmer earnings and straining food security.",
   solution: "DalAni collects micro-climate data using ESP32, DHT11 sensors, and GPS/GPRS modules, then turns those observations into a dynamic spoilage-risk score. When conditions move beyond the defined threshold, the system provides driver alerts and supports cooling and route decisions through one shared operational view.",
   targetMarket: "9,000+ farmer cooperatives nationwide in the Philippines, acting as administrative hubs for smallholder mango and high-value crop growers.",
   uniqueValue: "It connects reliable field data with practical decisions: teams can monitor conditions, identify risk earlier, and use a transparent record of transit conditions to support quality assessments.",
-  tags: ["Data Collection", "Risk Analytics", "Agri-Tech", "Cold-Chain"],
+  tags: ["Data Engineering", "Risk Analytics", "Automated Alerts", "IoT"],
   technologies: ["ESP32 Microcontroller", "Python", "TensorFlow", "Flutter", "GPS/GPRS Module", "DHT11 Sensor", "Firebase", "Google Maps API"],
   images: [
     "/assets/selected-works/dalani-final-logo.png",
@@ -113,15 +113,15 @@ const dalaniProject: ProjectData = {
 const arteryProject: ProjectData = {
   id: "artery",
   title: "Artery",
-  subtitle: "Predictive analytics for blood supply operations",
+  subtitle: "Data science & analytics for blood supply",
   category: "health-tech",
-  shortDescription: "A data-driven supply network concept that gives hospitals shared inventory visibility, demand insights, and traceable records for faster decisions.",
+  shortDescription: "A healthcare data science concept combining inventory dashboards, demand forecasting, and traceable records to help teams understand blood supply needs.",
   fullDescription: "Artery is a healthcare logistics concept that brings blood banks, regional hospitals, and emergency donors into one transparent dashboard. It combines live inventory data with demand forecasting and traceability so teams can understand supply conditions, anticipate pressure points, and coordinate response more effectively.",
   problemStatement: "Philippine hospitals suffer from severe blood inventory fragmentation, lack of inter-hospital visibility, expired blood units due to poor demand forecasting, and life-threatening delays in matching rare blood types during critical emergencies.",
   solution: "Artery unifies blood bank inventories nationwide into a live grid. Machine learning predicts upcoming demand spikes per blood group, while smart contracts track blood unit storage temperatures and expiry dates on an immutable ledger.",
   targetMarket: "Hospitals, Red Cross blood centers, regional health units, and emergency patient networks.",
   uniqueValue: "It brings operational data, forecasting, and auditability together so healthcare teams can make supply decisions with more context and accountability.",
-  tags: ["Data Analytics", "Demand Forecasting", "Health-Tech", "Supply Chain"],
+  tags: ["Data Science", "Data Analysis", "Forecasting", "Health-Tech"],
   technologies: ["React.js", "Node.js", "Blockchain Ledger", "TensorFlow", "PostgreSQL", "Docker", "AWS Cloud"],
   images: [
     "/assets/selected-works/artery-final-logo.png",
@@ -161,15 +161,15 @@ const arteryProject: ProjectData = {
 const tribleProject: ProjectData = {
   id: "trible",
   title: "Trible",
-  subtitle: "User-centered campus mobility platform",
+  subtitle: "React frontend for real-time campus mobility",
   category: "web-ui",
-  shortDescription: "A user-centered booking experience that makes driver availability, seat capacity, routes, and trip communication easier to understand and act on.",
+  shortDescription: "A responsive React booking experience that connects Firebase data with driver availability, seat reservations, route information, and in-app messaging.",
   fullDescription: "Trible is a personal project commissioned by an Agricultural Engineering student. It explores how a real-time campus mobility service can make transportation information easier to scan and use for both riders and drivers. The experience brings availability, routes, terminals, seat bookings, and communication into one workflow designed around quicker decisions and clearer status updates.",
   problemStatement: "Students often struggle with unreliable transportation, long waiting times, and unclear driver availability at campus terminals. Without a proper booking system, riders are forced to wait in queues, guess which drivers are available, or miss transport opportunities altogether. Drivers also face difficulty managing passenger demand and updating their route and seat status in real time.",
   solution: "Trible solves this by providing a real-time booking platform where students can see active drivers, available seats, terminal locations, and routes. Drivers can update their online status, destination, terminal, and seat count instantly, allowing passengers to make quick decisions and reserve rides with confidence.",
   targetMarket: "College and university students, tricycle drivers operating in campus or local transport routes, campus transport coordinators and transport service users, and students who travel regularly between terminals and campus zones.",
   uniqueValue: "Trible combines real-time visibility, booking, status management, and communication in one focused workflow that reduces uncertainty for both riders and drivers.",
-  tags: ["UX Design", "Real-Time Data", "Campus Mobility", "Booking Flow"],
+  tags: ["Frontend Development", "React", "Firebase", "Real-Time Data"],
   technologies: ["React", "Vite", "Tailwind CSS", "Firebase Authentication", "Firebase Realtime Database", "Zustand", "Framer Motion", "React Router", "Responsive UI design"],
   images: [
     "/assets/selected-works/trible-final-logo.png"
@@ -205,15 +205,15 @@ const tribleProject: ProjectData = {
 const metropolisProject: ProjectData = {
   id: "metropolis",
   title: "Metropolis",
-  subtitle: "UI/UX concept for data-rich urban interfaces",
+  subtitle: "Next.js frontend & interactive data views",
   category: "web-ui",
-  shortDescription: "A UI/UX concept exploring how complex urban signals can become clear, responsive, and engaging through hierarchy, motion, and interactive data views.",
-  fullDescription: "Metropolis is a conceptual UI/UX application focused on presenting smart-city monitoring, transportation nodes, and urban metrics through an expressive interface. Built with Next.js and responsive interaction patterns, it explores how visual hierarchy and motion can make data-rich experiences easier to navigate and understand.",
+  shortDescription: "A Next.js frontend concept exploring responsive dashboard layouts, interactive data views, and motion to make complex urban information easier to navigate.",
+  fullDescription: "Metropolis is a conceptual frontend application focused on presenting smart-city monitoring, transportation nodes, and urban metrics through an expressive interface. Built with Next.js and responsive interaction patterns, it explores how visual hierarchy and motion can make data-rich experiences easier to navigate and understand.",
   problemStatement: "Standard urban dashboards suffer from cluttered user interfaces and lack engaging visual storytelling, making complex urban data difficult to comprehend.",
   solution: "Metropolis translates complex urban metrics into structured dashboard views with clear visual grouping, responsive layouts, smooth transitions, and interactive ambient styling.",
   targetMarket: "Design enthusiasts, urban tech developers, and digital experience innovators.",
   uniqueValue: "It treats visual design as an information-design problem, using hierarchy, motion, and responsive layouts to make complex interfaces more legible and engaging.",
-  tags: ["UI/UX Design", "Data Visualization", "Next.js", "Interactive"],
+  tags: ["Frontend Development", "Data Visualization", "Next.js", "Responsive UI"],
   technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion", "Vercel"],
   images: [
     "/reality13.png"
@@ -233,7 +233,42 @@ const metropolisProject: ProjectData = {
   externalUrl: "https://reality13-metropolis.vercel.app"
 };
 
-const projectsData: ProjectData[] = [dalaniProject, tribleProject, arteryProject, metropolisProject];
+const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject];
+
+// Shared labels keep the hero and capability section aligned. Focus descriptions
+// distinguish established project work from areas still being developed.
+const focusAreas = [
+  {
+    title: "Frontend Development",
+    icon: Code2,
+    description: "Building responsive web interfaces with reusable components, clear interactions, and real-time application data.",
+    topics: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  },
+  {
+    title: "Data Science",
+    icon: Cpu,
+    description: "Developing skills in predictive modeling and model evaluation, with project concepts centered on forecasting and risk analysis.",
+    topics: ["Python", "TensorFlow", "Predictive Modeling", "Forecasting"],
+  },
+  {
+    title: "Data Analysis",
+    icon: Activity,
+    description: "Exploring patterns, interpreting metrics, and presenting data through clear dashboards that support practical decisions.",
+    topics: ["Python", "SQL", "Data Visualization", "Dashboard Design"],
+  },
+  {
+    title: "Data Engineering",
+    icon: Database,
+    description: "Connecting data collection, databases, and APIs while developing dependable workflows for preparing and delivering useful data.",
+    topics: ["SQL", "PostgreSQL", "Firebase", "REST APIs", "Data Pipelines"],
+  },
+  {
+    title: "AI Automation",
+    icon: Zap,
+    description: "Exploring AI-assisted workflows and API integrations to reduce repetitive work, with clear checks and human review of results.",
+    topics: ["Python", "API Integration", "Workflow Automation", "AI-Assisted Workflows"],
+  },
+];
 
 // --- Spotlight Mouse Tracking Card ---
 // This component adds a subtle cursor-reactive glow for cards while preserving
@@ -896,7 +931,7 @@ export default function Portfolio() {
 
           <div className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <a href="#work" className="hover:text-cyan-600 transition-colors">Work</a>
-            <a href="#tech" className="hover:text-cyan-600 transition-colors">Tech Architecture</a>
+            <a href="#tech" className="hover:text-cyan-600 transition-colors">Skills & Focus</a>
             <a href="#about" className="hover:text-cyan-600 transition-colors">About</a>
           </div>
 
@@ -931,18 +966,26 @@ export default function Portfolio() {
           {/* Gemini Badge */}
           <div className="gemini-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-cyan-800 mb-8 border border-cyan-300">
             <Sparkles className="w-4 h-4 text-cyan-600 animate-spin" style={{ animationDuration: '6s' }} />
-            <span>UI/UX, Data & Technology</span>
+            <span>Frontend, Data & AI Automation</span>
             <span className="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse ml-1" />
           </div>
 
           <h1 className="max-w-5xl text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-slate-900 mb-6 leading-[1.08] break-words">
-            Designing clearer <br />
-            <span className="aurora-text">digital and data experiences.</span>
+            Building interfaces. <br />
+            <span className="aurora-text">Connecting data & AI.</span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-10">
-            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a Computer Science student exploring UI/UX, data analysis, and data-driven software systems. I turn complex workflows and information into practical, understandable digital experiences.
+          <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl leading-relaxed mb-6">
+            Hi, I&apos;m <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-pink-600 font-bold">Karlo Roel Montenegro</span> — a frontend developer and Computer Science student focused on data science, data analysis, data engineering, and AI automation. I build responsive web experiences and explore how data and automation can make everyday workflows more useful.
           </p>
+
+          <ul aria-label="Professional focus areas" className="flex flex-wrap justify-center md:justify-start gap-2 max-w-3xl mb-8">
+            {focusAreas.map(({ title }) => (
+              <li key={title} className="rounded-full border border-cyan-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700">
+                {title}
+              </li>
+            ))}
+          </ul>
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap justify-center md:justify-start gap-3.5 mb-14">
@@ -976,6 +1019,7 @@ export default function Portfolio() {
               <Layers className="w-4 h-4" /> Portfolio Showcase
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Selected Work</h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-600">Frontend applications and data-driven concepts, from real-time booking interfaces to forecasting and automated monitoring.</p>
           </div>
 
           {/* Category Filter Tabs */}
@@ -984,7 +1028,7 @@ export default function Portfolio() {
               { id: "all", label: "All Projects" },
               { id: "ai-iot", label: "AI & IoT" },
               { id: "health-tech", label: "Health-Tech" },
-              { id: "web-ui", label: "Web & UI/UX" },
+              { id: "web-ui", label: "Frontend" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -1068,74 +1112,27 @@ export default function Portfolio() {
           <div className="inline-flex items-center gap-1.5 text-fuchsia-600 font-bold text-xs uppercase tracking-wider mb-2">
             <Terminal className="w-4 h-4" /> Technical Capability
           </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Core Stack & Technologies</h2>
-          <p className="text-slate-600 text-sm max-w-xl">Tools and technical foundations I use to design interfaces, work with data, and build reliable software and connected systems.</p>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">Skills & Focus Areas</h2>
+          <p className="text-slate-600 text-sm max-w-xl">Five connected areas that shape my work and learning: frontend development, data science, data analysis, data engineering, and AI automation.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Frontend */}
-          <SpotlightCard className="p-7">
-            <div className="p-3 bg-cyan-50 rounded-2xl border border-cyan-200 text-cyan-600 w-fit mb-5">
-              <Code2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Frontend & UI/UX</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Designing accessible, high-performance interfaces.</p>
-            <div className="flex flex-wrap gap-1.5">
-              {["React", "Next.js 16", "Tailwind CSS", "TypeScript", "Framer Motion"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </SpotlightCard>
-
-          {/* Backend */}
-          <SpotlightCard className="p-7">
-            <div className="p-3 bg-purple-50 rounded-2xl border border-purple-200 text-purple-600 w-fit mb-5">
-              <Globe className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Data & Backend</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Building application logic, APIs, and data-aware services.</p>
-            <div className="flex flex-wrap gap-1.5">
-              {["Python", "Java", "C++", "Node.js", "JavaScript", "REST APIs"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </SpotlightCard>
-
-          {/* AI & Hardware */}
-          <SpotlightCard className="p-7">
-            <div className="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-600 w-fit mb-5">
-              <Cpu className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">AI, Analytics & IoT</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Connecting sensor data, analytical models, and practical decisions.</p>
-            <div className="flex flex-wrap gap-1.5">
-              {["ESP32", "TensorFlow", "DHT11 Sensor", "GPS/GPRS", "Flutter"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </SpotlightCard>
-
-          {/* Cloud & Databases */}
-          <SpotlightCard className="p-7">
-            <div className="p-3 bg-pink-50 rounded-2xl border border-pink-200 text-pink-600 w-fit mb-5">
-              <Database className="w-6 h-6" />
-            </div>
-            <h3 className="text-lg font-bold text-slate-900 mb-2">Data Platforms & Tools</h3>
-            <p className="text-slate-500 text-xs leading-relaxed mb-4">Managing structured data, development workflows, and deployment foundations.</p>
-            <div className="flex flex-wrap gap-1.5">
-              {["PostgreSQL", "Firebase", "SQL", "Docker", "Git", "AWS"].map(t => (
-                <span key={t} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </SpotlightCard>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-6">
+          {focusAreas.map(({ title, icon: Icon, description, topics }, index) => (
+            <SpotlightCard key={title} className={`p-7 ${index > 2 ? "xl:col-span-3" : "xl:col-span-2"}`}>
+              <div className="p-3 bg-cyan-50 rounded-2xl border border-cyan-200 text-cyan-600 w-fit mb-5">
+                <Icon className="w-6 h-6" aria-hidden="true" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">{title}</h3>
+              <p className="text-slate-600 text-sm leading-relaxed mb-4">{description}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {topics.map(topic => (
+                  <span key={topic} className="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[11px] font-semibold text-slate-700 shadow-2xs">
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            </SpotlightCard>
+          ))}
         </div>
         </Reveal>
       </Section>
@@ -1151,13 +1148,13 @@ export default function Portfolio() {
             <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Get to Know Me</h2>
             <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
               <p>
-                Glad you&apos;re here. I&apos;m a Computer Science student interested in the intersection of people, interfaces, and data. I enjoy understanding how a workflow works, where information becomes difficult to use, and how thoughtful design and engineering can make a tool more useful in practice.
+                I&apos;m Karlo, a Computer Science student building my career across frontend development, data science, data analysis, data engineering, and AI automation. I enjoy connecting what people see on a screen with the data and workflows that make an application useful.
               </p>
               <p>
-                My approach combines user-centered UI/UX thinking with data analysis and software engineering fundamentals. I work toward interfaces that are clear and accessible, data workflows that are understandable and dependable, and systems that connect frontend experiences to practical backend logic. I use AI tools to support research, iteration, and debugging while keeping the reasoning and quality of the work grounded in fundamentals.
+                My frontend work uses React, Next.js, and TypeScript to create responsive interfaces. My data interests extend from exploring patterns and communicating insights to predictive modeling and the pipelines that prepare data for analysis. Trible and Metropolis reflect my frontend focus, while DalAni and Artery explore data collection, forecasting, and decision support.
               </p>
               <p>
-                As I prepare to step into the technology industry, I am developing my skills across interface design, data analysis, data engineering, application development, and cloud technologies. I enjoy working through ambiguous problems, learning new tools, and collaborating with people who care about making technology useful. I am open to internships, co-ops, project collaborations, and early-career opportunities in these areas.
+                I&apos;m also developing my skills in AI automation: connecting tools and APIs, reducing repetitive tasks, and checking the quality of automated results. I&apos;m open to internships, early-career roles, and project collaborations where I can contribute, learn from a team, and turn these interests into useful applications.
               </p>
             </div>
           </div>
@@ -1183,8 +1180,8 @@ export default function Portfolio() {
                 <div className="flex gap-3.5 items-start">
                   <div className="w-6 h-6 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center shrink-0 font-bold border border-pink-300">3</div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-0.5">Responsible Decisions</h4>
-                    <p className="text-slate-500">Data should be traceable, contextualized, and applied with care.</p>
+                    <h4 className="font-bold text-slate-900 mb-0.5">Responsible AI & Automation</h4>
+                    <p className="text-slate-500">Automated results should be understandable, checked, and easy for people to review.</p>
                   </div>
                 </div>
               </div>
@@ -1203,7 +1200,7 @@ export default function Portfolio() {
             <span className="aurora-text">extraordinary together.</span>
           </h2>
           <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-10 text-center">
-            I am currently open to UI/UX, data, and software opportunities across internships, co-ops, and project collaborations.
+            Open to internships, early-career opportunities, and collaborations in frontend development, data science, data analysis, data engineering, and AI automation.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4">
             <button
@@ -1228,7 +1225,7 @@ export default function Portfolio() {
       {/* Footer */}
       <footer className="relative z-10 py-8 bg-white/80 border-t border-slate-200 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs font-semibold">
-          <p>© Karlo Roel Montenegro. Made With Special Love.</p>
+          <p>© Karlo Roel Montenegro. Frontend, Data & AI Automation.</p>
           
           <div className="flex items-center gap-6">
             <a href="https://github.com/karlsxo/KarloRoel" target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors flex items-center gap-1">

@@ -1,13 +1,13 @@
 # Karlo Roel Portfolio
 
-Professional portfolio website for Karlo Roel Montenegro, built with Next.js and designed to showcase selected projects, technical strengths, and contact information in a clean, modern format.
+Professional portfolio website for Karlo Roel Montenegro, built with Next.js and designed to showcase frontend development, data science, data analysis, data engineering, AI automation, and contact information in a clean, modern format.
 
 ## Overview
 
 This portfolio highlights:
 
-- Selected work, including DalAni, Artery, and Metropolis
-- A concise summary of technical skills and academic focus
+- Selected work, including Trible, Metropolis, DalAni, and Artery
+- Five focus areas, with descriptions distinguishing project experience from developing skills
 - A polished contact flow for recruiters and collaborators
 
 ## Tech Stack
