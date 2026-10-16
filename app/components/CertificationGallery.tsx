@@ -121,7 +121,7 @@ export default function CertificationGallery() {
         <div className="mb-2 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-cyan-600">
           <Award className="h-4 w-4" aria-hidden="true" /> Continuous Learning
         </div>
-        <h2 className="mb-3 text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">Certifications</h2>
+        <h1 className="mb-3 text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">Certifications</h1>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">

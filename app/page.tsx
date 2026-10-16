@@ -29,7 +29,7 @@ import {
   Maximize2
 } from "lucide-react";
 import Image from "next/image";
-import CertificationGallery from "./components/CertificationGallery";
+import Link from "next/link";
 
 // --- Content Model ---
 // These interfaces shape each project entry used by the portfolio carousel, filters,
@@ -1139,8 +1139,17 @@ export default function Portfolio() {
       </Section>
 
       {/* Certifications Section */}
-      <section id="certifications" className="section-glow relative z-10 mx-auto max-w-7xl scroll-mt-28 px-6 py-20 md:py-28">
-        <CertificationGallery />
+      <section id="certifications" aria-labelledby="certifications-heading" className="section-glow relative z-10 mx-auto max-w-7xl scroll-mt-28 px-6 py-10 md:py-14">
+        <Link
+          href="/certifications"
+          aria-label="View certifications"
+          className="glass-panel scroll-glass group flex items-center justify-between gap-4 rounded-3xl px-5 py-6 transition-colors hover:border-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-600 sm:px-8 sm:py-8"
+        >
+          <h2 id="certifications-heading" className="text-xl font-extrabold tracking-tight text-slate-900 sm:text-3xl md:text-4xl">Certifications</h2>
+          <span className="inline-flex shrink-0 items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-700 transition-colors group-hover:text-fuchsia-600 sm:text-sm">
+            View <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+          </span>
+        </Link>
       </section>
 
       {/* About Me Section */}
