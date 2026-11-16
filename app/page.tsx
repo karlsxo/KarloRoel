@@ -159,6 +159,49 @@ const arteryProject: ProjectData = {
   ]
 };
 
+const uritectProject: ProjectData = {
+  id: "uritect",
+  title: "Uritect",
+  subtitle: "Offline urine dipstick reading & UTI screening support",
+  category: "health-tech",
+  shortDescription: "An offline Android prototype that reads ten-pad urine dipstick strips from a phone photo, classifies each pad on-device, and supports UTI screening and renal follow-up decisions.",
+  fullDescription: "Uritect is an offline Android clinical decision-support prototype for interpreting ten-pad urine reagent strips. From a single phone capture, it locates the strip without a printed marker, normalizes the lighting, reads each of the ten reagent pads, and classifies the results on the device. A separate Bayesian UTI screening estimate and a rule-based renal follow-up path help turn the readings into clear next steps. All processing and history storage stay on the phone, with no internet connection required.",
+  problemStatement: "Reading urine dipstick colors by eye is subjective and depends on lighting, timing, and the reader's experience. In rural health units and other low-resource settings, laboratory access is limited, and inconsistent strip interpretation can delay recognition of possible urinary tract infections and kidney-related abnormalities.",
+  solution: "Uritect checks each capture for blur, glare, darkness, and partial strips, then locates the strip and its ten reagent pads, corrects white balance using neutral strip pixels, and extracts normalized HSV color features. A per-analyte k-nearest neighbors model classifies each pad. The results feed a sex-specific, literature-derived Bayesian UTI screening estimate and a deterministic renal rule engine that recommends whether to observe, repeat, retake, or consult.",
+  targetMarket: "Medical technologists, rural health units, community clinics, and health workers in the Philippines who perform urinalysis screening where laboratory resources and connectivity are limited.",
+  uniqueValue: "It runs fully offline on an ordinary Android phone, needs no printed calibration marker, and keeps UTI and renal interpretation separate and transparent: it shows its prior, factors, and triggered rules instead of an unexplained score.",
+  tags: ["Health-Tech", "Computer Vision", "Machine Learning", "Mobile App"],
+  technologies: ["Flutter", "Dart", "Python", "k-Nearest Neighbors", "HSV Color Analysis", "Bayesian Inference", "Rule-Based Engine", "Android", "Offline On-Device Processing"],
+  images: [
+    "/assets/selected-works/uritect-final-logo.png"
+  ],
+  features: [
+    {
+      title: "Markerless Strip Detection",
+      description: "Locates one complete strip and validates ten aligned reagent pads without needing a printed black-and-white marker.",
+      icon: Target
+    },
+    {
+      title: "Lighting Normalization & Quality Checks",
+      description: "Rejects blurred, dark, overexposed, or partial captures and corrects white balance using neutral strip pixels before classification.",
+      icon: ShieldCheck
+    },
+    {
+      title: "On-Device Pad Classification",
+      description: "Extracts normalized HSV color features and classifies each analyte with its own k-NN model, fully offline on the phone.",
+      icon: Cpu
+    },
+    {
+      title: "UTI Screening & Renal Follow-Up",
+      description: "Pairs a transparent Bayesian UTI screening estimate with a separate rule-based renal path that recommends observing, repeating, retaking, or consulting.",
+      icon: Activity
+    }
+  ],
+  achievements: [
+    "🏆 Top 7 out of 90 Participants - Region 6, PSC XI"
+  ]
+};
+
 const tribleProject: ProjectData = {
   id: "trible",
   title: "Trible",
@@ -234,7 +277,7 @@ const metropolisProject: ProjectData = {
   externalUrl: "https://reality13-metropolis.vercel.app"
 };
 
-const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject];
+const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject, uritectProject];
 
 // Shared labels keep the hero and capability section aligned. Focus descriptions
 // distinguish established project work from areas still being developed.
@@ -1166,7 +1209,7 @@ export default function Portfolio() {
                 I&apos;m Karlo, a Computer Science student building my career across frontend development, data science, data analysis, data engineering, and AI automation. I enjoy connecting what people see on a screen with the data and workflows that make an application useful.
               </p>
               <p>
-                My frontend work uses React, Next.js, and TypeScript to create responsive interfaces. My data interests extend from exploring patterns and communicating insights to predictive modeling and the pipelines that prepare data for analysis. Trible and Metropolis reflect my frontend focus, while DalAni and Artery explore data collection, forecasting, and decision support.
+                My frontend work uses React, Next.js, and TypeScript to create responsive interfaces. My data interests extend from exploring patterns and communicating insights to predictive modeling and the pipelines that prepare data for analysis. Trible and Metropolis reflect my frontend focus, while DalAni and Artery explore data collection, forecasting, and decision support. Uritect, an offline Android app that reads urine dipstick strips and supports UTI screening on the device, placed Top 7 out of 90 participants in Region 6 during PSC XI.
               </p>
               <p>
                 I&apos;m also developing my skills in AI automation: connecting tools and APIs, reducing repetitive tasks, and checking the quality of automated results. I&apos;m open to internships, early-career roles, and project collaborations where I can contribute, learn from a team, and turn these interests into useful applications.
