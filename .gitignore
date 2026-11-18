@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Personal documents (CV and application letters) - never commit
+*_CV_*.docx
+*_Application_Letter*.docx
+~$*.docx

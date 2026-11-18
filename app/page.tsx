@@ -1253,8 +1253,8 @@ export default function Portfolio() {
       <section className="relative z-10 min-h-[72svh] py-24 md:py-32 border-t border-slate-200 flex items-center justify-center">
         <Reveal className="w-full">
         <div className="max-w-5xl mx-auto px-6 text-center flex flex-col items-center justify-center">
-          <h2 className="max-w-5xl text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-slate-900 tracking-tight mb-6 text-center break-words">
-            Let&apos;s build something <br />
+          <h2 className="max-w-5xl text-[1.6rem] min-[400px]:text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 tracking-tight mb-6 text-center break-words">
+            <span className="whitespace-nowrap">Let&apos;s build something</span> <br />
             <span className="aurora-text">extraordinary together.</span>
           </h2>
           <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto mb-10 text-center">
