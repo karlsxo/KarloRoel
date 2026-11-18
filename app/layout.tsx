@@ -1,15 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Oswald, Source_Serif_4, UnifrakturMaguntia } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Masthead: blackletter, like a traditional newspaper nameplate.
+const unifraktur = UnifrakturMaguntia({
+  variable: "--font-unifraktur",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+// Headlines, kickers, and labels: a condensed sans for the front-page look.
+const oswald = Oswald({
+  variable: "--font-oswald",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Body copy: a readable text serif.
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
 // Keep search metadata aligned with the roles and project themes presented on the page.
@@ -26,10 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 text-slate-900 selection:bg-pink-500/30 selection:text-pink-900`}
-      >
+    // suppressHydrationWarning: the inline script adds the "js" class before React hydrates.
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Marks that JavaScript is running so scroll reveals can start hidden; without it, content stays visible. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body className={`${unifraktur.variable} ${oswald.variable} ${sourceSerif.variable} antialiased`}>
         {children}
       </body>
     </html>

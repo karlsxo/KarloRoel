@@ -10,26 +10,38 @@ export const metadata: Metadata = {
 
 export default function CertificationsPage() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-900">
-      <div className="aurora-stage" aria-hidden="true" />
-      <div className="aurora-ribbon" aria-hidden="true" />
-      <div className="noise-overlay" aria-hidden="true" />
+    <div className="relative min-h-screen">
+      <div className="paper-grain" aria-hidden="true" />
 
-      <header className="fixed left-1/2 top-4 z-50 w-[92%] max-w-6xl -translate-x-1/2">
-        <nav aria-label="Certifications navigation" className="glass-panel scroll-glass flex items-center justify-between gap-4 rounded-full border border-slate-200/80 px-5 py-3 shadow-md">
-          <Link href="/" aria-label="Karlo Montenegro home" className="flex items-center gap-2.5 rounded-full text-sm font-bold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-600 md:text-base">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-fuchsia-400 bg-slate-900 text-xs font-black text-white">KR</span>
-            <span className="hidden sm:inline">Karlo Montenegro</span>
-          </Link>
-          <Link href="/#certifications" className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs font-bold text-slate-700 transition-colors hover:border-cyan-300 hover:bg-cyan-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600">
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back to portfolio
-          </Link>
-        </nav>
-      </header>
+      <div className="relative z-10">
+        <header className="mx-auto max-w-[1240px] px-4 pt-5 sm:px-6 sm:pt-8 lg:px-10">
+          <nav aria-label="Certifications navigation" className="flex items-center justify-between gap-3 border-b-4 border-double border-ink pb-3">
+            <Link
+              href="/"
+              aria-label="The Daily Karlo, back to the portfolio home page"
+              className="whitespace-nowrap py-1 font-masthead text-[clamp(1.7rem,5vw,3.25rem)] leading-none text-ink transition-colors hover:text-press"
+            >
+              The Daily Karlo
+            </Link>
+            <Link href="/#certifications" className="ink-btn-outline btn-sm shrink-0">
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              <span>
+                Back<span className="hidden sm:inline"> to portfolio</span>
+              </span>
+            </Link>
+          </nav>
+        </header>
 
-      <main className="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-32 md:pb-28 md:pt-40">
-        <CertificationGallery />
-      </main>
+        <main className="mx-auto max-w-[1240px] px-4 pb-20 pt-10 sm:px-6 md:pb-28 md:pt-14 lg:px-10">
+          <CertificationGallery />
+        </main>
+
+        <footer className="bg-ink text-paper-light">
+          <p className="mx-auto max-w-[1240px] px-4 py-5 text-center font-headline text-[0.68rem] uppercase tracking-[0.2em] sm:px-6 lg:px-10">
+            © Karlo Roel Montenegro. Frontend, Data &amp; AI Automation.
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
