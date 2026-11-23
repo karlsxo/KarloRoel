@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
 import {
   Activity,
+  ArrowRight,
   ArrowUp,
   ArrowUpRight,
   Award,
@@ -203,14 +204,14 @@ const uritectProject: ProjectData = {
 const binProject: ProjectData = {
   id: "bin",
   title: "BIN",
-  subtitle: "Computer vision for trash sorting by material",
+  subtitle: "Comparing computer vision models for trash sorting",
   category: "ai-iot",
-  shortDescription: "A phone app that identifies a piece of trash from a photo as cardboard, glass, metal, paper, plastic, or residual waste, comparing three computer vision methods that all run on the device.",
-  fullDescription: "BIN is a Computer Vision group project at West Visayas State University. It asks which kind of computer vision method best recognizes the material of a piece of trash from a single photo, and whether it still works on messy real-world photos. We compared a classical HOG + linear SVM written from scratch, a 4-block CNN trained from scratch, and a pretrained MobileNetV3-Large on the same data, split, and metrics across six experiments. We then turned the results into BIN, an installable phone app that runs all three methods on the device, works offline, and tells users which bin an item belongs in and how to prepare it.",
-  problemStatement: "Segregating waste by material is the first step of recycling and is required at source by the Philippine Ecological Solid Waste Management Act (RA 9003). In barangay materials recovery facilities and schools, this sorting is still done by hand. Models trained only on clean studio photos also break down on real-world photos with cluttered backgrounds and uneven lighting.",
-  solution: "BIN opens straight to the camera. The user places one item inside the scan square and taps Identify. MobileNetV3, the most accurate method on real-world photos, gives the answer, together with whether the item is recyclable or residual and what to do with it. When its confidence is below 65%, BIN says \"Not sure\" and asks for a retake. Retraining on TrashNet plus real-world web photos raised MobileNetV3's real-world accuracy from 62.8% to 97.7%.",
-  targetMarket: "Barangay materials recovery facilities, schools, households, and anyone in the Philippines who needs quick help deciding which bin a piece of trash belongs in.",
-  uniqueValue: "It shows its work: every scan lists the prediction, confidence, and on-phone runtime of all three methods side by side. It runs fully on the phone, so photos never leave the device, and it admits uncertainty with a calibrated \"Not sure\" threshold instead of guessing.",
+  shortDescription: "A computer vision project that tests different models on identifying trash materials from photos and evaluates which one has the highest accuracy and potential.",
+  fullDescription: "BIN is a computer vision project that tests and compares different models on one task: identifying the material of a piece of trash from a photo. It compares three approaches: a classical HOG + SVM, a CNN trained from scratch, and a pretrained MobileNetV3. All three use the same data and are evaluated the same way, to find which model has the highest accuracy and the most potential. The best model, MobileNetV3, is then used in a simple phone app.",
+  problemStatement: "Sorting trash by material is the first step of recycling, but it is usually done by hand. It is also unclear which computer vision approach works best for this task, especially on real-world photos with messy backgrounds and different lighting.",
+  solution: "The three models were trained and tested side by side on six trash categories: cardboard, glass, metal, paper, plastic, and residual trash. MobileNetV3 performed best, reaching 97.7% accuracy on real-world photos it had never seen. BIN uses it to identify an item from a photo and suggest which bin it belongs in.",
+  targetMarket: "Students, researchers, and developers interested in computer vision and model evaluation, as well as anyone who wants help sorting their trash.",
+  uniqueValue: "BIN could be integrated into smart trash bins that sort items automatically, recycling stations and materials recovery facilities, or school and community waste programs. It could also be extended to recognize more types of waste and to give recycling guidance for specific locations.",
   tags: ["Computer Vision", "Deep Learning", "Machine Learning", "Mobile App"],
   technologies: ["Python", "PyTorch", "NumPy", "MobileNetV3", "CNN", "HOG + SVM", "ONNX Runtime Web", "JavaScript", "Progressive Web App", "Gradio", "Google Colab"],
   images: [
@@ -244,7 +245,7 @@ const binProject: ProjectData = {
     }
   ],
   achievements: [
-    "📚 Computer Vision Group Project — West Visayas State University"
+    "📚 Computer Vision Project — Model Comparison & Evaluation"
   ]
 };
 
@@ -597,15 +598,15 @@ const LeadStory = ({
   project,
   onOpen,
   label,
-  reverse = false,
+  controls,
 }: {
   project: ProjectData;
   onOpen: (id: string) => void;
   label: string;
-  reverse?: boolean;
+  controls?: React.ReactNode;
 }) => (
-  <article className="press-card group relative grid gap-6 border-t border-ink/55 py-7 md:grid-cols-12 md:gap-8">
-    <figure className={`md:col-span-7 ${reverse ? "md:order-2" : ""}`}>
+  <article className="press-card group relative grid gap-6 md:grid-cols-12 md:gap-8">
+    <figure className="md:col-span-7">
       <div className="relative aspect-[16/10] overflow-hidden border border-ink bg-paper-deep">
         <Image
           src={project.images[0]}
@@ -619,7 +620,7 @@ const LeadStory = ({
         Filed under: {project.tags.join(" · ")}
       </figcaption>
     </figure>
-    <div className={`flex flex-col md:col-span-5 ${reverse ? "md:order-1" : ""}`}>
+    <div className="flex flex-col md:col-span-5">
       <p className="kicker">
         {label} &middot; {categoryLabels[project.category]}
       </p>
@@ -629,37 +630,141 @@ const LeadStory = ({
       <p className="mt-2 font-serif text-xl italic leading-snug text-ink-soft">{project.subtitle}</p>
       <p className="news-body drop-cap mt-4 text-[1.02rem] leading-relaxed text-ink-soft">{project.shortDescription}</p>
       <AchievementNotes items={project.achievements} />
-      <div className="mt-auto pt-5">
+      <div className="mt-5">
         <StoryCallout project={project} />
       </div>
+      {controls}
     </div>
   </article>
 );
 
-const ProjectArticle = ({ project, onOpen }: { project: ProjectData; onOpen: (id: string) => void }) => (
-  <article className="press-card group relative flex h-full flex-col">
-    <div className="relative h-48 overflow-hidden border border-ink/70 bg-paper-deep">
-      <Image
-        src={project.images[0]}
-        alt={`${project.title} preview`}
-        fill
-        className="newsprint-img object-contain p-5"
-        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-      />
+// --- Project Stack ---
+// Projects sit on top of one another like newspaper pages. "View next project"
+// turns the top page forward, toward the reader, from its left edge to reveal the page beneath it.
+const pageEase = [0.65, 0, 0.35, 1] as const;
+
+const foldVariants: Variants = {
+  current: { x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 2, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1], zIndex: { duration: 0 } } },
+  under: { x: 8, y: 8, rotateY: 0, opacity: 1, zIndex: 1, transition: { duration: 0.45, zIndex: { duration: 0 } } },
+  folded: {
+    // Negative: the free edge swings out toward the viewer, like lifting a page off the pile.
+    rotateY: -100,
+    opacity: [1, 1, 0],
+    zIndex: 3,
+    transition: { duration: 0.85, ease: pageEase, opacity: { duration: 0.85, times: [0, 0.75, 1] }, zIndex: { duration: 0 } },
+  },
+};
+
+const foldShadeVariants: Variants = {
+  current: { opacity: 0 },
+  under: { opacity: 0 },
+  folded: { opacity: 1, transition: { duration: 0.85, ease: pageEase } },
+};
+
+// Reduced motion: no fold, the top page simply fades out.
+const fadeVariants: Variants = {
+  current: { x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 2, transition: { duration: 0 } },
+  under: { x: 8, y: 8, rotateY: 0, opacity: 1, zIndex: 1, transition: { duration: 0 } },
+  folded: { opacity: 0, zIndex: 3, transition: { duration: 0.2, zIndex: { duration: 0 } } },
+};
+
+const fadeShadeVariants: Variants = {
+  current: { opacity: 0 },
+  under: { opacity: 0 },
+  folded: { opacity: 0 },
+};
+
+const ProjectStack = ({ projects, onOpen }: { projects: ProjectData[]; onOpen: (id: string) => void }) => {
+  // `step` only ever increases, so every page keeps a unique key even when the stack wraps around.
+  const [step, setStep] = useState(0);
+  // A ref, not state: the page that is folding away still has a live button, and a
+  // second fast click on it must see "turning" immediately, not after a re-render.
+  const isTurning = useRef(false);
+  const shouldReduceMotion = useReducedMotion();
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const restoreFocus = useRef(false);
+
+  // Keep keyboard focus on the button after the page turns.
+  useEffect(() => {
+    if (!restoreFocus.current) return;
+    restoreFocus.current = false;
+    nextButtonRef.current?.focus({ preventScroll: true });
+  }, [step]);
+
+  const count = projects.length;
+  if (count === 0) return null;
+
+  const position = step % count;
+  const showNext = () => {
+    if (isTurning.current || count < 2) return;
+    isTurning.current = true;
+    restoreFocus.current = true;
+    setStep((current) => current + 1);
+  };
+
+  const sheetVariants = shouldReduceMotion ? fadeVariants : foldVariants;
+  const shadeVariants = shouldReduceMotion ? fadeShadeVariants : foldShadeVariants;
+  const sheets = count > 1
+    ? [{ sheetStep: step + 1, isCurrent: false }, { sheetStep: step, isCurrent: true }]
+    : [{ sheetStep: step, isCurrent: true }];
+
+  return (
+    <div className="relative isolate mb-4 mr-4 mt-2" style={{ perspective: "3000px" }}>
+      {/* Deep perspective keeps the page from ballooning over the screen as it turns toward the viewer. */}
+      {/* A third page edge, so a stack of more than two reads as a pile. */}
+      {count > 2 && (
+        <div aria-hidden="true" className="sheet-paper absolute inset-0 translate-x-4 translate-y-4 border border-ink/45" />
+      )}
+
+      <AnimatePresence mode="popLayout" initial={false} onExitComplete={() => { isTurning.current = false; }}>
+        {sheets.map(({ sheetStep, isCurrent }) => {
+          const index = sheetStep % count;
+          const project = projects[index];
+          return (
+            <motion.div
+              key={`page-${sheetStep}`}
+              variants={sheetVariants}
+              initial={false}
+              animate={isCurrent ? "current" : "under"}
+              exit="folded"
+              style={{ transformOrigin: "left center" }}
+              className={`sheet-paper isolate border border-ink/70 p-5 sm:p-7 ${isCurrent ? "relative" : "absolute inset-0 overflow-hidden"}`}
+              aria-hidden={isCurrent ? undefined : true}
+              inert={!isCurrent}
+            >
+              <LeadStory
+                project={project}
+                onOpen={onOpen}
+                label={index === 0 ? "Lead Story" : "Also Reported"}
+                controls={count > 1 && (
+                  <div className="relative z-10 mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-ink/40 pt-4">
+                    <button ref={isCurrent ? nextButtonRef : undefined} type="button" onClick={showNext} className="ink-btn">
+                      {index === count - 1 ? "Back to first project" : "View next project"}
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </button>
+                    <span className="font-headline text-[0.7rem] uppercase tracking-[0.18em] text-ink-muted">
+                      Project {index + 1} of {count}
+                    </span>
+                  </div>
+                )}
+              />
+              {/* Shades the page as it turns away from the light. */}
+              <motion.div
+                aria-hidden="true"
+                variants={shadeVariants}
+                className="pointer-events-none absolute inset-0 bg-gradient-to-l from-ink/45 via-ink/10 to-transparent"
+              />
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+
+      <p className="sr-only" aria-live="polite">
+        Showing project {position + 1} of {count}: {projects[position].title}
+      </p>
     </div>
-    <p className="kicker mt-4">{categoryLabels[project.category]}</p>
-    <h3 className="mt-1 font-headline text-3xl font-bold uppercase leading-[0.95] text-ink">
-      <ProjectLink project={project} onOpen={onOpen}>{project.title}</ProjectLink>
-    </h3>
-    <p className="mt-1.5 font-serif text-[0.98rem] italic leading-snug text-ink-soft">{project.subtitle}</p>
-    <p className="mt-3 text-pretty text-[0.94rem] leading-relaxed text-ink-soft hyphens-auto">{project.shortDescription}</p>
-    <AchievementNotes items={project.achievements} />
-    <p className="mt-3 font-serif text-[0.76rem] italic leading-snug text-ink-muted">Filed under: {project.tags.join(" · ")}</p>
-    <div className="mt-auto pt-4">
-      <StoryCallout project={project} />
-    </div>
-  </article>
-);
+  );
+};
 
 // --- Contact Modal ---
 // Styled as a letter to the editor. Submitting opens the visitor's email client
@@ -955,7 +1060,7 @@ const ProjectDetailModal = ({
                     )}
                     {articlePair(
                       { title: 'Target Audience & Reach', text: project.targetMarket },
-                      { title: 'Unique Proposition', text: project.uniqueValue },
+                      { title: project.id === 'bin' ? 'Future Implementation' : 'Unique Proposition', text: project.uniqueValue },
                     )}
 
                     <section className="border-2 border-ink">
@@ -1131,12 +1236,6 @@ export default function Portfolio() {
   const filteredProjects = activeFilter === "all"
     ? projectsData
     : projectsData.filter(p => p.category === activeFilter);
-  const [leadProject, ...otherProjects] = filteredProjects;
-  // A project that would sit alone on the last grid row is shown as a wide
-  // "Also Reported" story instead, so no row is left mostly empty.
-  const leftoverProject = otherProjects.length % 4 === 1 ? otherProjects[otherProjects.length - 1] : undefined;
-  const gridProjects = leftoverProject ? otherProjects.slice(0, -1) : otherProjects;
-  const gridColumns = gridProjects.length >= 4 ? "cols-4" : gridProjects.length === 3 ? "cols-3" : "";
 
   return (
     <div className="relative min-h-screen">
@@ -1345,27 +1444,10 @@ export default function Portfolio() {
               </SectionHeading>
             </Reveal>
 
-            {leadProject && (
-              <Reveal key={`lead-${activeFilter}-${leadProject.id}`}>
-                <LeadStory project={leadProject} onOpen={openProjectDetail} label="Lead Story" />
-              </Reveal>
-            )}
-
-            {gridProjects.length > 0 && (
-              <div className={`article-grid ${gridColumns}`}>
-                {gridProjects.map((project, index) => (
-                  <Reveal key={`${activeFilter}-${project.id}`} delay={index * 0.06}>
-                    <ProjectArticle project={project} onOpen={openProjectDetail} />
-                  </Reveal>
-                ))}
-              </div>
-            )}
-            {leftoverProject && (
-              <Reveal key={`also-${activeFilter}-${leftoverProject.id}`}>
-                <LeadStory project={leftoverProject} onOpen={openProjectDetail} label="Also Reported" reverse />
-              </Reveal>
-            )}
-            <div className="border-t border-ink/55" aria-hidden="true" />
+            {/* Keyed by filter so each category starts again from its first project. */}
+            <Reveal key={`stack-${activeFilter}`}>
+              <ProjectStack key={activeFilter} projects={filteredProjects} onOpen={openProjectDetail} />
+            </Reveal>
           </section>
 
           {/* Skills & Focus Areas */}
