@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "framer-motion";
 import {
   Activity,
+  ArrowLeft,
   ArrowRight,
   ArrowUp,
   ArrowUpRight,
@@ -387,14 +388,8 @@ const categoryLabels: Record<ProjectData["category"], string> = {
   "web-ui": "Frontend",
 };
 
-const filterTabs = [
-  { id: "all", label: "All Projects" },
-  { id: "ai-iot", label: "AI & IoT" },
-  { id: "health-tech", label: "Health-Tech" },
-  { id: "web-ui", label: "Frontend" },
-] as const;
-
-type FilterId = (typeof filterTabs)[number]["id"];
+// Shown as printed section labels; they are not interactive.
+const categoryTags = ["AI & IoT", "Health-Tech", "Frontend"];
 
 const corePrinciples = [
   {
@@ -640,66 +635,106 @@ const LeadStory = ({
 
 // --- Project Stack ---
 // Projects sit on top of one another like newspaper pages. "View next project"
-// turns the top page forward, toward the reader, from its left edge to reveal the page beneath it.
-const pageEase = [0.65, 0, 0.35, 1] as const;
+// turns the top page forward, toward the reader, from its left edge to reveal the
+// page beneath it; "Previous work" turns the previous page back down onto the pile.
+type TurnDirection = 1 | -1;
 
+const pageEase = [0.65, 0, 0.35, 1] as const;
+const TURN_SECONDS = 0.85;
+const TURNED_AWAY = { rotateY: -100, opacity: 0 };
+
+// `custom` is the turn direction: 1 for next, -1 for previous.
 const foldVariants: Variants = {
-  current: { x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 2, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1], zIndex: { duration: 0 } } },
+  // A page returning from the left when going back starts turned away.
+  entering: { ...TURNED_AWAY, x: 0, y: 0, zIndex: 3 },
+  current: (direction: TurnDirection) =>
+    direction === -1
+      ? {
+          x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 3,
+          transition: { duration: TURN_SECONDS, ease: pageEase, opacity: { duration: 0.2 }, zIndex: { duration: 0 } },
+        }
+      : { x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 2, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1], zIndex: { duration: 0 } } },
   under: { x: 8, y: 8, rotateY: 0, opacity: 1, zIndex: 1, transition: { duration: 0.45, zIndex: { duration: 0 } } },
-  folded: {
-    // Negative: the free edge swings out toward the viewer, like lifting a page off the pile.
-    rotateY: -100,
-    opacity: [1, 1, 0],
-    zIndex: 3,
-    transition: { duration: 0.85, ease: pageEase, opacity: { duration: 0.85, times: [0, 0.75, 1] }, zIndex: { duration: 0 } },
-  },
+  // Leaving: going forward the top page turns away; going back, the bottom page
+  // that drops out of view is already hidden, so it just goes.
+  folded: (direction: TurnDirection) =>
+    direction === 1
+      ? {
+          // Negative: the free edge swings out toward the viewer, like lifting a page off the pile.
+          rotateY: -100,
+          opacity: [1, 1, 0],
+          zIndex: 3,
+          transition: { duration: TURN_SECONDS, ease: pageEase, opacity: { duration: TURN_SECONDS, times: [0, 0.75, 1] }, zIndex: { duration: 0 } },
+        }
+      : { opacity: 0, zIndex: 0, transition: { duration: 0 } },
 };
 
 const foldShadeVariants: Variants = {
-  current: { opacity: 0 },
+  entering: { opacity: 1 },
+  current: (direction: TurnDirection) =>
+    direction === -1 ? { opacity: 0, transition: { duration: TURN_SECONDS, ease: pageEase } } : { opacity: 0 },
   under: { opacity: 0 },
-  folded: { opacity: 1, transition: { duration: 0.85, ease: pageEase } },
+  folded: (direction: TurnDirection) =>
+    direction === 1 ? { opacity: 1, transition: { duration: TURN_SECONDS, ease: pageEase } } : { opacity: 0 },
 };
 
-// Reduced motion: no fold, the top page simply fades out.
+// Reduced motion: no turning; pages simply fade.
 const fadeVariants: Variants = {
-  current: { x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 2, transition: { duration: 0 } },
+  entering: { x: 0, y: 0, rotateY: 0, opacity: 0, zIndex: 3 },
+  current: { x: 0, y: 0, rotateY: 0, opacity: 1, zIndex: 2, transition: { duration: 0.2, zIndex: { duration: 0 } } },
   under: { x: 8, y: 8, rotateY: 0, opacity: 1, zIndex: 1, transition: { duration: 0 } },
-  folded: { opacity: 0, zIndex: 3, transition: { duration: 0.2, zIndex: { duration: 0 } } },
+  folded: (direction: TurnDirection) =>
+    direction === 1
+      ? { opacity: 0, zIndex: 3, transition: { duration: 0.2, zIndex: { duration: 0 } } }
+      : { opacity: 0, zIndex: 0, transition: { duration: 0 } },
 };
 
 const fadeShadeVariants: Variants = {
+  entering: { opacity: 0 },
   current: { opacity: 0 },
   under: { opacity: 0 },
   folded: { opacity: 0 },
 };
 
 const ProjectStack = ({ projects, onOpen }: { projects: ProjectData[]; onOpen: (id: string) => void }) => {
-  // `step` only ever increases, so every page keeps a unique key even when the stack wraps around.
+  // `step` moves by one per turn and is never wrapped, so every page keeps a unique key.
   const [step, setStep] = useState(0);
-  // A ref, not state: the page that is folding away still has a live button, and a
-  // second fast click on it must see "turning" immediately, not after a re-render.
+  const [direction, setDirection] = useState<TurnDirection>(1);
+  // A ref, not state: a second fast click must see "turning" immediately, not after a re-render.
   const isTurning = useRef(false);
+  const turnTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
-  const restoreFocus = useRef(false);
+  const previousButtonRef = useRef<HTMLButtonElement | null>(null);
+  const focusAfterTurn = useRef<"next" | "previous" | null>(null);
 
-  // Keep keyboard focus on the button after the page turns.
+  // Keep keyboard focus on the button that was pressed after the page turns.
   useEffect(() => {
-    if (!restoreFocus.current) return;
-    restoreFocus.current = false;
-    nextButtonRef.current?.focus({ preventScroll: true });
+    const target = focusAfterTurn.current;
+    if (!target) return;
+    focusAfterTurn.current = null;
+    (target === "next" ? nextButtonRef : previousButtonRef).current?.focus({ preventScroll: true });
   }, [step]);
+
+  useEffect(() => () => {
+    if (turnTimer.current) clearTimeout(turnTimer.current);
+  }, []);
 
   const count = projects.length;
   if (count === 0) return null;
 
-  const position = step % count;
-  const showNext = () => {
+  const wrap = (value: number) => ((value % count) + count) % count;
+  const position = wrap(step);
+
+  const turn = (to: TurnDirection) => {
     if (isTurning.current || count < 2) return;
     isTurning.current = true;
-    restoreFocus.current = true;
-    setStep((current) => current + 1);
+    focusAfterTurn.current = to === 1 ? "next" : "previous";
+    setDirection(to);
+    setStep((current) => current + to);
+    turnTimer.current = setTimeout(() => {
+      isTurning.current = false;
+    }, shouldReduceMotion ? 250 : TURN_SECONDS * 1000 + 80);
   };
 
   const sheetVariants = shouldReduceMotion ? fadeVariants : foldVariants;
@@ -716,15 +751,16 @@ const ProjectStack = ({ projects, onOpen }: { projects: ProjectData[]; onOpen: (
         <div aria-hidden="true" className="sheet-paper absolute inset-0 translate-x-4 translate-y-4 border border-ink/45" />
       )}
 
-      <AnimatePresence mode="popLayout" initial={false} onExitComplete={() => { isTurning.current = false; }}>
+      <AnimatePresence mode="popLayout" initial={false} custom={direction}>
         {sheets.map(({ sheetStep, isCurrent }) => {
-          const index = sheetStep % count;
+          const index = wrap(sheetStep);
           const project = projects[index];
           return (
             <motion.div
               key={`page-${sheetStep}`}
+              custom={direction}
               variants={sheetVariants}
-              initial={false}
+              initial={isCurrent && direction === -1 ? "entering" : false}
               animate={isCurrent ? "current" : "under"}
               exit="folded"
               style={{ transformOrigin: "left center" }}
@@ -737,8 +773,17 @@ const ProjectStack = ({ projects, onOpen }: { projects: ProjectData[]; onOpen: (
                 onOpen={onOpen}
                 label={index === 0 ? "Lead Story" : "Also Reported"}
                 controls={count > 1 && (
-                  <div className="relative z-10 mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-ink/40 pt-4">
-                    <button ref={isCurrent ? nextButtonRef : undefined} type="button" onClick={showNext} className="ink-btn">
+                  <div className="relative z-10 mt-6 flex flex-wrap items-center gap-x-3 gap-y-3 border-t border-ink/40 pt-4">
+                    <button
+                      ref={isCurrent ? previousButtonRef : undefined}
+                      type="button"
+                      onClick={() => turn(-1)}
+                      className="ink-btn-outline"
+                    >
+                      <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                      Previous work
+                    </button>
+                    <button ref={isCurrent ? nextButtonRef : undefined} type="button" onClick={() => turn(1)} className="ink-btn">
                       {index === count - 1 ? "Back to first project" : "View next project"}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </button>
@@ -748,9 +793,10 @@ const ProjectStack = ({ projects, onOpen }: { projects: ProjectData[]; onOpen: (
                   </div>
                 )}
               />
-              {/* Shades the page as it turns away from the light. */}
+              {/* Shades the page while it is turned away from the light. */}
               <motion.div
                 aria-hidden="true"
+                custom={direction}
                 variants={shadeVariants}
                 className="pointer-events-none absolute inset-0 bg-gradient-to-l from-ink/45 via-ink/10 to-transparent"
               />
@@ -1212,7 +1258,6 @@ export default function Portfolio() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isProjectDetailOpen, setIsProjectDetailOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
-  const [activeFilter, setActiveFilter] = useState<FilterId>("all");
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = () => {
@@ -1233,9 +1278,6 @@ export default function Portfolio() {
     }
   };
 
-  const filteredProjects = activeFilter === "all"
-    ? projectsData
-    : projectsData.filter(p => p.category === activeFilter);
 
   return (
     <div className="relative min-h-screen">
@@ -1426,27 +1468,21 @@ export default function Portfolio() {
                 title="Selected Work"
                 description="Frontend applications and data-driven concepts, from real-time booking interfaces to forecasting and automated monitoring."
               >
-                <div role="group" aria-label="Filter projects by category" className="flex flex-wrap gap-2">
-                  {filterTabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      aria-pressed={activeFilter === tab.id}
-                      onClick={() => setActiveFilter(tab.id)}
-                      className={`min-h-9 border border-ink px-3 py-2 font-headline text-[0.72rem] uppercase tracking-[0.14em] transition-colors ${
-                        activeFilter === tab.id ? "bg-ink text-paper-light" : "text-ink hover:bg-paper-deep"
-                      }`}
+                <ul aria-label="Project categories" className="flex flex-wrap gap-2">
+                  {categoryTags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="border border-ink px-3 py-2 font-headline text-[0.72rem] uppercase tracking-[0.14em] text-ink"
                     >
-                      {tab.label}
-                    </button>
+                      {tag}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </SectionHeading>
             </Reveal>
 
-            {/* Keyed by filter so each category starts again from its first project. */}
-            <Reveal key={`stack-${activeFilter}`}>
-              <ProjectStack key={activeFilter} projects={filteredProjects} onOpen={openProjectDetail} />
+            <Reveal>
+              <ProjectStack projects={projectsData} onOpen={openProjectDetail} />
             </Reveal>
           </section>
 
