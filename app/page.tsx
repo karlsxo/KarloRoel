@@ -44,7 +44,7 @@ interface ProjectData {
   id: string;
   title: string;
   subtitle: string;
-  category: "ai-iot" | "health-tech" | "web-ui";
+  category: "ai-iot" | "health-tech" | "web-ui" | "data-science";
   shortDescription: string;
   fullDescription: string;
   problemStatement: string;
@@ -58,6 +58,10 @@ interface ProjectData {
   achievements?: string[];
   externalUrl?: string;
   galleryReplacementUrl?: string;
+  // A live site that opens alongside the case study (unlike externalUrl, which replaces it).
+  siteUrl?: string;
+  // Desktop screenshots use a wide gallery frame; phone screenshots use the default tall one.
+  galleryAspect?: "portrait" | "landscape";
 }
 
 // --- Portfolio Project Data ---
@@ -250,6 +254,55 @@ const binProject: ProjectData = {
   ]
 };
 
+const retailLensProject: ProjectData = {
+  id: "retail-lens",
+  title: "Retail Lens",
+  subtitle: "Customer analytics on real retail transactions",
+  category: "data-science",
+  shortDescription: "A Python analysis of a year of real UK online-retail transactions, turned into an interactive dashboard for customer segments, repeat purchases, and monthly cohort return rates.",
+  fullDescription: "Retail Lens is a customer analytics project built on the public UCI Online Retail dataset: transactions from a UK online retailer between December 2010 and November 2011. A Python pipeline cleans 541,909 raw rows down to 374,186 eligible purchases, scores every customer on recency, frequency, and monetary value (RFM), groups customers into explainable segments, and measures repeat purchases and monthly cohort return rates. The results feed an interactive React dashboard with a searchable customer table, segment charts, and a cohort heatmap.",
+  problemStatement: "Raw transaction logs mix cancellations, duplicates, postage fees, and anonymous orders, so headline totals can mislead. A business needs to know which customers drive value, how many come back, and which patterns are worth testing, without overstating what historical data can prove.",
+  solution: "A documented, tested pipeline applies cleaning rules in a fixed order and records how many rows each rule removes. It then builds RFM scores and rule-based segments, a 60-day repeat-purchase rate, and cohort return rates, with reconciliation checks and unit tests. The dashboard presents the findings with clear limits: values are purchase value before returns, not profit, and no causal claims are made.",
+  targetMarket: "Small online retailers, marketing and CRM teams, and analysts who need a transparent starting point for customer segmentation and retention analysis.",
+  uniqueValue: "Every number is traceable: each cleaning step is counted, totals reconcile, and segments are transparent rules rather than a black-box model. Key results: 4,293 customers, the top 10% of customers account for 60.6% of purchase value, and 37.4% of customers buy again within 60 days.",
+  tags: ["Data Science", "Data Analysis", "Customer Analytics", "Dashboard"],
+  technologies: ["Python", "pandas", "NumPy", "Matplotlib", "Jupyter Notebook", "RFM Segmentation", "Cohort Analysis", "React", "TypeScript", "Recharts", "Vite"],
+  images: [
+    "/retail-lens-1.png",
+    "/retail-lens-2.png",
+    "/retail-lens-3.png",
+    "/retail-lens-4.png",
+    "/retail-lens-5.png",
+  ],
+  galleryAspect: "landscape",
+  siteUrl: "/projects/retail-lens/index.html",
+  features: [
+    {
+      title: "Audited Data Cleaning",
+      description: "Seven ordered cleaning rules, each with a recorded row count, take 541,909 raw rows to 374,186 eligible purchases, with totals reconciled at every step.",
+      icon: ShieldCheck
+    },
+    {
+      title: "RFM Customer Segments",
+      description: "Scores customers from 1 to 5 on recency, frequency, and monetary value and groups them into seven transparent segments, from Champions to Hibernating.",
+      icon: Users
+    },
+    {
+      title: "Repeat & Cohort Analysis",
+      description: "Measures a 60-day repeat-purchase rate and monthly cohort return rates, keeping months not yet observed separate from months with no purchases.",
+      icon: Activity
+    },
+    {
+      title: "Interactive Dashboard",
+      description: "A React and Recharts dashboard with customer search, segment filters, sorting, pagination, and CSV export.",
+      icon: Layers
+    }
+  ],
+  achievements: [
+    "📊 Data Science Project — UCI Online Retail Dataset"
+  ]
+};
+
 const tribleProject: ProjectData = {
   id: "trible",
   title: "Trible",
@@ -325,7 +378,7 @@ const metropolisProject: ProjectData = {
   externalUrl: "https://reality13-metropolis.vercel.app"
 };
 
-const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject, uritectProject, binProject];
+const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject, uritectProject, binProject, retailLensProject];
 
 // Shared labels keep the hero and capability section aligned. Focus descriptions
 // distinguish established project work from areas still being developed.
@@ -386,10 +439,11 @@ const categoryLabels: Record<ProjectData["category"], string> = {
   "ai-iot": "AI & IoT",
   "health-tech": "Health-Tech",
   "web-ui": "Frontend",
+  "data-science": "Data Science",
 };
 
 // Shown as printed section labels; they are not interactive.
-const categoryTags = ["AI & IoT", "Health-Tech", "Frontend"];
+const categoryTags = ["AI & IoT", "Health-Tech", "Frontend", "Data Science"];
 
 const corePrinciples = [
   {
@@ -625,8 +679,20 @@ const LeadStory = ({
       <p className="mt-2 font-serif text-xl italic leading-snug text-ink-soft">{project.subtitle}</p>
       <p className="news-body drop-cap mt-4 text-[1.02rem] leading-relaxed text-ink-soft">{project.shortDescription}</p>
       <AchievementNotes items={project.achievements} />
-      <div className="mt-5">
+      <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
         <StoryCallout project={project} />
+        {project.siteUrl && (
+          <a
+            href={project.siteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 inline-flex items-center gap-1.5 border-b border-press pb-0.5 font-headline text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-press transition-colors hover:text-press-dark"
+          >
+            Open the live dashboard
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        )}
       </div>
       {controls}
     </div>
@@ -1062,6 +1128,13 @@ const ProjectDetailModal = ({
               </h2>
               <p className="mt-3 font-serif text-xl italic leading-snug text-ink-soft md:text-2xl">{project.subtitle}</p>
               <AchievementNotes items={project.achievements} />
+              {project.siteUrl && (
+                <a href={project.siteUrl} target="_blank" rel="noopener noreferrer" className="ink-btn mt-5">
+                  Open the live dashboard
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
 
               {/* Section tabs */}
               <div role="tablist" aria-label={`${project.title} case study sections`} className="mt-7 flex flex-wrap gap-1 border-y-2 border-ink py-1.5">
@@ -1179,7 +1252,7 @@ const ProjectDetailModal = ({
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="mt-7 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
+                      className={`mt-7 grid grid-cols-1 gap-6 sm:grid-cols-2 ${project.galleryAspect === "landscape" ? "" : "md:grid-cols-3"}`}
                     >
                       {project.images.map((img, idx) => (
                         <figure key={img} className="press-card">
@@ -1187,7 +1260,7 @@ const ProjectDetailModal = ({
                             type="button"
                             onClick={() => setSelectedLightboxImage(img)}
                             aria-label={`Expand ${project.title} figure ${idx + 1}`}
-                            className="group relative block aspect-[9/16] w-full overflow-hidden border border-ink bg-paper-deep"
+                            className={`group relative block w-full overflow-hidden border border-ink bg-paper-deep ${project.galleryAspect === "landscape" ? "aspect-[8/7]" : "aspect-[9/16]"}`}
                           >
                             <Image
                               src={img}

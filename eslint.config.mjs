@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone data science project (separate app) and its built copy served from public/.
+    "data-science-project/**",
+    "public/projects/**",
   ]),
 ]);
 
