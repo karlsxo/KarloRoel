@@ -200,6 +200,54 @@ const uritectProject: ProjectData = {
   ]
 };
 
+const binProject: ProjectData = {
+  id: "bin",
+  title: "BIN",
+  subtitle: "Computer vision for trash sorting by material",
+  category: "ai-iot",
+  shortDescription: "A phone app that identifies a piece of trash from a photo as cardboard, glass, metal, paper, plastic, or residual waste, comparing three computer vision methods that all run on the device.",
+  fullDescription: "BIN is a Computer Vision group project at West Visayas State University. It asks which kind of computer vision method best recognizes the material of a piece of trash from a single photo, and whether it still works on messy real-world photos. We compared a classical HOG + linear SVM written from scratch, a 4-block CNN trained from scratch, and a pretrained MobileNetV3-Large on the same data, split, and metrics across six experiments. We then turned the results into BIN, an installable phone app that runs all three methods on the device, works offline, and tells users which bin an item belongs in and how to prepare it.",
+  problemStatement: "Segregating waste by material is the first step of recycling and is required at source by the Philippine Ecological Solid Waste Management Act (RA 9003). In barangay materials recovery facilities and schools, this sorting is still done by hand. Models trained only on clean studio photos also break down on real-world photos with cluttered backgrounds and uneven lighting.",
+  solution: "BIN opens straight to the camera. The user places one item inside the scan square and taps Identify. MobileNetV3, the most accurate method on real-world photos, gives the answer, together with whether the item is recyclable or residual and what to do with it. When its confidence is below 65%, BIN says \"Not sure\" and asks for a retake. Retraining on TrashNet plus real-world web photos raised MobileNetV3's real-world accuracy from 62.8% to 97.7%.",
+  targetMarket: "Barangay materials recovery facilities, schools, households, and anyone in the Philippines who needs quick help deciding which bin a piece of trash belongs in.",
+  uniqueValue: "It shows its work: every scan lists the prediction, confidence, and on-phone runtime of all three methods side by side. It runs fully on the phone, so photos never leave the device, and it admits uncertainty with a calibrated \"Not sure\" threshold instead of guessing.",
+  tags: ["Computer Vision", "Deep Learning", "Machine Learning", "Mobile App"],
+  technologies: ["Python", "PyTorch", "NumPy", "MobileNetV3", "CNN", "HOG + SVM", "ONNX Runtime Web", "JavaScript", "Progressive Web App", "Gradio", "Google Colab"],
+  images: [
+    "/assets/selected-works/bin-final-logo.png",
+    "/bin-2.png",
+    "/bin-3.png",
+    "/bin-4.png",
+    "/bin-5.png",
+    "/bin-6.png",
+  ],
+  features: [
+    {
+      title: "Three Methods, One Comparison",
+      description: "Runs a from-scratch HOG + linear SVM, a 4-block CNN, and a pretrained MobileNetV3 on every photo, showing each prediction, confidence, and runtime.",
+      icon: Layers
+    },
+    {
+      title: "Real-World Accuracy",
+      description: "Mixed-domain training on studio and real-world photos lets MobileNetV3 reach 97.7% on 600 real-world photos it never saw, and 94.1% on the TrashNet test set.",
+      icon: Target
+    },
+    {
+      title: "Calibrated \"Not Sure\" Answers",
+      description: "Answers only at 65% confidence or higher. At that threshold, BIN answers 94% of real-world test photos, and 99.5% of those answers are correct.",
+      icon: ShieldCheck
+    },
+    {
+      title: "Offline, Private Phone App",
+      description: "An installable web app that runs the models on the phone with ONNX Runtime, works offline after the first visit, and never uploads photos.",
+      icon: Zap
+    }
+  ],
+  achievements: [
+    "📚 Computer Vision Group Project — West Visayas State University"
+  ]
+};
+
 const tribleProject: ProjectData = {
   id: "trible",
   title: "Trible",
@@ -275,7 +323,7 @@ const metropolisProject: ProjectData = {
   externalUrl: "https://reality13-metropolis.vercel.app"
 };
 
-const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject, uritectProject];
+const projectsData: ProjectData[] = [tribleProject, metropolisProject, dalaniProject, arteryProject, uritectProject, binProject];
 
 // Shared labels keep the hero and capability section aligned. Focus descriptions
 // distinguish established project work from areas still being developed.
@@ -1084,7 +1132,11 @@ export default function Portfolio() {
     ? projectsData
     : projectsData.filter(p => p.category === activeFilter);
   const [leadProject, ...otherProjects] = filteredProjects;
-  const gridColumns = otherProjects.length >= 4 ? "cols-4" : otherProjects.length === 3 ? "cols-3" : "";
+  // A project that would sit alone on the last grid row is shown as a wide
+  // "Also Reported" story instead, so no row is left mostly empty.
+  const leftoverProject = otherProjects.length % 4 === 1 ? otherProjects[otherProjects.length - 1] : undefined;
+  const gridProjects = leftoverProject ? otherProjects.slice(0, -1) : otherProjects;
+  const gridColumns = gridProjects.length >= 4 ? "cols-4" : gridProjects.length === 3 ? "cols-3" : "";
 
   return (
     <div className="relative min-h-screen">
@@ -1299,19 +1351,20 @@ export default function Portfolio() {
               </Reveal>
             )}
 
-            {otherProjects.length === 1 ? (
-              <Reveal key={`second-${activeFilter}-${otherProjects[0].id}`}>
-                <LeadStory project={otherProjects[0]} onOpen={openProjectDetail} label="Also Reported" reverse />
-              </Reveal>
-            ) : otherProjects.length > 1 ? (
+            {gridProjects.length > 0 && (
               <div className={`article-grid ${gridColumns}`}>
-                {otherProjects.map((project, index) => (
+                {gridProjects.map((project, index) => (
                   <Reveal key={`${activeFilter}-${project.id}`} delay={index * 0.06}>
                     <ProjectArticle project={project} onOpen={openProjectDetail} />
                   </Reveal>
                 ))}
               </div>
-            ) : null}
+            )}
+            {leftoverProject && (
+              <Reveal key={`also-${activeFilter}-${leftoverProject.id}`}>
+                <LeadStory project={leftoverProject} onOpen={openProjectDetail} label="Also Reported" reverse />
+              </Reveal>
+            )}
             <div className="border-t border-ink/55" aria-hidden="true" />
           </section>
 
